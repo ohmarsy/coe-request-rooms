@@ -1,12 +1,13 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import DashboardPage from "../pages/Dashboard";
 import ImageAnalysePage from "../pages/ImageAnalyse";
+import HomePage from "../pages/Home";
 
 const AppRouter = () => {
   return (
     <>
       <Routes>
-        <Route path="/" element={<DashboardPage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/image-analyse" element={<ImageAnalysePage />} />
 
