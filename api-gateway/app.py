@@ -3,8 +3,12 @@ import requests
 
 app = Flask(__name__)
 
-AUTH_SERVICE_URL = "http://localhost:5002"  
-DASHBOARD_SERVICE_URL = "http://localhost:5003"  
+AUTH_SERVICE_URL = "http://auth-service:5002" 
+DASHBOARD_SERVICE_URL = "http://dashboard-service:5003"
+
+@app.route('/')
+def hello():
+    return "Hello API!"
 
 @app.route('/auth/', methods=['GET'])
 def auth():

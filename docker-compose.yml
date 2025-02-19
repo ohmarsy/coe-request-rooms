@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "5002:5002"
+    volumes:
+      - ./auth-service:/app
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+    networks:
+      - backend
+
+  dashboard-service:
+    build: ./dashboard-service
+    ports:
+      - "5003:5003"
+    volumes:
+      - ./dashboard-service:/app
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+    networks:
+      - backend
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./api-gateway:/app
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+    networks:
+      - backend
+    depends_on:
+      - auth-service
+      - dashboard-service
+
+networks:
+  backend:
+    driver: bridge

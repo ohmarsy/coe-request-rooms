@@ -3,7 +3,7 @@ from flask import Flask, jsonify
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
-def home():
+def dashboard():
     return jsonify({"message": "Hello from Dashboard Service!"})
 
 if __name__ == '__main__':
