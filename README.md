@@ -1,5 +1,8 @@
 # start project
 
+`docker compose up -d` ไปเลย ง่ายๆ
+
+หรือรันทีละอัน
 backend
 
 ```
@@ -14,3 +17,9 @@ then frontend
 cd fe-coe-request-rooms
 npm run dev
 ```
+
+# test
+
+http://localhost:5001/dashboard
+และ
+http://localhost:5001/auth
