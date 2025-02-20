@@ -14,7 +14,7 @@ export default function LoginPage() {
         <form className="w-full max-w-xl mx-auto p-4">
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <label className="block mb-2" htmlFor="email">
+              <label className="block mb-2">
                 Email Address
               </label>
               <input
@@ -42,7 +42,7 @@ export default function LoginPage() {
           </div>
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full px-3">
-              <label className="block mb-2" htmlFor="email">
+              <label className="block mb-2">
                 Password
               </label>
               <input
@@ -55,7 +55,7 @@ export default function LoginPage() {
         
         <div className="w-full max-w-xl mx-auto px-4">
         <Button>Sign in</Button>
-        <p className="mt-5 text-xs">You don’t have an account ? <Link to='/sign-up' className="text-[var(--primary-color)] underline">Sign Up</Link></p>
+        <p className="mt-5 text-xs">You don’t have an account ? <Link to='/sign-up' className="text-[var(--primary-color)] underline">Sign up</Link></p>
         </div>
  
       </motion.div>
