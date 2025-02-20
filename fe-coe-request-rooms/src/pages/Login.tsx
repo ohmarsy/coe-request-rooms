@@ -1,10 +1,15 @@
+import { motion } from "framer-motion";
 import AuthLayout from "../layout/AuthLayout";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
 export default function LoginPage() {
   return (
     <AuthLayout>
-      <div className="bg-[var(--background-color)] text-[var(--text-color)] w-full h-full flex flex-col items-center justify-center ">
+      <motion.div
+      initial={{ opacity: 0, y: -100 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }} 
+      className="bg-[var(--background-color)] text-[var(--text-color)] w-full h-full flex flex-col items-center justify-center ">
         <h2 className="w-full max-w-xl mx-auto p-4 text-3xl text-[var(--text-color)] mb-6"><span className="text-[var(--primary-color)]">Sign in</span> to CoE Rooms</h2>
         <form className="w-full max-w-xl mx-auto p-4">
           <div className="flex flex-wrap -mx-3 mb-6">
@@ -53,7 +58,7 @@ export default function LoginPage() {
         <p className="mt-5 text-xs">You don’t have an account ? <Link to='/sign-up' className="text-[var(--primary-color)] underline">Sign Up</Link></p>
         </div>
  
-      </div>
+      </motion.div>
     </AuthLayout>
   );
 }
