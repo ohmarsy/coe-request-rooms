@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 
 const DashboardPage = () => {
   return (
-    <div>DashboardPage</div>
-  )
-}
+    <div>
+      DashboardPage
+      <FontAwesomeIcon icon={faCoffee} />
+    </div>
+  );
+};
 
-export default DashboardPage
+export default DashboardPage;
