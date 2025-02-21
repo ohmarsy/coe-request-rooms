@@ -17,7 +17,7 @@ const HomePage = () => {
                 <span className="text-[var(--primary-color)]">CoE</span> Rooms
             </h1>
 
-            <Link to="/login">
+            <Link to="/sign-in">
                 <Button>
                     Sign in
                 </Button>

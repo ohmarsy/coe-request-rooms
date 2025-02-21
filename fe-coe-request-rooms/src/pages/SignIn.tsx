@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import AuthLayout from "../layout/AuthLayout";
 import { Link } from "react-router-dom";
 import Button from "../components/Button";
-export default function LoginPage() {
+
+export default function SignInPage() {
   return (
     <AuthLayout>
       <motion.div

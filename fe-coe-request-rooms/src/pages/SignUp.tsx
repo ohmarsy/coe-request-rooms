@@ -80,7 +80,7 @@ export default function SignUpPage() {
 
                 <div className="w-full max-w-xl mx-auto px-4">
                     <Button>Create account</Button>
-                    <p className="mt-5 text-xs">Already have an account? <Link to='/login' className="text-[var(--primary-color)] underline">Sign in</Link></p>
+                    <p className="mt-5 text-xs">Already have an account? <Link to='/sign-in' className="text-[var(--primary-color)] underline">Sign in</Link></p>
                 </div>
 
             </motion.div>
