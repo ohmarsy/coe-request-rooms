@@ -1,5 +1,4 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import ImageAnalysePage from "../pages/ImageAnalyse";
 import HomePage from "../pages/Home";
 import SignUpPage from "../pages/SignUp";
 import SignInPage from "../pages/SignIn";
@@ -10,7 +9,6 @@ const AppRouter = () => {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/main" element={<MainPage />} />
-        <Route path="/image-analyse" element={<ImageAnalysePage />} />
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
 

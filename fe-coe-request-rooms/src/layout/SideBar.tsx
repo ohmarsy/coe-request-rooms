@@ -9,14 +9,20 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
-const SideBar = () => {
+// Define the type for props
+interface SideBarProps {
+  selectedMenu: string;
+  setSelectedMenu: (menu: string) => void;
+}
+
+const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
   const [isOpen, setIsOpen] = React.useState(true);
 
   const menuItems = [
     { title: "Dashboard", icon: faTableCells, route: "dashboard" },
-    { title: "Image analyse", icon: faImage, route: "image-analyse" },
-    { title: "Report table", icon: faTableList, route: "report-table" },
-    { title: "Manage room", icon: faDoorOpen, route: "manage-room" },
+    { title: "Image Analyse", icon: faImage, route: "image-analyse" },
+    { title: "Report Table", icon: faTableList, route: "report-table" },
+    { title: "Manage Room", icon: faDoorOpen, route: "manage-room" },
   ];
 
   return (
@@ -26,7 +32,11 @@ const SideBar = () => {
       } duration-300 h-screen bg-white shadow-md p-8 flex flex-col`}
     >
       {/* Header */}
-      <div className="flex gap-x-4 items-center">
+      <div
+        className={`flex ${
+          isOpen ? "flex-row" : "flex-col-reverse"
+        } gap-x-4 items-center`}
+      >
         <img
           src="./src/assets/LogoCoE.png"
           className={`cursor-pointer duration-100 ${isOpen ? "w-10" : "w-8"}`}
@@ -51,13 +61,13 @@ const SideBar = () => {
       <ul className="pt-6 flex-1">
         {menuItems.map((menu, index) => (
           <li key={index} className="mb-4">
-            <a
-              href={`#`}
+            <button
+              onClick={() => setSelectedMenu(menu.route)}
               className={`
-              flex items-center gap-4 p-3 rounded-lg
+              flex items-center gap-4 p-3 rounded-lg w-full text-left
               ${
-                index === 0
-                  ? "bg-[var(--primary-color)]  text-white"
+                selectedMenu === menu.route
+                  ? "bg-[var(--primary-color)] text-white"
                   : "text-gray-700 hover:bg-gray-100"
               }
               ${!isOpen && "justify-center"}
@@ -72,17 +82,16 @@ const SideBar = () => {
               >
                 {menu.title}
               </span>
-            </a>
+            </button>
           </li>
         ))}
       </ul>
 
       {/* Sign Out Button */}
       <div className="pt-6 border-t border-gray-200">
-        <a
-          href="#"
+        <button
           className={`
-          flex items-center gap-4 p-3 text-gray-700 hover:bg-gray-100 rounded-lg
+          flex items-center gap-4 p-3 text-gray-700 hover:bg-gray-100 rounded-lg w-full text-left
           ${!isOpen && "justify-center"}
         `}
         >
@@ -95,7 +104,7 @@ const SideBar = () => {
           >
             Sign out
           </span>
-        </a>
+        </button>
       </div>
     </div>
   );
