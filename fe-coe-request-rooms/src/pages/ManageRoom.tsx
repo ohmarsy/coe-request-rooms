@@ -32,18 +32,27 @@ const ManageRoomPage = () => {
 
   return (
     <div className="w-full h-full flex">
-      <div className="flex flex-col flex-1/3 h-full gap-2 p-2">
+      <div className="flex flex-col flex-1/3 h-full gap-2.5 p-2">
         <div className="w-full flex gap-2.5 items-center justify-center">
-          <div className="w-full bg-white h-[120px] flex flex-col items-center justify-center gap-2 shadow-sm rounded-2xl">
+          <div className="flex-2 bg-white h-[120px] flex flex-col items-center justify-center gap-2 shadow-sm rounded-2xl">
             <p className="text-2xl">{dateTime.date}</p>
-            <p className="text-[#7d7d7d] font-medium text-lg">Date</p>
+            <p className="text-[#7d7d7d] font-medium text-base">Date</p>
           </div>
-          <div className="w-full bg-white h-[120px] flex flex-col items-center justify-center gap-2 shadow-sm rounded-2xl">
+          <div className="flex-1 bg-white h-[120px] flex flex-col items-center justify-center gap-2 shadow-sm rounded-2xl">
             <p className="text-2xl">{dateTime.time}</p>
-            <p className="text-[#7d7d7d] font-medium text-lg">Time</p>
+            <p className="text-[#7d7d7d] font-medium text-base">Time</p>
           </div>
         </div>
-        <div className="w-full h-full bg-white shadow-sm rounded-2xl"></div>
+        <div className="w-full h-full bg-white shadow-sm rounded-2xl">
+          <div className="flex flex-col">
+            <p className="text-2xl px-6 py-4 border-b border-b-[#f7f7f7]">All rooms</p>
+            <div className="px-2 py-4 text-lg flex flex-col gap-2">
+              <p className="hover:bg-gray-100 rounded-2xl w-full px-4 py-2">EN4204</p>
+              <p className="hover:bg-gray-100 rounded-2xl w-full px-4 py-2">EN4204</p>
+              <p className="hover:bg-gray-100 rounded-2xl w-full px-4 py-2">EN4204</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="flex-2/3 bg-amber-600 h-full p-2"></div>
     </div>
