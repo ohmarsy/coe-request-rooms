@@ -35,11 +35,11 @@ const ManageRoomPage = () => {
       <div className="flex flex-col flex-1/3 h-full gap-3 p-2">
         <div className="w-full flex gap-3 items-center justify-center">
           <div className="flex-2 bg-white h-[120px] flex flex-col items-center justify-center gap-2 shadow-sm rounded-2xl">
-            <p className="text-2xl">{dateTime.date}</p>
+            <p className="text-3xl">{dateTime.date}</p>
             <p className="text-[#7d7d7d] font-medium text-base">Date</p>
           </div>
           <div className="flex-1 bg-white h-[120px] flex flex-col items-center justify-center gap-2 shadow-sm rounded-2xl">
-            <p className="text-2xl">{dateTime.time}</p>
+            <p className="text-3xl">{dateTime.time}</p>
             <p className="text-[#7d7d7d] font-medium text-base">Time</p>
           </div>
         </div>

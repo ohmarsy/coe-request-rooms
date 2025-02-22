@@ -28,8 +28,8 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
   return (
     <div
       className={`${
-        isOpen ? "w-74" : "w-20"
-      } duration-300 h-screen bg-white shadow-md p-8 flex flex-col`}
+        isOpen ? "w-74 p-8" : "w-20 p-2 py-8"
+      } duration-300 h-screen bg-white shadow-md  flex flex-col`}
     >
       {/* Header */}
       <div
@@ -39,7 +39,7 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
       >
         <img
           src="./src/assets/LogoCoE.png"
-          className={`cursor-pointer duration-100 ${isOpen ? "w-10" : "w-8"}`}
+          className={`duration-100 ${isOpen ? "w-10" : "w-12"}`}
         />
         <div className={`flex items-end gap-2 ${isOpen ? "block" : "hidden"}`}>
           <span className="text-[var(--primary-color)] font-bold text-2xl">
@@ -51,20 +51,20 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
         </div>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="duration-200 text-gray-600"
+          className={`duration-200 text-gray-600 cursor-pointer ${isOpen ? "" : "pb-4"}`}
         >
-          <FontAwesomeIcon icon={faBars} />
+          <FontAwesomeIcon icon={faBars} size="2xl" />
         </button>
       </div>
 
       {/* Menu Items */}
-      <ul className="pt-6 flex-1">
+      <ul className="pt-10 flex-1">
         {menuItems.map((menu, index) => (
           <li key={index} className="mb-4">
             <button
               onClick={() => setSelectedMenu(menu.route)}
               className={`
-              flex items-center gap-4 p-3 rounded-lg w-full text-left
+              flex items-center gap-4 p-3 px-6 rounded-lg w-full text-left
               ${
                 selectedMenu === menu.route
                   ? "bg-[var(--primary-color)] text-white"
