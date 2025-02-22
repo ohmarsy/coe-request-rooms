@@ -26,7 +26,10 @@ const MainPage = () => {
   return (
     <div className="flex bg-[var(--background-color)]">
       <SideBar setSelectedMenu={setSelectedMenu} selectedMenu={selectedMenu} />
-      <div className="p-7 text-2xl font-bold flex-1 h-screen">
+      <div
+        className="p-7 text-2xl font-bold flex-1 h-screen duration-300 fade-in"
+        key={selectedMenu}
+      >
         {renderComponent()}
       </div>
     </div>

@@ -1,12 +1,25 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap");
 @import "tailwindcss";
 
-:root{
-    --primary-color:#2A7BE4;
-    --secondary-color:#2A7BE4;
-    --background-color: #FAFCFE;
-    --text-color: #140B0C;
+:root {
+  --primary-color: #2a7be4;
+  --secondary-color: #2a7be4;
+  --background-color: #fafcfe;
+  --text-color: #140b0c;
 }
-*{
-    font-family: "Comfortaa", serif;
+* {
+  font-family: "Comfortaa", serif;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out forwards;
 }

@@ -35,30 +35,36 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
       <div
         className={`flex ${
           isOpen ? "flex-row" : "flex-col-reverse"
-        } gap-x-4 items-center`}
+        } gap-x-6 items-center`}
       >
-        <img
-          src="./src/assets/LogoCoE.png"
-          className={`duration-100 ${isOpen ? "w-10" : "w-12"}`}
-        />
-        <div className={`flex items-end gap-2 ${isOpen ? "block" : "hidden"}`}>
-          <span className="text-[var(--primary-color)] font-bold text-2xl">
-            CoE
-          </span>
-          <span className="text-[var(--primary-color)] font-bold text-lg">
-            Rooms
-          </span>
+        <div className="flex gap-2 items-center justify-center">
+          <img
+            src="./src/assets/LogoCoE.png"
+            className={`duration-100 ${isOpen ? "w-14" : "w-12"}`}
+          />
+          <div
+            className={`flex items-end gap-2 ${isOpen ? "block" : "hidden"}`}
+          >
+            <span className="text-[var(--primary-color)] font-bold text-2xl">
+              CoE
+            </span>
+            <span className="text-[var(--primary-color)] font-bold text-lg">
+              Rooms
+            </span>
+          </div>
         </div>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`duration-200 text-gray-600 cursor-pointer ${isOpen ? "" : "pb-4"}`}
+          className={`duration-200 text-gray-600 cursor-pointer ${
+            isOpen ? "" : "pb-4"
+          }`}
         >
-          <FontAwesomeIcon icon={faBars} size="2xl" />
+          <FontAwesomeIcon icon={faBars} size="xl" />
         </button>
       </div>
 
       {/* Menu Items */}
-      <ul className="pt-10 flex-1">
+      <ul className="pt-8 flex-1">
         {menuItems.map((menu, index) => (
           <li key={index} className="mb-4">
             <button
