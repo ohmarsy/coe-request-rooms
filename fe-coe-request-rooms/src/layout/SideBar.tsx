@@ -70,7 +70,7 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
             <button
               onClick={() => setSelectedMenu(menu.route)}
               className={`
-              flex items-center gap-4 p-3 px-6 rounded-lg w-full text-left
+              flex items-center gap-4 p-3 px-6 rounded-lg w-full text-left cursor-pointer
               ${
                 selectedMenu === menu.route
                   ? "bg-[var(--primary-color)] text-white"
@@ -97,7 +97,7 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
       <div className="pt-6 border-t border-gray-200">
         <button
           className={`
-          flex items-center gap-4 p-3 text-gray-700 hover:bg-gray-100 rounded-lg w-full text-left
+          flex items-center gap-4 p-3 text-gray-700 hover:bg-gray-100 rounded-lg w-full text-left cursor-pointer
           ${!isOpen && "justify-center"}
         `}
         >
