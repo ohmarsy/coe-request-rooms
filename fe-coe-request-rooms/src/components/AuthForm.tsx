@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import Button from "./Button";
+import Button
+    from "./Button";
 interface AuthFormProps {
     buttonText: string;
-    linkTo:string;
+    linkTo: string;
     onSubmit: (firstname?: string, lastname?: string, email?: string, password?: string) => void;
     showDomainSelect?: boolean;
     showFirstNameLastName?: boolean;
@@ -11,7 +11,6 @@ interface AuthFormProps {
 
 const AuthForm: React.FC<AuthFormProps> = ({
     buttonText,
-    linkTo,
     onSubmit,
     showDomainSelect = false,
     showFirstNameLastName = false,
@@ -24,17 +23,20 @@ const AuthForm: React.FC<AuthFormProps> = ({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (showFirstNameLastName) {
-            onSubmit(firstname, lastname, email + domain, password);
-        } else {
-            onSubmit(undefined, undefined, email + domain, password);
-        }
+        const fullEmail = email.trim() + domain;
+        onSubmit(
+            showFirstNameLastName ? firstname.trim() : undefined,
+            showFirstNameLastName ? lastname.trim() : undefined,
+            fullEmail,
+            password
+        );
     };
 
     return (
-        <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto p-4">
+        <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto p-4 text-sm md:text-base">
+            {/* Firstname & Lastname */}
             {showFirstNameLastName && (
-                <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="flex flex-wrap -mx-3 mb-2 md:mb-6">
                     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
                         <label htmlFor="firstname" className="block mb-2">Firstname</label>
                         <input
@@ -60,12 +62,13 @@ const AuthForm: React.FC<AuthFormProps> = ({
                 </div>
             )}
 
-            <div className="flex flex-wrap -mx-3 mb-6">
-                <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+            {/* Email & Domain Select */}
+            <div className="flex flex-wrap -mx-3 mb-2 md:mb-6">
+                <div className="w-1/2 px-3 mb-2 md:mb-0">
                     <label htmlFor="email" className="block mb-2">Email Address</label>
                     <input
                         id="email"
-                        className="appearance-none w-full p-2 mb-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        className="w-full p-2 mb-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
                         type="text"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -74,28 +77,21 @@ const AuthForm: React.FC<AuthFormProps> = ({
                 </div>
 
                 {showDomainSelect && (
-                    <div className="w-full md:w-1/2 px-3">
+                    <div className="w-1/2 px-3 mb-2">
                         <label className="block mb-2 text-transparent">Domain</label>
-                        <div className="relative">
-                            <select
-                                className="block appearance-none cursor-pointer w-full border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                                id="grid-state"
-                                value={domain}
-                                onChange={(e) => setDomain(e.target.value)}
-                            >
-                                <option value="@kkumail.ac.th">@kkumail.ac.th</option>
-                                <option value="@kkumail.com">@kkumail.com</option>
-                            </select>
-                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                                </svg>
-                            </div>
-                        </div>
+                        <select
+                            className="block w-full border border-gray-300 p-2 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            value={domain}
+                            onChange={(e) => setDomain(e.target.value)}
+                        >
+                            <option value="@kkumail.ac.th">@kkumail.ac.th</option>
+                            <option value="@kkumail.com">@kkumail.com</option>
+                        </select>
                     </div>
                 )}
             </div>
 
+            {/* Password */}
             <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full px-3">
                     <label htmlFor="password" className="block mb-2">Password</label>
@@ -110,14 +106,11 @@ const AuthForm: React.FC<AuthFormProps> = ({
                 </div>
             </div>
 
-            <div className="w-full max-w-xl mx-auto">
-                <Link to={linkTo}>
-                    <Button typeButton="submit">
-                        {buttonText}
-                    </Button>
-                </Link>
+            {/* Submit Button */}
+            <Button typeButton="submit">
+                {buttonText}
+            </Button>
 
-            </div>
         </form>
     );
 };
