@@ -16,7 +16,7 @@ const WelcomePage = () => {
         <motion.div {...motionSettings} className="w-screen h-screen  bg-[var(--background-color)] flex flex-col items-center text-[var(--text-color)]">
             
             {/* Header */}
-            <h1 className="text-4xl md:text-6xl font-bold mb-8 mt-24 md:my-16">
+            <h1 className="text-4xl md:text-6xl font-bold mb-8 mt-32 md:my-16">
                 <span className="text-[var(--primary-color)]">CoE</span> Rooms
             </h1>
 
