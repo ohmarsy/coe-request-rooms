@@ -95,7 +95,7 @@ const ManageRoomPage = () => {
       <div className="flex-2/3 h-full p-2 pb-0">
         <div className="px-8 py-4 h-full bg-white shadow-sm rounded-2xl">
           {selectedRoom ? (
-            <p className="text-xl max-[1024px]:text-lg flex items-center gap-2">
+            <p className="text-xl max-[1024px]:text-lg flex items-center gap-2 min-w-[200px]">
               Room :
               <span
                 className={`${
