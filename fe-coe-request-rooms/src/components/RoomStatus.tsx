@@ -7,7 +7,7 @@ const RoomStatus = () => {
   };
   
   return (
-    <div className="flex flex-col items-center justify-center bg-white  shadow-sm rounded-2xl p-8 w-full max-w-md space-y-2">
+    <div className="flex flex-col items-center justify-center bg-white  shadow-sm rounded-2xl p-8 w-full max-w-md space-y-2 h-full">
       <p className={`text-lg font-medium ${status === "Available" ? "text-green-500" : "text-red-500"}`}>
         {status}
       </p>

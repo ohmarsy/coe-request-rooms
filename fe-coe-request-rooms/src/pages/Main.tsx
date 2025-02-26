@@ -30,7 +30,7 @@ const MainPage = () => {
       <div className="flex flex-col w-full">
         <Navbar name={selectedMenu} />
         <div
-          className="p-7 pb-0 flex-1 h-screen duration-300 fade-in"
+          className="p-7 py-0 flex-1 h-screen duration-300 fade-in"
           key={selectedMenu}
         >
           {renderComponent()}
