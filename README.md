@@ -1,15 +1,7 @@
 # start project
 
-`docker compose up -d` ไปเลย ง่ายๆ
-
-หรือรันทีละอัน
 backend
-
-```
-python3 auth-service/app.py
-python3 rooms-service/app.py
-python3 api-gateway/app.py
-```
+`docker compose up -d` ไปเลย ง่ายๆ
 
 then frontend
 
