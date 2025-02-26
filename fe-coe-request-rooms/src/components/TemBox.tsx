@@ -5,9 +5,9 @@ const TemperatureDisplay = () => {
   const [unit] = useState('C');
 
   return (
-    <div className="flex flex-col items-center justify-center bg-white  shadow-sm rounded-2xl p-8 w-full max-w-md">
+    <div className="flex flex-col items-center justify-center bg-white  shadow-sm rounded-2xl p-4 w-full max-w-md h-full">
       <div className="flex items-start">
-        <span className="text-8xl font-bold text-black">
+        <span className="text-6xl font-bold text-black">
           {temperature}
         </span>
         <span className="text-4xl font-bold text-gray-400 mt-2">

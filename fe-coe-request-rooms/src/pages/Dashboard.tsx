@@ -31,9 +31,9 @@ const DashboardPage = () => {
 
 
   return (
-    <div className="w-full h-full flex flex-col gap-3 p-2">
+    <div className="w-full h-full flex flex-col gap-3 p-2 pb-4">
       {/* Top Column */}
-      <div className="flex gap-3">
+      <div className="flex gap-3 flex-1">
         {/* AllRoom Left */}
         <div className="flex-1">
           <AllRoom rooms={rooms} handleClickRoom={handleClickRoom} />
@@ -52,8 +52,7 @@ const DashboardPage = () => {
       </div>
 
       {/* Bottom Row */}
-      {/* Bottom Row */}
-      <div className="flex gap-3">
+      <div className="flex gap-3 flex-1">
         {/* Date and Time Boxes + Temperature */}
         <div className="flex-1 flex flex-col gap-3 pb-0">
           <div className="flex gap-3 items-center justify-center max-[1024px]:flex-col">
