@@ -1,12 +1,13 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBars,
   faTableCells,
   faImage,
   faTableList,
   faDoorOpen,
   faRightFromBracket,
+  faChevronLeft,
+  faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 
 // Define the type for props
@@ -56,10 +57,10 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
         <button
           onClick={() => setIsOpen(!isOpen)}
           className={`duration-200 text-gray-600 cursor-pointer ${
-            isOpen ? "" : "pb-4"
+            isOpen ? "" : "pb-4" 
           }`}
         >
-          <FontAwesomeIcon icon={faBars} size="xl" />
+          <FontAwesomeIcon icon={isOpen ? faChevronLeft : faChevronRight} size="xl" /> 
         </button>
       </div>
 
