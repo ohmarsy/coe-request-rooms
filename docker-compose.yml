@@ -12,12 +12,12 @@ services:
     networks:
       - backend
 
-  dashboard-service:
-    build: ./dashboard-service
+  rooms-service:
+    build: ./rooms-service
     ports:
       - "5003:5003"
     volumes:
-      - ./dashboard-service:/app
+      - ./rooms-service:/app
     environment:
       - FLASK_APP=app.py
       - FLASK_RUN_HOST=0.0.0.0
@@ -37,7 +37,7 @@ services:
       - backend
     depends_on:
       - auth-service
-      - dashboard-service
+      - rooms-service
 
 networks:
   backend:

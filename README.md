@@ -7,7 +7,7 @@ backend
 
 ```
 python3 auth-service/app.py
-python3 dashboard-service/app.py
+python3 rooms-service/app.py
 python3 api-gateway/app.py
 ```
 
@@ -20,6 +20,6 @@ npm run dev
 
 # test
 
-http://localhost:5001/dashboard
+http://localhost:5001/rooms
 และ
 http://localhost:5001/auth

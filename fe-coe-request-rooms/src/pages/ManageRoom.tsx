@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AllRoom from "../components/AllRoom";
 import DateBox from "../components/DateBox";
 import TimeBox from "../components/TimeBox";
@@ -54,7 +54,7 @@ const ManageRoomPage = () => {
                 <Switch
                   leftname={"Request Rooms"}
                   rightname={"Request History"}
-                  onClick_left={()=>{}}
+                  onClick_left={() => {}}
                 />
               </div>
             </div>
