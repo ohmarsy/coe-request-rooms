@@ -8,12 +8,12 @@ interface SwitchProps {
 const Switch: React.FC<SwitchProps> = ({ leftname, rightname }) => {
     const [active, setActive] = useState<"leftfunc" | "rigthfunc">("leftfunc");
     return (
-        <div className='flex items-center justify-center p-4'>
+        <div className='flex  p-4'>
             <div
-                className='flex bg-[var(--background-color)] '>
+                className='flex bg-[var(--background-color)] rounded-full border-1 border-gray-200'>
                 <button
                     onClick={() => setActive("leftfunc")}
-                    className={`px-4 py-2 rounded-l-full transition ${active === "leftfunc"
+                    className={`px-4 py-2 rounded-l-full  transition ${active === "leftfunc"
                         ? "bg-[var(--primary-color)] text-white"
                         : "text-[var(--text-color)]"
                         }`}>
