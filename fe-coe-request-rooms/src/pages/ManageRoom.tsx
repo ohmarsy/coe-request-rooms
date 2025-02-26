@@ -23,6 +23,18 @@ const ManageRoomPage = () => {
     },
   ];
 
+  const [activeComponent, setActiveComponent] = React.useState<
+    "RequestRooms" | "RequestHistory"
+  >("RequestRooms");
+  const handleLeft = () => {
+    setActiveComponent("RequestRooms");
+    console.log("left");
+  };
+  const handleRight = () => {
+    setActiveComponent("RequestHistory");
+    console.log("right");
+  };
+
   return (
     <div className="w-full h-full flex">
       <div className="flex flex-col flex-1/3 h-full gap-3 p-2 pb-0">
@@ -50,12 +62,18 @@ const ManageRoomPage = () => {
                   {selectedRoom ?? " "}
                 </span>
               </p>
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center flex-col">
                 <Switch
                   leftname={"Request Rooms"}
                   rightname={"Request History"}
-                  onClick_left={() => {}}
+                  onClick_left={handleLeft}
+                  onClick_right={handleRight}
                 />
+                {activeComponent === "RequestRooms" ? (
+                  <div className="flex">RequestRooms</div>
+                ) : (
+                  <div className="flex">RequestHistory</div>
+                )}
               </div>
             </div>
           ) : (
