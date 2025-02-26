@@ -6,6 +6,16 @@ interface NavbarProps {
   name: string;
 }
 const Navbar: React.FC<NavbarProps> = ({ name }) => {
+  if (name === "dashboard") {
+    name = "Dashboard";
+  } else if (name === "image-analyse") {
+    name = "Image Analyse";
+  } else if (name === "report-table") {
+    name = "Report Table";
+  } else if (name === "manage-room") {
+    name = "Manage Room";
+  }
+
   return (
     <nav className="bg-[var(--primary-color)] h-[80px] w-full">
       <div className="mx-auto px-2 sm:px-6 lg:px-8 flex items-center justify-between h-full">
