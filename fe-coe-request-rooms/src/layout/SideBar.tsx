@@ -6,8 +6,8 @@ import {
   faTableList,
   faDoorOpen,
   faRightFromBracket,
-  faChevronLeft,
-  faChevronRight,
+  faChevronCircleLeft,
+  faChevronCircleRight,
 } from "@fortawesome/free-solid-svg-icons";
 
 // Define the type for props
@@ -41,7 +41,7 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
         <div className="flex gap-2 items-center justify-center">
           <img
             src="./src/assets/LogoCoE.png"
-            className={`duration-100 ${isOpen ? "w-14" : "w-12"}`}
+            className={`duration-100 ${isOpen ? "w-14" : "w-0"}`}
           />
           <div
             className={`flex items-end gap-2 ${isOpen ? "block" : "hidden"}`}
@@ -56,11 +56,11 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
         </div>
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className={`duration-200 text-gray-600 cursor-pointer ${
-            isOpen ? "" : "pb-4" 
+          className={`duration-100 text-[var(--primary-color)] cursor-pointer ${
+            isOpen ? "" : "" 
           }`}
         >
-          <FontAwesomeIcon icon={isOpen ? faChevronLeft : faChevronRight} size="xl" /> 
+          <FontAwesomeIcon icon={isOpen ? faChevronCircleLeft : faChevronCircleRight} size="xl" /> 
         </button>
       </div>
 
@@ -75,7 +75,7 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
               ${
                 selectedMenu === menu.route
                   ? "bg-[var(--primary-color)] text-white"
-                  : "text-gray-700 hover:bg-gray-100"
+                  : "text-[var(--text-color)] hover:bg-gray-100"
               }
               ${!isOpen && "justify-center"}
             `}
@@ -98,7 +98,7 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
       <div className="pt-6 border-t border-gray-200">
         <button
           className={`
-          flex items-center gap-4 p-3 text-gray-700 hover:bg-gray-100 rounded-lg w-full text-left cursor-pointer
+          flex items-center gap-4 p-3 text-[var(--text-color)] hover:bg-gray-100 rounded-lg w-full text-left cursor-pointer
           ${!isOpen && "justify-center"}
         `}
         >
