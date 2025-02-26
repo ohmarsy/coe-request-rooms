@@ -10,12 +10,6 @@ const ManageRoomPage = () => {
     setSelectedRoom(name);
   };
 
-  const [dateTime, setDateTime] = useState({
-    date: "",
-    hour: "",
-    minute: "",
-  });
-
   const rooms = [
     {
       name: "EN4204",
@@ -28,35 +22,12 @@ const ManageRoomPage = () => {
     },
   ];
 
-  useEffect(() => {
-    const updateDateTime = () => {
-      const now = new Date();
-
-      setDateTime({
-        date: now.toLocaleDateString("en-GB", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-        }),
-        hour: now.getHours().toString().padStart(2, "0"),
-        minute: now.getMinutes().toString().padStart(2, "0"),
-      });
-    };
-
-    updateDateTime();
-    const interval = setInterval(() => {
-      updateDateTime();
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div className="w-full h-full flex">
       <div className="flex flex-col flex-1/3 h-full gap-3 p-2 pb-0">
         <div className="w-full flex gap-3 items-center justify-center max-[1024px]:flex-col">
           <DateBox />
-          <TimeBox hour={dateTime.hour} minute={dateTime.minute} />
+          <TimeBox />
         </div>
         <AllRoom rooms={rooms} handleClickRoom={handleClickRoom} />
       </div>
