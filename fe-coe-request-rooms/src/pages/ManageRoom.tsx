@@ -55,7 +55,7 @@ const ManageRoomPage = () => {
     <div className="w-full h-full flex">
       <div className="flex flex-col flex-1/3 h-full gap-3 p-2 pb-0">
         <div className="w-full flex gap-3 items-center justify-center max-[1024px]:flex-col">
-          <DateBox date={dateTime.date} />
+          <DateBox />
           <TimeBox hour={dateTime.hour} minute={dateTime.minute} />
         </div>
         <AllRoom rooms={rooms} handleClickRoom={handleClickRoom} />
