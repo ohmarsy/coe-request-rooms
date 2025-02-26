@@ -4,6 +4,7 @@ import ManageRoomPage from "./ManageRoom";
 import DashboardPage from "./Dashboard";
 import ImageAnalysePage from "./ImageAnalyse";
 import ReportTablePage from "./ReportTable";
+import Navbar from "../layout/Navbar";
 
 const MainPage = () => {
   const [selectedMenu, setSelectedMenu] = useState("dashboard");
@@ -26,11 +27,14 @@ const MainPage = () => {
   return (
     <div className="flex bg-[var(--background-color)]">
       <SideBar setSelectedMenu={setSelectedMenu} selectedMenu={selectedMenu} />
-      <div
-        className="p-7 text-2xl font-bold flex-1 h-screen duration-300 fade-in"
-        key={selectedMenu}
-      >
-        {renderComponent()}
+      <div className="flex flex-col w-full">
+        <Navbar />
+        <div
+          className="p-7 text-2xl font-bold flex-1 h-screen duration-300 fade-in"
+          key={selectedMenu}
+        >
+          {renderComponent()}
+        </div>
       </div>
     </div>
   );
