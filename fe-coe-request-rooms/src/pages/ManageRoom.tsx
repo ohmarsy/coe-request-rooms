@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 
 const ManageRoomPage = () => {
+  const [selectedRoom, setSelectedRoom] = useState("");
+
+  const handleClickRoom = (name: string) => {
+    setSelectedRoom(name);
+  };
+
   const [dateTime, setDateTime] = useState({
     date: "",
     hour: "",
@@ -47,14 +53,16 @@ const ManageRoomPage = () => {
 
   return (
     <div className="w-full h-full flex">
-      <div className="flex flex-col flex-1/3 h-full gap-3 p-2">
-        <div className="w-full flex gap-3 items-center justify-center">
-          <div className="flex-2 bg-white h-[120px] flex flex-col items-center justify-center gap-2 shadow-sm rounded-2xl">
-            <p className="text-3xl">{dateTime.date}</p>
+      <div className="flex flex-col flex-1/3 h-full gap-3 p-2 pb-0">
+        <div className="w-full flex gap-3 items-center justify-center max-[1024px]:flex-col">
+          <div className="flex-2 bg-white h-[120px] flex flex-col items-center justify-center gap-2 shadow-sm rounded-2xl max-[1024px]:w-full max-[1024px]:py-3">
+            <p className="text-2xl font-medium max-[1240px]:text-xl max-[1080px]:text-lg">
+              {dateTime.date}
+            </p>
             <p className="text-[#7d7d7d] font-medium text-base">Date</p>
           </div>
-          <div className="flex-1 bg-white h-[120px] flex flex-col items-center justify-center gap-2 shadow-sm rounded-2xl">
-            <div className="text-3xl">
+          <div className="flex-1 bg-white h-[120px] flex flex-col items-center justify-center gap-2 shadow-sm rounded-2xl max-[1024px]:w-full max-[1024px]:py-3">
+            <div className="text-2xl font-medium max-[1240px]:text-xl max-[1080px]:text-lg">
               {dateTime.hour}
               <span className={`${blink ? "opacity-100" : "opacity-0"}`}>
                 {" "}
@@ -67,14 +75,15 @@ const ManageRoomPage = () => {
         </div>
         <div className="w-full h-full bg-white shadow-sm rounded-2xl flex flex-col">
           <div className="flex flex-col">
-            <p className="text-2xl px-8 py-4 border-b border-b-gray-200">
+            <p className="text-xl px-8 py-4 border-b border-b-gray-200 max-[1024px]:text-lg">
               All rooms
             </p>
             <div className="px-4 py-4 text-lg flex flex-col gap-2 max-h-[67vh] overflow-scroll scrollbar-hidden">
               {rooms.map((room, index) => (
                 <p
-                  className="bg-gray-100 hover:bg-[var(--primary-color)] hover:text-white duration-100 rounded-2xl w-full px-6 py-3 font-medium cursor-pointer"
+                  className="bg-gray-100 hover:bg-[var(--primary-color)] hover:text-white duration-100 rounded-lg w-full px-6 py-2 font-medium cursor-pointer"
                   key={index}
+                  onClick={() => handleClickRoom(room.name)}
                 >
                   {room.name}
                 </p>
@@ -83,8 +92,25 @@ const ManageRoomPage = () => {
           </div>
         </div>
       </div>
-      <div className="flex-2/3 h-full p-2">
-        <div className="p-2 h-full bg-white shadow-sm rounded-2xl"></div>
+      <div className="flex-2/3 h-full p-2 pb-0">
+        <div className="px-8 py-4 h-full bg-white shadow-sm rounded-2xl">
+          {selectedRoom ? (
+            <p className="text-xl max-[1024px]:text-lg flex items-center gap-2">
+              Room :
+              <span
+                className={`${
+                  selectedRoom ? "bg-gray-100" : ""
+                } px-3 py-1 text-lg rounded-md`}
+              >
+                {selectedRoom ?? " "}
+              </span>
+            </p>
+          ) : (
+            <div className="w-full h-full flex justify-center items-center">
+              <p className="text-center">Please select the room</p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
