@@ -13,7 +13,7 @@ const Switch: React.FC<SwitchProps> = ({ leftname, rightname }) => {
                 className='flex bg-[var(--background-color)] rounded-full border-1 border-gray-200'>
                 <button
                     onClick={() => setActive("leftfunc")}
-                    className={`px-4 py-2 rounded-l-full text-sm transition ${active === "leftfunc"
+                    className={`px-4 py-2 rounded-l-full text-base transition ${active === "leftfunc"
                         ? "bg-[var(--primary-color)] text-white"
                         : "text-[var(--text-color)] cursor-pointer" 
                         }`}>
@@ -21,7 +21,7 @@ const Switch: React.FC<SwitchProps> = ({ leftname, rightname }) => {
                 </button>
                 <button
                     onClick={() => setActive("rigthfunc")}
-                    className={`px-4 py-2 rounded-r-full text-sm  transition ${active === "rigthfunc"
+                    className={`px-4 py-2 rounded-r-full text-base  transition ${active === "rigthfunc"
                         ? "bg-[var(--primary-color)] text-white"
                         : "text-[var(--text-color)] cursor-pointer"
                         }`}>

@@ -3,12 +3,17 @@ import React from "react";
 interface AllRoomProps {
   rooms: RoomProps[];
   handleClickRoom: (roomName: string) => void;
+  selectedRoom?: string;
 }
 
 interface RoomProps {
   name: string;
 }
-const AllRoom: React.FC<AllRoomProps> = ({ rooms, handleClickRoom }) => {
+const AllRoom: React.FC<AllRoomProps> = ({
+  rooms,
+  handleClickRoom,
+  selectedRoom,
+}) => {
   return (
     <div className="w-full h-full bg-white shadow-sm rounded-2xl flex flex-col">
       <div className="flex flex-col">
@@ -18,7 +23,9 @@ const AllRoom: React.FC<AllRoomProps> = ({ rooms, handleClickRoom }) => {
         <div className="px-4 py-4 text-lg flex flex-col gap-2 max-h-[67vh] overflow-scroll scrollbar-hidden">
           {rooms.map((room, index) => (
             <p
-              className="bg-gray-100 hover:bg-[var(--primary-color)] hover:text-white duration-100 rounded-lg w-full px-6 py-2 font-medium cursor-pointer"
+              className={`duration-100 rounded-lg w-full px-6 py-2 font-medium cursor-pointer ${
+                selectedRoom === room.name ? "hover:bg-[#2366d2] text-white bg-[var(--primary-color)]" : "bg-gray-100 hover:bg-gray-300 "
+              }`}
               key={index}
               onClick={() => handleClickRoom(room.name)}
             >

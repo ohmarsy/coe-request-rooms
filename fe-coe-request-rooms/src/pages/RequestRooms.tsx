@@ -2,7 +2,7 @@ import React from 'react'
 import Navbar from '../layout/Navbar'
 import Switch from '../components/Switch'
 
-const RequestRooms = () => {
+const RequestRoomsPage = () => {
     return (
         <div>
             <Navbar name={'Request rooms'} />
@@ -22,4 +22,4 @@ const RequestRooms = () => {
     )
 }
 
-export default RequestRooms
+export default RequestRoomsPage
