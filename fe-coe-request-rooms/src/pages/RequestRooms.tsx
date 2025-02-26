@@ -20,7 +20,7 @@ const RequestRooms = () => {
             <div className='flex flex-col items-center justify-center space-y-8 mt-8'>
                 <Switch leftname={'Request Rooms'} rightname={'Request History'} onClick_left={handleLeft} onClick_right={handleRight} />
                 <h1 className='text-xl font-medium'>{activeComponent === 'RequestRoom' ? 'Request to join rooms' : 'Request History'}</h1>
-                <div className='flex flex-row w-full px-8 space-x-8'>
+                {activeComponent === 'RequestRoom' ? (<div className='flex flex-row w-full px-8 space-x-8'>
                     <div className='flex-1 flex flex-col'>
                         <p className='text-center text-lg font-medium'>Room can join</p>
                         <div className='flex flex-col space-y-4'>
@@ -30,6 +30,11 @@ const RequestRooms = () => {
 
                     </div>
                 </div>
+                ) : (
+                    <div>
+                        kuy
+                    </div>
+                )}
             </div>
         </div>
     )
