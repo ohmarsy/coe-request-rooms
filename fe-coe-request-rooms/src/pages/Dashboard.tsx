@@ -33,29 +33,29 @@ const DashboardPage = () => {
   return (
     <div className="w-full h-full flex flex-col gap-3">
       {/* Top Column */}
-      <div className="flex gap-3 flex-1">
+      <div className="flex flex-col lg:flex-row gap-3 flex-1">
         {/* AllRoom Left */}
-        <div className="flex-1">
+        <div className="w-full lg:flex-1">
           <AllRoom rooms={rooms} handleClickRoom={handleClickRoom} />
         </div>
 
         {/* Image Middle */}
-        <div className="flex-1">
+        <div className="w-full lg:flex-1 lg:mt-0">
           <Image />
         </div>
 
         {/* Status/Quantity Right */}
-        <div className="flex-1 flex flex-col gap-3">
+        <div className="w-full lg:flex-1 flex flex-col gap-3 lg:mt-0">
           <RoomStatus />
           <Quantity />
         </div>
       </div>
 
       {/* Bottom Row */}
-      <div className="flex gap-3 flex-1">
+      <div className="flex flex-col xl:flex-row gap-3 flex-1">
         {/* Date and Time Boxes + Temperature */}
-        <div className="flex-1 flex flex-col gap-3 pb-0">
-          <div className="flex gap-3 items-center justify-center max-[1024px]:flex-col">
+        <div className="w-full xl:flex-1 flex flex-col gap-3 pb-0">
+          <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">
             <DateBox />
             <TimeBox />
           </div>
@@ -63,10 +63,11 @@ const DashboardPage = () => {
         </div>
 
         {/* Report Table */}
-        <div className="flex-2">
+        <div className="w-full xl:flex-2 ">
           <ReportTable />
         </div>
       </div>
+
 
     </div>
 
