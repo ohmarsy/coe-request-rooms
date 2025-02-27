@@ -10,7 +10,7 @@ interface CardProps {
 const Card: React.FC<CardProps> = ({ image, name, email }) => {
     return (
        
-        <div className='w-80 h-100 bg-white flex flex-col rounded-2xl shadow-lg overflow-hidden'>
+        <div className=' bg-white flex flex-col rounded-2xl shadow-lg overflow-hidden md:w-full md:max-w-xs h-full md:max-h-xs'>
             <div className=' h-3/5'>
                 <img
                     className='h-full w-full object-cover'
@@ -20,8 +20,8 @@ const Card: React.FC<CardProps> = ({ image, name, email }) => {
 
             </div>
             <div className=' h-2/5 flex flex-col justify-center items-center'>
-            <h2 className="text-base font-bold text-gray-600">Name : {name}</h2> 
-               <p className="text-base text-gray-600 mt-2">Email : {email}</p> 
+            <h2 className="mx-auto text-sm sm:text-base font-bold text-gray-600">Name : {name}</h2> 
+               <p className="mx-auto text-sm text-clip text-gray-600 mt-2">Email : {email}</p> 
             </div>
 
         </div>
