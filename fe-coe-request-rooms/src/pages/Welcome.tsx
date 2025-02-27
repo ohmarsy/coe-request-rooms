@@ -37,7 +37,7 @@ const WelcomePage = () => {
             <img className="mt-16" src={ImgWelcome} alt="Illustration of welcoming users to CoE Rooms" />
 
             {/* Footer */}
-            <footer className="mt-16 text-center text-[#140B0C] opacity-40">
+            <footer className="mt-32 text-center text-[#140B0C] opacity-40">
                 <p>Developed by</p>
                 <p className="font-semibold">BOSS OHM LEE EARTH ICE</p>
             </footer>
