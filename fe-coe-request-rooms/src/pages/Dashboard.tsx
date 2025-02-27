@@ -31,7 +31,7 @@ const DashboardPage = () => {
 
 
   return (
-    <div className="w-full h-full flex flex-col gap-3 p-2 py-4">
+    <div className="w-full h-full flex flex-col gap-3">
       {/* Top Column */}
       <div className="flex gap-3 flex-1">
         {/* AllRoom Left */}

@@ -22,7 +22,7 @@ const ReportTable = () => {
   ];
 
   return (
-    <div className="bg-white shadow-sm rounded-2xl p-8 h-full">
+    <div className="bg-white shadow-sm rounded-2xl p-8 h-full w-full ">
       <h2 className="text-lg font-medium mb-4">Report table</h2>
       
       <div className="overflow-x-auto">

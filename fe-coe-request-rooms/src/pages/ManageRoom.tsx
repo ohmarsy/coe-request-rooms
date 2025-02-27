@@ -36,8 +36,8 @@ const ManageRoomPage = () => {
   };
 
   return (
-    <div className="w-full h-full flex">
-      <div className="flex flex-col flex-1/3 h-full gap-3 p-2 py-4">
+    <div className="w-full h-full flex gap-3">
+      <div className="flex flex-col flex-1/3 h-full gap-3">
         <div className="w-full flex gap-3 items-center justify-center max-[1024px]:flex-col">
           <DateBox />
           <TimeBox />
@@ -48,7 +48,7 @@ const ManageRoomPage = () => {
           selectedRoom={selectedRoom}
         />
       </div>
-      <div className="flex-2/3 h-full p-2 py-4">
+      <div className="flex-2/3 h-full">
         <div className="h-full bg-white shadow-sm rounded-2xl text-[var(--text-color)]">
           {selectedRoom ? (
             <div className="flex flex-col">
