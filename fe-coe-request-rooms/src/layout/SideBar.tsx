@@ -30,7 +30,7 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
     <div
       className={`${
         isOpen ? "w-74 p-8" : "w-20 p-2 py-8"
-      } duration-300 h-screen bg-white shadow-md  flex flex-col`}
+      } duration-300 bg-white shadow-md flex flex-col h-[100vh]`}
     >
       {/* Header */}
       <div
