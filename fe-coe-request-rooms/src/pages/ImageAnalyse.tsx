@@ -48,7 +48,7 @@ const ImageAnalysePage = () => {
 
       />
       {activeComponent === "Human face" ? (
-        <div className='mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center'>
+        <div className='text-pretty grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center'>
 
           {profiles.map((profile, index) => <Card
             key={index}
@@ -68,11 +68,11 @@ const ImageAnalysePage = () => {
 
           {profiles.map((profile) =>
             <div>
-              <img src={profile.image} alt="" className='object-cover rounded-lg' />
+              <img src={profile.image} alt="" className='object-cover rounded-2xl' />
             </div>)}
             {profiles.map((profile) =>
             <div className=''>
-              <img src={profile.image} alt="" className='object-cover rounded-lg' />
+              <img src={profile.image} alt="" className='object-cover rounded-2xl' />
             </div>)}
 
         </div>
