@@ -3,6 +3,7 @@ import AllRoom from "../components/AllRoom";
 import DateBox from "../components/DateBox";
 import TimeBox from "../components/TimeBox";
 import Switch from "../components/Switch";
+import { useEffect } from "react";
 
 const ManageRoomPage = () => {
   const [selectedRoom, setSelectedRoom] = useState("");
@@ -26,6 +27,9 @@ const ManageRoomPage = () => {
   const [activeComponent, setActiveComponent] = React.useState<
     "RequestRooms" | "RequestHistory"
   >("RequestRooms");
+
+  const [animate, setAnimate] = useState(false);
+
   const handleLeft = () => {
     setActiveComponent("RequestRooms");
     console.log("left");
@@ -34,6 +38,18 @@ const ManageRoomPage = () => {
     setActiveComponent("RequestHistory");
     console.log("right");
   };
+
+  useEffect(() => {
+    if (selectedRoom) {
+      setAnimate(false); 
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setAnimate(true); 
+        });
+      });
+    }
+  }, [selectedRoom]);
 
   return (
     <div className="w-full h-full flex gap-3">
@@ -49,7 +65,11 @@ const ManageRoomPage = () => {
         />
       </div>
       <div className="flex-2/3 h-full">
-        <div className="h-full bg-white shadow-sm rounded-2xl text-[var(--text-color)]">
+        <div
+          className={`h-full bg-white shadow-sm rounded-2xl text-[var(--text-color)] duration-300 ${
+            animate ? "fade-in" : ""
+          }`}
+        >
           {selectedRoom ? (
             <div className="flex flex-col">
               <p className="text-xl font-medium max-[1024px]:text-lg flex items-center gap-2 min-w-[200px] px-8 py-4 border-b border-b-gray-200">
