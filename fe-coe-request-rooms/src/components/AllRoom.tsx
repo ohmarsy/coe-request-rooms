@@ -17,14 +17,14 @@ const AllRoom: React.FC<AllRoomProps> = ({
   maxRooms,
 }) => {
   return (
-    <div className={`w-full bg-white shadow-sm rounded-2xl flex flex-col`}>
+    <div className={`w-full bg-white shadow-sm rounded-2xl flex flex-col h-full`}>
       <div className="flex flex-col">
         <p className="text-xl px-8 py-4 border-b border-b-gray-200 max-[1024px]:text-lg">
           All rooms
         </p>
         <div
           className={`px-4 py-4 text-lg flex flex-col gap-2 overflow-scroll scrollbar-hidden`}
-          style={{ maxHeight: maxRooms ? `${maxRooms * 56}px` : "auto" }}
+          style={{ maxHeight: maxRooms ? `${maxRooms * 7.75}vh` : "auto" }}
         >
           {rooms.map((room, index) => (
             <p
