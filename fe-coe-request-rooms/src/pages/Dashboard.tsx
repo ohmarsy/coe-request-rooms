@@ -27,6 +27,12 @@ const DashboardPage = () => {
     {
       name: "EN4202",
     },
+    {
+      name: "EN4202",
+    },
+    {
+      name: "EN4202",
+    },
   ];
 
 
@@ -36,7 +42,7 @@ const DashboardPage = () => {
       <div className="flex flex-col lg:flex-row gap-3 flex-1">
         {/* AllRoom Left */}
         <div className="w-full lg:flex-1">
-          <AllRoom rooms={rooms} handleClickRoom={handleClickRoom} />
+          <AllRoom rooms={rooms} handleClickRoom={handleClickRoom} maxRooms={4} />
         </div>
 
         {/* Image Middle */}

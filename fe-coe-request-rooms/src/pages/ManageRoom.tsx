@@ -20,7 +20,25 @@ const ManageRoomPage = () => {
       name: "EN4203",
     },
     {
-      name: "EN4202",
+      name: "EN4201",
+    },
+    {
+      name: "EN4301",
+    },
+    {
+      name: "EN4302",
+    },
+    {
+      name: "EN4303",
+    },
+    {
+      name: "EN4402",
+    },
+    {
+      name: "EN4403",
+    },
+    {
+      name: "EN4405",
     },
   ];
 
@@ -62,6 +80,7 @@ const ManageRoomPage = () => {
           rooms={rooms}
           handleClickRoom={handleClickRoom}
           selectedRoom={selectedRoom}
+          maxRooms={7}
         />
       </div>
       <div className="flex-2/3 h-full">
