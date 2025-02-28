@@ -20,7 +20,7 @@ const ReportTablePage: React.FC = () => {
   return (
     <div className="">
       <h1 className="text-xl font-bold mb-4">Room Status Table</h1>
-      <Table columns={columns} data={data} />
+      <Table columns={columns} data={data} maxRows={10} />
     </div>
   );
 };

@@ -12,11 +12,12 @@ interface RowData {
 interface TableProps {
   columns: Column[];
   data: RowData[];
+  maxRows: number;
 }
 
-const Table: React.FC<TableProps> = ({ columns, data }) => {
+const Table: React.FC<TableProps> = ({ columns, data, maxRows }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const rowsPerPage = 3;
+  const rowsPerPage = maxRows;
 
   const totalPages = Math.ceil(data.length / rowsPerPage);
   const visibleData = data.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
@@ -41,7 +42,7 @@ const Table: React.FC<TableProps> = ({ columns, data }) => {
                 key={rowIndex}
               >
                 {columns.map((col, colIndex) => (
-                  <td key={colIndex} className="px-4 py-3">
+                  <td key={colIndex} className="px-4 py-2">
                     {col.accessor === "information" ? (
                       <a href="#">
                         {row[col.accessor]}
