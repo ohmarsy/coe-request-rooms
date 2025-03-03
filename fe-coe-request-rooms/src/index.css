@@ -6,7 +6,9 @@
   --secondary-color: #2a7be4;
   --background-color: #fafcfe;
   --text-color: #140b0c;
+  --border-color: #DDDDDD;
 }
+
 * {
   font-family: "Comfortaa", serif;
   font-weight: 400;
