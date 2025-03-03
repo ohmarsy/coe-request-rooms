@@ -30,8 +30,6 @@ def add_auth_user():
     
     except requests.exceptions.RequestException as e:
         return jsonify({"error": "Auth service failed to add user", "details": str(e)}), 500
-    
-
 
 @app.route('/rooms/', methods=['GET'])
 def rooms():
@@ -49,5 +47,19 @@ def rooms():
     except requests.exceptions.RequestException as e:
         return jsonify({"error": "Rooms service is unavailable", "details": str(e)}), 500
 
+@app.route('/rooms/add-room', methods=['POST'])
+def add_room():
+    try:
+        room_data = request.get_json()
+        
+        response = requests.post(f"{ROOMS_SERVICE_URL}/add-room", json=room_data)
+
+        print("Room service response:", response.text)
+
+        return jsonify(response.json()), response.status_code
+    
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": "Room service failed to add room", "details": str(e)}), 500
+    
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)
