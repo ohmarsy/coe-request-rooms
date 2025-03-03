@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, request, jsonify
 import requests
 
 app = Flask(__name__)
@@ -11,12 +11,27 @@ def hello():
     return "Hello API!"
 
 @app.route('/auth/', methods=['GET'])
-def auth():
+def auth_status():
     try:
         response = requests.get(f"{AUTH_SERVICE_URL}/")
         return jsonify(response.json()), response.status_code
     except requests.exceptions.RequestException as e:
         return jsonify({"error": "Auth service is unavailable", "details": str(e)}), 500
+@app.route('/auth/add-user', methods=['POST'])
+def add_auth_user():
+    try:
+        user_data = request.get_json()
+        
+        response = requests.post(f"{AUTH_SERVICE_URL}/add-user", json=user_data)
+
+        print("Auth service response:", response.text)
+
+        return jsonify(response.json()), response.status_code
+    
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": "Auth service failed to add user", "details": str(e)}), 500
+    
+
 
 @app.route('/rooms/', methods=['GET'])
 def rooms():

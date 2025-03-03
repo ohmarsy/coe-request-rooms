@@ -15,3 +15,10 @@ npm run dev
 http://localhost:5001/rooms
 และ
 http://localhost:5001/auth
+
+# run this to use flask db
+```
+python3 -m flask db init
+python3 -m flask db migrate -m "Initial migration"
+python3 -m flask db upgrade
+```

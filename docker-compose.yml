@@ -1,5 +1,19 @@
 version: '3.8'
 services:
+  db:
+    image: postgres:15
+    container_name: db
+    restart: always
+    env_file: .env
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      
   auth-service:
     build: ./auth-service
     ports:
@@ -9,6 +23,8 @@ services:
     environment:
       - FLASK_APP=app.py
       - FLASK_RUN_HOST=0.0.0.0
+    depends_on:
+      - db
     networks:
       - backend
 
@@ -38,6 +54,9 @@ services:
     depends_on:
       - auth-service
       - rooms-service
+
+volumes:
+  postgres_data:
 
 networks:
   backend:
