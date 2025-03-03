@@ -6,9 +6,10 @@ services:
     restart: always
     env_file: .env
     environment:
-      POSTGRES_USER: "${POSTGRES_USER_AUTH}"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD_AUTH}"
-      POSTGRES_DB: "${POSTGRES_DB_AUTH}"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: authdb
+      DATABASE_URL: "postgresql://postgres:password@host.docker.internal:5432/authdb"
     ports:
       - "5432:5432"
     volumes:
@@ -20,9 +21,10 @@ services:
     restart: always
     env_file: .env
     environment:
-      POSTGRES_USER: "${POSTGRES_USER_ROOM}"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD_ROOM}"
-      POSTGRES_DB: "${POSTGRES_DB_ROOM}"
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: roomdb
+      DATABASE_URL: "postgresql://postgres:password@host.docker.internal:5433/roomdb"
     ports:
       - "5433:5432"
     volumes:
