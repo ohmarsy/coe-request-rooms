@@ -10,6 +10,7 @@ ROOMS_SERVICE_URL = "http://rooms-service:5003"
 def hello():
     return "Hello API!"
 
+# ================== auth service ================== 
 @app.route('/auth/', methods=['GET'])
 def auth_status():
     try:
@@ -17,7 +18,7 @@ def auth_status():
         return jsonify(response.json()), response.status_code
     except requests.exceptions.RequestException as e:
         return jsonify({"error": "Auth service is unavailable", "details": str(e)}), 500
-@app.route('/auth/add-user', methods=['POST'])
+@app.route('/auth/add-user/', methods=['POST'])
 def add_auth_user():
     try:
         user_data = request.get_json()
@@ -31,6 +32,7 @@ def add_auth_user():
     except requests.exceptions.RequestException as e:
         return jsonify({"error": "Auth service failed to add user", "details": str(e)}), 500
 
+# ================== rooms service ==================
 @app.route('/rooms/', methods=['GET'])
 def rooms():
     try:
@@ -47,7 +49,7 @@ def rooms():
     except requests.exceptions.RequestException as e:
         return jsonify({"error": "Rooms service is unavailable", "details": str(e)}), 500
 
-@app.route('/rooms/add-room', methods=['POST'])
+@app.route('/rooms/add-room/', methods=['POST'])
 def add_room():
     try:
         room_data = request.get_json()
