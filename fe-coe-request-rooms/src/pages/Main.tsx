@@ -8,6 +8,7 @@ import Navbar from "../layout/Navbar";
 
 const MainPage = () => {
   const [selectedMenu, setSelectedMenu] = useState("dashboard");
+  const [isOpen, setIsOpen] = useState(false);
 
   const renderComponent = () => {
     switch (selectedMenu) {
@@ -26,11 +27,18 @@ const MainPage = () => {
 
   return (
     <div className="flex bg-[var(--background-color)]">
-      <SideBar setSelectedMenu={setSelectedMenu} selectedMenu={selectedMenu} />
+      <SideBar
+        setSelectedMenu={setSelectedMenu}
+        selectedMenu={selectedMenu}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+      />
       <div className="flex flex-col w-full">
-        <Navbar name={selectedMenu} />
+        <Navbar name={selectedMenu} isOpen={isOpen}/>
         <div
-          className="px-4 py-4 flex-1 h-screen duration-300 fade-in overflow-hidden"
+          className={`px-4 py-4 flex-1 h-screen duration-300 fade-in overflow-hidden ${
+            isOpen ? "ml-[296px]" : "ml-[80px]"
+          }`}
           key={selectedMenu}
         >
           {renderComponent()}

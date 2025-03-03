@@ -14,10 +14,11 @@ import {
 interface SideBarProps {
   selectedMenu: string;
   setSelectedMenu: (menu: string) => void;
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
 }
 
-const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
-  const [isOpen, setIsOpen] = React.useState(true);
+const SideBar = ({ setSelectedMenu, selectedMenu, isOpen, setIsOpen }: SideBarProps) => {
 
   const menuItems = [
     { title: "Dashboard", icon: faTableCells, route: "dashboard" },
@@ -30,7 +31,7 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
     <div
       className={`${
         isOpen ? "w-74 p-8" : "w-20 p-2 py-8"
-      } duration-300 bg-white shadow-md flex flex-col h-[100vh]`}
+      } duration-300 bg-white shadow-md flex flex-col fixed z-[999] top-0 bottom-0`}
     >
       {/* Header */}
       <div
