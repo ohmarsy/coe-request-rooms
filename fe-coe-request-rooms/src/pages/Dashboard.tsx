@@ -51,13 +51,8 @@ const DashboardPage = () => {
       {/* Top Column */}
       <div className="flex flex-col lg:flex-row gap-3 flex-1">
         {/* AllRoom Left */}
-<<<<<<< Updated upstream
-        <div className="w-full lg:flex-2">
-          <AllRoom rooms={rooms} handleClickRoom={handleClickRoom} maxRooms={4.5} />
-=======
         <div className="w-full lg:flex-1">
           <AllRoom rooms={rooms} handleClickRoom={handleClickRoom} maxRooms={4} />
->>>>>>> Stashed changes
         </div>
 
         {/* Image Middle */}
