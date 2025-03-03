@@ -3,6 +3,7 @@ import Navbar from '../layout/Navbar'
 import Switch from '../components/Switch'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import Table from '../components/Table';
 
 
 
@@ -40,9 +41,27 @@ const RequestRooms = () => {
     const handleSubmit = (values: typeof initialValues) => {
         console.log('Form values:', values)
     }
+    const columns = [
+        { header: 'Room ID', accessor: 'roomID', title: 'Room ID', dataIndex: 'roomID', key: 'roomID' },
+        { header: 'Date', accessor: 'date', title: 'Date', dataIndex: 'date', key: 'date' },
+        { header: 'Check in', accessor: 'checkin', title: 'Check in', dataIndex: 'checkin', key: 'checkin' },
+        { header: 'Check out', accessor: 'checkout', title: 'Check out', dataIndex: 'checkout', key: 'checkout' },
+        { header: 'Status', accessor: 'status', title: 'Status', dataIndex: 'status', key: 'status' },
+    ]
+
+    const data = [
+        { key: '1', roomID: 'EN4101', date: '2025-03-01', checkin: '08:00', checkout: '10:00', status: 'Approved' },
+        { key: '2', roomID: 'EN4102', date: '2025-03-02', checkin: '09:00', checkout: '11:00', status: 'Pending' },
+        { key: '3', roomID: 'EN4103', date: '2025-03-03', checkin: '10:00', checkout: '12:00', status: 'Rejected' },
+        { key: '3', roomID: 'EN4103', date: '2025-03-03', checkin: '10:00', checkout: '12:00', status: 'Rejected' },
+        { key: '3', roomID: 'EN4103', date: '2025-03-03', checkin: '10:00', checkout: '12:00', status: 'Rejected' },
+        { key: '3', roomID: 'EN4103', date: '2025-03-03', checkin: '10:00', checkout: '12:00', status: 'Rejected' },
+        { key: '3', roomID: 'EN4103', date: '2025-03-03', checkin: '10:00', checkout: '12:00', status: 'Rejected' },
+        { key: '3', roomID: 'EN4103', date: '2025-03-03', checkin: '10:00', checkout: '12:00', status: 'Rejected' },
+    ]
     return (
         <div>
-            <Navbar name={'Request rooms'} />
+            <Navbar name={'Request rooms'} isOpen={false} />
             <div className='flex flex-col items-center justify-center space-y-8 mt-8'>
                 <Switch leftname={'Request Rooms'} rightname={'Request History'} onClick_left={handleLeft} onClick_right={handleRight} />
                 <h1 className='text-xl font-medium'>{activeComponent === 'RequestRoom' ? 'Request to join rooms' : 'Request History'}</h1>
@@ -76,7 +95,7 @@ const RequestRooms = () => {
                                     <div className='grid grid-cols-2 gap-4'>
                                         <div className='h-20'>
                                             <label htmlFor="checkin">Check in</label>
-                                            <Field type="time" name="checkin" step="60" className="border border-[var(--border-color)] p-2 w-full rounded-md"  />
+                                            <Field type="time" name="checkin" step="60" className="border border-[var(--border-color)] p-2 w-full rounded-md" />
                                             <ErrorMessage name="checkin" component="div" className="text-red-500 text-sm" />
                                         </div>
                                         <div className='h-20'>
@@ -110,8 +129,22 @@ const RequestRooms = () => {
                         </Form>
                     </Formik>
                 ) : (
-                    <div>
-                        kuy
+                    <div className='flex flex-col w-full px-8'>
+                        <div className='flex flex-row space-x-4 justify-evenly items-center px-32'>
+                            <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md'>
+                                <p className='text-sm'>Inprogress</p>
+                                <p className='text-2xl font-bold'>0</p>
+                            </div>
+                            <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md'>
+                                    <p className='text-sm'>Approved</p>
+                                <p className='text-2xl font-bold'>0</p>
+                            </div>
+                            <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md'>
+                                    <p className='text-sm'>Reject</p>
+                                <p className='text-2xl font-bold'>0</p>
+                            </div>
+                        </div>
+                        <Table columns={columns} data={data} maxRows={5} />
                     </div>
                 )}
             </div>

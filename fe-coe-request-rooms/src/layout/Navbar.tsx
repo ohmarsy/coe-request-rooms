@@ -7,6 +7,8 @@ interface NavbarProps {
   isOpen: boolean;
 }
 const Navbar: React.FC<NavbarProps> = ({ name, isOpen }) => {
+  const pathname = window.location.pathname.split("/")[1];
+  
   if (name === "dashboard") {
     name = "Dashboard";
   } else if (name === "image-analyse") {
@@ -21,7 +23,7 @@ const Navbar: React.FC<NavbarProps> = ({ name, isOpen }) => {
     <nav className="bg-[var(--primary-color)] h-[60px] sm:h-[70px] md:h-[80px] w-full">
       <div
         className={`mx-auto px-2 sm:px-4 md:px-6 lg:px-8 flex items-center justify-between h-full ${
-          isOpen ? "ml-[296px]" : "ml-[80px]"
+          isOpen ? "ml-[296px]" : pathname === "request-rooms" ? "ml-[0px]" : "ml-[80px]"
         }`}
       >
         <h1 className="text-white text-base sm:text-lg md:text-xl font-bold">{`${name.toString()}`}</h1>
