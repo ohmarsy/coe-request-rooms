@@ -22,3 +22,10 @@ python3 -m flask db init
 python3 -m flask db migrate -m "Initial migration"
 python3 -m flask db upgrade
 ```
+
+# postgres for user database
+host = `localhost`
+
+port = `5432`
+
+username = `postgres`
