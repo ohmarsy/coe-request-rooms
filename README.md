@@ -29,3 +29,10 @@ host = `localhost`
 port = `5432`
 
 username = `postgres`
+
+# if database error = "Target database is not up to date" when migration new schema pls try this
+```
+flask db stamp head
+flask db migrate -m "Fix schema"
+flask db upgrade
+```
