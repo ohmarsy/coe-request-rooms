@@ -4,9 +4,26 @@ import DateBox from "../components/DateBox";
 import TimeBox from "../components/TimeBox";
 import Switch from "../components/Switch";
 import { useEffect } from "react";
+import Table from "../components/Table";
 
 const ManageRoomPage = () => {
   const [selectedRoom, setSelectedRoom] = useState("");
+
+  const columns = [
+    { header: "Room", accessor: "room" },
+    { header: "Room Status", accessor: "status" },
+    { header: "Information", accessor: "information" },
+    { header: "Device", accessor: "device" },
+    { header: "Time", accessor: "time" },
+    { header: "Date", accessor: "date" },
+  ];
+  
+  const data = [
+    { room: "EN4102", status: "Occupied", information: "35.8", device: "AN-3351-3", time: "16:45", date: "12-02-2025" },
+    { room: "EM5103", status: "Occupied", information: "35.8", device: "AN-3351-3", time: "17:35", date: "12-02-2025" },
+    { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+    { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  ];
 
   const handleClickRoom = (name: string) => {
     setSelectedRoom(name);
@@ -59,11 +76,11 @@ const ManageRoomPage = () => {
 
   useEffect(() => {
     if (selectedRoom) {
-      setAnimate(false); 
+      setAnimate(false);
 
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          setAnimate(true); 
+          setAnimate(true);
         });
       });
     }
@@ -108,11 +125,14 @@ const ManageRoomPage = () => {
                   onClick_left={handleLeft}
                   onClick_right={handleRight}
                 />
-                {activeComponent === "RequestRooms" ? (
-                  <div className="flex">RequestRooms</div>
-                ) : (
-                  <div className="flex">RequestHistory</div>
-                )}
+                <div className="flex flex-col w-full px-8">
+                  <p className="text-start">
+                    {activeComponent === "RequestRooms"
+                      ? "RequestRooms"
+                      : "RequestHistory"}
+                  </p>
+                  <Table columns={columns} data={data} maxRows={10} />
+                </div>
               </div>
             </div>
           ) : (

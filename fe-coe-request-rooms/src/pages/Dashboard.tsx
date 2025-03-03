@@ -52,7 +52,7 @@ const DashboardPage = () => {
       <div className="flex flex-col lg:flex-row gap-3 flex-1">
         {/* AllRoom Left */}
         <div className="w-full lg:flex-2">
-          <AllRoom rooms={rooms} handleClickRoom={handleClickRoom} maxRooms={4} />
+          <AllRoom rooms={rooms} handleClickRoom={handleClickRoom} maxRooms={4.5} />
         </div>
 
         {/* Image Middle */}
