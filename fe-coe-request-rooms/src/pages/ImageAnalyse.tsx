@@ -67,7 +67,7 @@ const ImageAnalysePage = () => {
         rightname="Number plate"
         onClick_left={handleLeft}
         onClick_right={handleRight}
-        className="p-2 sticky top-0 bg-[var(--background-color)]"
+        className="sticky top-0 bg-[var(--background-color)]"
       />
       {activeComponent === "Human face" ? (
         <div className="text-pretty grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
