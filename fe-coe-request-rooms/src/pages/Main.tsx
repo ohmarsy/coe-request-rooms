@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SideBar from "../layout/SideBar";
 import ManageRoomPage from "./ManageRoom";
 import DashboardPage from "./Dashboard";
@@ -8,7 +8,24 @@ import Navbar from "../layout/Navbar";
 
 const MainPage = () => {
   const [selectedMenu, setSelectedMenu] = useState("dashboard");
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true); 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsMobile(window.innerWidth <= 1024);  // เช็คว่าเป็น mobile หรือไม่
+      setIsOpen(window.innerWidth > 1024);     // เมื่อหน้าจอใหญ่กว่าหรือเท่ากับ 1024px จะเปิด Sidebar
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  // function toggle sidebar
+  const toggleSidebar = () => {
+    setIsOpen(prevState => !prevState);
+  };
 
   const renderComponent = () => {
     switch (selectedMenu) {
@@ -26,21 +43,16 @@ const MainPage = () => {
   };
 
   return (
-    <div className="flex bg-[var(--background-color)]">
-      <SideBar
-        setSelectedMenu={setSelectedMenu}
-        selectedMenu={selectedMenu}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-      />
-      <div className="flex flex-col w-full">
-        <Navbar name={selectedMenu} isOpen={isOpen}/>
-        <div
-          className={`px-4 py-4 flex-1 h-screen duration-300 fade-in overflow-hidden ${
-            isOpen ? "ml-[296px]" : "ml-[80px]"
-          }`}
-          key={selectedMenu}
-        >
+    <div className="flex flex-col min-h-screen overflow-hidden">
+      <Navbar name={selectedMenu} toggleSidebar={toggleSidebar} isMobile={isMobile} />
+
+      <div className="flex flex-1">
+        {isOpen && (
+          <SideBar selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
+        )}
+
+        {/* Page Content */}
+        <div className={`flex-1 p-4 ${isOpen ? "ml-64" : ""} mt-16`}>
           {renderComponent()}
         </div>
       </div>
