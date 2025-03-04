@@ -26,12 +26,12 @@ def add_user():
     try:
         data = request.get_json()
 
-        if not all(k in data for k in ("firstName", "lastName", "email", "password", "role")):
+        if not all(k in data for k in ("first_name", "last_name", "email", "password", "role")):
             return jsonify({"error": "Missing required fields"}), 400
 
         new_user = User(
-            firstName=data['firstName'],
-            lastName=data['lastName'],
+            first_name=data['first_name'],
+            last_name=data['last_name'],
             email=data['email'],
             password=data['password'],
             role=data['role']

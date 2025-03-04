@@ -62,6 +62,20 @@ def add_room():
     
     except requests.exceptions.RequestException as e:
         return jsonify({"error": "Room service failed to add room", "details": str(e)}), 500
+
+@app.route('/rooms/access-list/', methods=['POST'])
+def add_access_list():
+    try:
+        access_list_data = request.get_json()
+        
+        response = requests.post(f"{ROOMS_SERVICE_URL}/access-list", json=access_list_data)
+
+        print("Room service response:", response.text)
+
+        return jsonify(response.json()), response.status_code
+    
+    except requests.exceptions.RequestException as e:
+        return jsonify({"error": "Room service failed to add access list", "details": str(e)}), 500
     
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001)
