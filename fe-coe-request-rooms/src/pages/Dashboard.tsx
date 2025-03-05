@@ -74,7 +74,7 @@ const DashboardPage = () => {
       </div>
 
       {/* Bottom Row */}
-      <div className="flex flex-col xl:flex-row gap-3 flex-1">
+      <div className="flex flex-col xl:flex-row gap-3 flex-1 ">
         {/* Date and Time Boxes + Temperature */}
         <div className="w-full xl:flex-1 flex flex-col gap-3 pb-0">
           <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">

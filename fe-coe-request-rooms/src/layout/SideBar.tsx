@@ -62,7 +62,7 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
 
   return (
     <>
-      <div className="fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-white border-r border-gray-200 p-6 flex flex-col">
+      <div className="fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-white border-r border-gray-200 p-6 flex flex-col z-50">
         <ul className="flex-1">
           {menuItems.map((menu, index) => (
             <li key={index} className="mb-4">
@@ -96,7 +96,7 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
 
       {/* Modal */}
       {modal.isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ">
           <div className="bg-white rounded-lg p-6 w-96 max-w-lg">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-lg font-medium">{modal.title} Icon Details</h3>

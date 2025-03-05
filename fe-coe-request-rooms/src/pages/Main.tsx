@@ -5,6 +5,8 @@ import DashboardPage from "./Dashboard";
 import ImageAnalysePage from "./ImageAnalyse";
 import ReportTablePage from "./ReportTable";
 import Navbar from "../layout/Navbar";
+import Backdrop from "../components/Backdrop";
+ 
 
 const MainPage = () => {
   const [selectedMenu, setSelectedMenu] = useState("dashboard");
@@ -42,21 +44,25 @@ const MainPage = () => {
     }
   };
 
-  return (
-    <div className="flex flex-col min-h-screen overflow-hidden">
-      <Navbar name={selectedMenu} toggleSidebar={toggleSidebar} isMobile={isMobile} />
-
-      <div className="flex flex-1">
-        {isOpen && (
-          <SideBar selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />
-        )}
-
-        {/* Page Content */}
-        <div className={`flex-1 p-4 ${isOpen ? "ml-64" : ""} mt-16`}>
+    return (
+      <div className="flex flex-col min-h-screen overflow-hidden">
+        <Navbar name={selectedMenu} toggleSidebar={toggleSidebar} isMobile={isMobile} />
+  
+        <div className="flex flex-1 relative">
+          {isOpen && <SideBar selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />}
+          
+          {isOpen && isMobile && <Backdrop onClick={toggleSidebar} />}
+          
+          {/* Page Content */}
+          <div
+          className={`flex-1 p-4 transition-all duration-300 ease-in-out ${
+            isOpen && !isMobile ? 'ml-64' : ''
+          } mt-16`}
+        >
           {renderComponent()}
         </div>
+        </div>
       </div>
-    </div>
   );
 };
 
