@@ -37,7 +37,7 @@ services:
     environment:
       - FLASK_APP=app.py
       - FLASK_RUN_HOST=0.0.0.0
-      - DATABASE_URL="postgresql://postgres:password@host.docker.internal:5432/authdb"
+      - DATABASE_URL=postgresql://postgres:password@host.docker.internal:5432/authdb
     depends_on:
       - db-auth
     networks:
@@ -52,7 +52,7 @@ services:
     environment:
       - FLASK_APP=app.py
       - FLASK_RUN_HOST=0.0.0.0
-      - DATABASE_URL="postgresql://postgres:password@host.docker.internal:5433/roomdb"
+      - DATABASE_URL=postgresql://postgres:password@host.docker.internal:5433/roomdb
     networks:
       - backend
 
