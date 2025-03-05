@@ -95,6 +95,30 @@ def get_images():
     
     return jsonify(mock_data)
 
+@app.route('/temperature-indoor', methods=['GET'])
+def get_temp_indoor():
+    mock_data = [
+        {"id": 1, "indoor": 24},
+    ]
+    
+    return jsonify(mock_data)
+
+@app.route('/temperature-outdoor', methods=['GET'])
+def get_temp_outdoor():
+    mock_data = [
+        {"id": 1, "outdoor": 38},
+    ]
+    
+    return jsonify(mock_data)
+
+@app.route('/people', methods=['GET'])
+def get_people():
+    mock_data = [
+        {"id": 1, "people": 10},
+    ]
+    
+    return jsonify(mock_data)
+
 
 
 if __name__ == '__main__':
