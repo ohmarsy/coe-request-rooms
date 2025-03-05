@@ -1,5 +1,6 @@
-import datetime
+from datetime import datetime
 from flask import Flask, request, jsonify
+import requests
 from models import db
 from models.room import Room
 from models.access_list import AccessList
@@ -18,6 +19,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 migrate = Migrate(app, db)
+
+AUTH_SERVICE_URL = "http://localhost:5002" 
 
 @app.route('/', methods=['GET'])
 def rooms():
@@ -53,6 +56,11 @@ def add_access_list():
         if not all(k in data for k in required_fields):
             return jsonify({"error": "Missing required fields"}), 400
 
+        user_response = requests.get(f"{AUTH_SERVICE_URL}/user/{data['user_id']}")
+        
+        if user_response.status_code != 200:
+            return jsonify({"error": "User not found"}), 404
+
         from_date = datetime.strptime(data['from_date'], "%Y-%m-%d %H:%M:%S")  
         time = datetime.strptime(data['time'], "%Y-%m-%d %H:%M:%S")  
 
@@ -69,10 +77,8 @@ def add_access_list():
 
         return jsonify({"message": "Access list entry added successfully"}), 201
 
-
     except Exception as e:
-        db.session.rollback() 
-        return jsonify({"error": "Failed to add room", "details": str(e)}), 500
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5003)

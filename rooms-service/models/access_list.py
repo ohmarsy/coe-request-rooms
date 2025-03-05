@@ -13,5 +13,4 @@ class AccessList(db.Model):
     room_id = Column(String, ForeignKey("rooms.room_id"), nullable=False)
     created_at = Column(DateTime, default=db.func.current_timestamp())
 
-    user = relationship("User", back_populates="access_list")
     room = relationship("Room", back_populates="access_list")

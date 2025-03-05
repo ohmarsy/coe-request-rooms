@@ -20,6 +20,24 @@ migrate = Migrate(app, db)
 def auth():
     return jsonify({"message": "Hello from Auth Service!"})
 
+@app.route('/user/<int:id>', methods=['GET'])
+def get_user_by_id(id):
+    user = User.query.get(id)
+    
+    if user is None:
+        return jsonify({'message': 'User not found'}), 404
+    
+    # Return the user data as a JSON response
+    return jsonify({
+        'id': user.id,
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'email': user.email,
+        'role': user.role,
+        'created_at': user.created_at
+    })
+    
+
 
 @app.route('/add-user', methods=['POST'])
 def add_user():

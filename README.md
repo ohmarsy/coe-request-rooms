@@ -36,3 +36,22 @@ flask db stamp head
 flask db migrate -m "Fix schema"
 flask db upgrade
 ```
+
+# new computer pls do
+```
+cd auth-service
+rm -rf migrations
+flask db init
+flask db migrate -m "Initial migration"
+flask db upgrade
+```
+
+and
+
+```
+cd rooms-service
+rm -rf migrations
+flask db init
+flask db migrate -m "Initial migration"
+flask db upgrade
+```
