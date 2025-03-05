@@ -8,10 +8,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from dotenv import load_dotenv
 import os
+from flask_cors import CORS
+
 
 app = Flask(__name__)
 
 load_dotenv()
+
+CORS(app)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://postgres:password@localhost:5433/roomdb')
