@@ -11,20 +11,20 @@ const ManageRoomPage = () => {
   const [selectedRoom, setSelectedRoom] = useState("");
   const [userData, setUserData] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Make the API request
-        const response = await axios.get("http://localhost:5002/user/1");
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // Make the API request
+  //       const response = await axios.get("http://localhost:5002/user/1");
 
-        setUserData(response.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
+  //       setUserData(response.data);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   const columns = [
     { header: "Room", accessor: "room" },

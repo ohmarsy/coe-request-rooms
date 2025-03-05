@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
 import Switch from "../components/Switch";
+import axios from "axios";
 
 const ImageAnalysePage = () => {
+  const [imageData, setImageData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Make the API request
+        const response = await axios.get("http://localhost:5003/images");
+
+        setImageData(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, []);
   const profiles = [
     {
       image:
