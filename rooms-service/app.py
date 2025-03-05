@@ -83,6 +83,16 @@ def add_access_list():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route('/images', methods=['GET'])
+def get_images():
+    mock_data = [
+        {"id": 1, "image": "https://example.com/images/img1.jpg", "name": "Image 1 description", "email": "a@a.com"},
+        {"id": 2, "image": "https://example.com/images/img2.jpg", "name": "Image 2 description", "email": "b@b.com"},
+        {"id": 3, "image": "https://example.com/images/img3.jpg", "name": "Image 3 description", "email": "c@c.com"}
+    ]
+    
+    return jsonify(mock_data)
 
 
 
