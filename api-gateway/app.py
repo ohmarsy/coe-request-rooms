@@ -1,10 +1,14 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import requests
 
 app = Flask(__name__)
 
 AUTH_SERVICE_URL = "http://auth-service:5002" 
 ROOMS_SERVICE_URL = "http://rooms-service:5003"
+
+CORS(app)
+
 
 @app.route('/')
 def hello():

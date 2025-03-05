@@ -5,9 +5,26 @@ import TimeBox from "../components/TimeBox";
 import Switch from "../components/Switch";
 import { useEffect } from "react";
 import Table from "../components/Table";
+import axios from "axios";
 
 const ManageRoomPage = () => {
   const [selectedRoom, setSelectedRoom] = useState("");
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Make the API request
+        const response = await axios.get("http://localhost:5002/user/1");
+
+        setUserData(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const columns = [
     { header: "Room", accessor: "room" },
@@ -17,16 +34,45 @@ const ManageRoomPage = () => {
     { header: "Time", accessor: "time" },
     { header: "Date", accessor: "date" },
   ];
-  
+
   const data = [
-    { room: "EN4102", status: "Occupied", information: "35.8", device: "AN-3351-3", time: "16:45", date: "12-02-2025" },
-    { room: "EM5103", status: "Occupied", information: "35.8", device: "AN-3351-3", time: "17:35", date: "12-02-2025" },
-    { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
-    { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+    {
+      room: "EN4102",
+      status: "Occupied",
+      information: "35.8",
+      device: "AN-3351-3",
+      time: "16:45",
+      date: "12-02-2025",
+    },
+    {
+      room: "EM5103",
+      status: "Occupied",
+      information: "35.8",
+      device: "AN-3351-3",
+      time: "17:35",
+      date: "12-02-2025",
+    },
+    {
+      room: "EM5103",
+      status: "Occupied",
+      information: "User_image",
+      device: "CAM-32",
+      time: "19:35",
+      date: "12-02-2025",
+    },
+    {
+      room: "EM5103",
+      status: "Occupied",
+      information: "User_image",
+      device: "CAM-32",
+      time: "19:35",
+      date: "12-02-2025",
+    },
   ];
 
   const handleClickRoom = (name: string) => {
     setSelectedRoom(name);
+    console.log(JSON.stringify(userData, null, 2));
   };
 
   const rooms = [
