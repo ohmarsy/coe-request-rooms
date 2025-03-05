@@ -9,7 +9,10 @@ import Quantity from '../components/Quantity';
 import ReportTable from '../components/ReportTable';
 import Card from '../components/Card';
 import axios from 'axios';
+import { getImages, ImageData } from "../services/getImages";
+
 import { div } from 'framer-motion/client';
+import { data } from 'react-router-dom';
 
 interface TemperatureIndoor {
   indoor: number;
@@ -26,6 +29,7 @@ interface People {
 const DashboardPage = () => {
 
   const [selectedRoom, setSelectedRoom] = useState("");
+  const [imageData, setImageData] = useState<ImageData[]>([]);
   const [temperatureIndoor, setTemperatureIndoorData] = useState<TemperatureIndoor[]>([]);
   const [temperatureOutdoor, setTemperatureOutdoorData] = useState<TemperatureOutdoor[]>([]);
   const [people, setPeopleData] = useState<People[]>([]);
@@ -35,9 +39,12 @@ const DashboardPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const data = await getImages();
+        setImageData(data);
         const responseTempIndoor = await axios.get("http://localhost:5003/temperature-indoor");
         const responseTempOutdoor = await axios.get("http://localhost:5003/temperature-outdoor");
         const responsePeople = await axios.get("http://localhost:5003/people")
+
 
 
         setTemperatureIndoorData(responseTempIndoor.data || {});
@@ -57,16 +64,6 @@ const DashboardPage = () => {
   const handleClickRoom = (name: string) => {
     setSelectedRoom(name);
   };
-
-  const profiles = [
-    {
-
-      image: "https://picsum.photos/200/300.jpg",
-      name: "Earth",
-      email: "Piyawat.m@kkumail.com"
-
-    }
-  ];
 
   const rooms = [
     {
@@ -102,12 +99,11 @@ const DashboardPage = () => {
         {/* Image Middle */}
         <div className="w-full lg:flex-1">
           {/* <Image/> */}
-          {profiles.map((profile, index) => <Card
-            key={index}
-            name={profile.name}
-            email={profile.email}
-            image={profile.image}
-          />)}
+          <Card
+            name={imageData[0].name}
+            email={imageData[0].email}
+            image={imageData[0].image}
+          />
         </div>
 
         {/* Status/Quantity Right */}

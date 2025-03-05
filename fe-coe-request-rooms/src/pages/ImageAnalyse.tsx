@@ -2,31 +2,23 @@ import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
 import Switch from "../components/Switch";
 import axios from "axios";
-
-interface Image {
-  name: string;
-  email: string;
-  image: string;
-}
+import { getImages, ImageData } from "../services/getImages";
 
 const ImageAnalysePage = () => {
 
-  const [imageData, setImageData] = useState<Image[]>([]);
+  const [imageData, setImageData] = useState<ImageData[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchImages = async () => {
       try {
-        // Make the API request
-        const response = await axios.get("http://localhost:5003/images");
-        console.log(response.data);
-        
-        setImageData(response.data);
+        const data = await getImages();
+        setImageData(data);
       } catch (err) {
-        console.log(err);
+        console.log("Failed to fetch images");
       }
     };
 
-    fetchData();
+    fetchImages();
   }, []);
   
 
