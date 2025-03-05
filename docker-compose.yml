@@ -1,5 +1,22 @@
 version: '3.8'
 services:
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    networks:
+      - backend
+    depends_on:
+      - db-auth
+      - db-room
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
   db-auth:
     image: postgres:15
     container_name: db-auth
@@ -74,6 +91,7 @@ services:
 volumes:
   postgres_auth_data:
   postgres_room_data:
+  pgadmin_data:
 
 networks:
   backend:
