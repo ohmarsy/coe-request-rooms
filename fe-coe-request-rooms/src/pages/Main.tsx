@@ -6,11 +6,11 @@ import ImageAnalysePage from "./ImageAnalyse";
 import ReportTablePage from "./ReportTable";
 import Navbar from "../layout/Navbar";
 import Backdrop from "../components/Backdrop";
- 
+
 
 const MainPage = () => {
   const [selectedMenu, setSelectedMenu] = useState("dashboard");
-  const [isOpen, setIsOpen] = useState(true); 
+  const [isOpen, setIsOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -29,6 +29,22 @@ const MainPage = () => {
     setIsOpen(prevState => !prevState);
   };
 
+  const [menuFromUrl, setMenuFromUrl] = useState<string | null>(null);
+
+  // useEffect(() => {
+  //   const updateMenuFromUrl = () => {
+  //     const urlParams = new URLSearchParams(window.location.search);
+  //     const menu = urlParams.get('menu');
+
+  //     if (menu) {
+  //       setSelectedMenu(menu);
+  //     } 
+  //   };
+
+  //   updateMenuFromUrl();
+  // }, [selectedMenu]);
+
+
   const renderComponent = () => {
     switch (selectedMenu) {
       case "dashboard":
@@ -44,25 +60,24 @@ const MainPage = () => {
     }
   };
 
-    return (
-      <div className="flex flex-col min-h-screen overflow-hidden">
-        <Navbar name={selectedMenu} toggleSidebar={toggleSidebar} isMobile={isMobile} />
-  
-        <div className="flex flex-1 relative">
-          {isOpen && <SideBar selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />}
-          
-          {isOpen && isMobile && <Backdrop onClick={toggleSidebar} />}
-          
-          {/* Page Content */}
-          <div
-          className={`flex-1 p-4 transition-all duration-300 ease-in-out ${
-            isOpen && !isMobile ? 'ml-64' : ''
-          } mt-16`}
+  return (
+    <div className="flex flex-col min-h-screen overflow-hidden">
+      <Navbar name={selectedMenu} toggleSidebar={toggleSidebar} isMobile={isMobile} />
+
+      <div className="flex flex-1 relative">
+        {isOpen && <SideBar selectedMenu={selectedMenu} setSelectedMenu={setSelectedMenu} />}
+
+        {isOpen && isMobile && <Backdrop onClick={toggleSidebar} />}
+
+        {/* Page Content */}
+        <div
+          className={`flex-1 p-4 transition-all duration-300 ease-in-out ${isOpen && !isMobile ? 'ml-64' : ''
+            } mt-16 w-full `}
         >
           {renderComponent()}
         </div>
-        </div>
       </div>
+    </div>
   );
 };
 

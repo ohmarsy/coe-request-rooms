@@ -3,16 +3,14 @@ import TemBox from '../components/TemBox'
 import DateBox from '../components/DateBox';
 import TimeBox from '../components/TimeBox';
 import AllRoom from '../components/AllRoom';
-import Image from '../components/Image';
 import RoomStatus from '../components/RoomStatus';
 import Quantity from '../components/Quantity';
-import ReportTable from '../components/ReportTable';
 import Card from '../components/Card';
 import axios from 'axios';
 import { getImages, ImageData } from "../services/getImages";
-
-import { div } from 'framer-motion/client';
-import { data } from 'react-router-dom';
+import Table from '../components/Table';
+import ReportTablePage from './ReportTable';
+import { useNavigate } from 'react-router-dom';
 
 interface TemperatureIndoor {
   indoor: number;
@@ -26,7 +24,46 @@ interface People {
   people: number;
 }
 
+const columns = [
+  { header: "Room", accessor: "room" },
+  { header: "Room Status", accessor: "status" },
+  { header: "Information", accessor: "information" },
+  { header: "Device", accessor: "device" },
+  { header: "Time", accessor: "time" },
+  { header: "Date", accessor: "date" },
+];
+
+const data = [
+  { room: "EN4102", status: "Occupied", information: "35.8", device: "AN-3351-3", time: "16:45", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "35.8", device: "AN-3351-3", time: "17:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+];
+
 const DashboardPage = () => {
+  const navigate = useNavigate();
 
   const [selectedRoom, setSelectedRoom] = useState("");
   const [imageData, setImageData] = useState<ImageData[]>([]);
@@ -122,15 +159,24 @@ const DashboardPage = () => {
             <TimeBox />
           </div>
           <div className='flex gap-3 h-full'>
-            <TemBox indoor={temperatureIndoor[0].indoor} tempType={'indoor'}  />
-            <TemBox outdoor={temperatureOutdoor[0].outdoor} tempType={'outdoor'}  />
+            <TemBox indoor={temperatureIndoor[0].indoor} tempType={'indoor'} />
+            <TemBox outdoor={temperatureOutdoor[0].outdoor} tempType={'outdoor'} />
           </div>
         </div>
 
         {/* Report Table */}
-        <div className="w-full xl:flex-2 ">
-          <ReportTable />
+        <div className="w-full xl:flex-2 bg-white  shadow-sm rounded-2xl p-6 h-full">
+          <p className="text-xl font-bold py-2">Room Status Table</p>
+          <Table columns={columns} data={data} maxRows={5} pagination={false} />
+          <div className="flex justify-end pt-4">
+
+            <p className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer" onClick={() => {
+              navigate('/main?menu=report-table')
+            }}>See more</p>
+
+          </div>
         </div>
+
       </div>
 
 
