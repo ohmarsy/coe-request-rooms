@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
 import Switch from "../components/Switch";
-import axios from "axios";
 import { getImages, ImageData } from "../services/getImages";
 
 const ImageAnalysePage = () => {
@@ -14,7 +13,7 @@ const ImageAnalysePage = () => {
         const data = await getImages();
         setImageData(data);
       } catch (err) {
-        console.log("Failed to fetch images");
+        console.log(err);
       }
     };
 
