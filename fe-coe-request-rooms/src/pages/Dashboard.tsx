@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TemBox from '../components/TemBox'
 import DateBox from '../components/DateBox';
 import TimeBox from '../components/TimeBox';
@@ -8,10 +8,51 @@ import RoomStatus from '../components/RoomStatus';
 import Quantity from '../components/Quantity';
 import ReportTable from '../components/ReportTable';
 import Card from '../components/Card';
+import axios from 'axios';
+import { div } from 'framer-motion/client';
+
+interface TemperatureIndoor {
+  indoor: number;
+}
+
+interface TemperatureOutdoor {
+  outdoor: number;
+}
+
+interface People {
+  people: number;
+}
 
 const DashboardPage = () => {
 
   const [selectedRoom, setSelectedRoom] = useState("");
+  const [temperatureIndoor, setTemperatureIndoorData] = useState<TemperatureIndoor[]>([]);
+  const [temperatureOutdoor, setTemperatureOutdoorData] = useState<TemperatureOutdoor[]>([]);
+  const [people, setPeopleData] = useState<People[]>([]);
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const responseTempIndoor = await axios.get("http://localhost:5003/temperature-indoor");
+        const responseTempOutdoor = await axios.get("http://localhost:5003/temperature-outdoor");
+        const responsePeople = await axios.get("http://localhost:5003/people")
+
+
+        setTemperatureIndoorData(responseTempIndoor.data || {});
+        setTemperatureOutdoorData(responseTempOutdoor.data || {});
+        setPeopleData(responsePeople.data || {});
+
+        setLoading(false);
+
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleClickRoom = (name: string) => {
     setSelectedRoom(name);
@@ -44,6 +85,9 @@ const DashboardPage = () => {
       name: "EN4202",
     },
   ];
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
 
   return (
@@ -69,7 +113,7 @@ const DashboardPage = () => {
         {/* Status/Quantity Right */}
         <div className="w-full lg:flex-1 flex flex-col gap-3 lg:mt-0">
           <RoomStatus />
-          <Quantity />
+          <Quantity people={people[0].people} />
         </div>
       </div>
 
@@ -81,7 +125,10 @@ const DashboardPage = () => {
             <DateBox />
             <TimeBox />
           </div>
-          <TemBox />
+          <div className='flex gap-3 h-full'>
+            <TemBox indoor={temperatureIndoor[0].indoor} tempType={'indoor'}  />
+            <TemBox outdoor={temperatureOutdoor[0].outdoor} tempType={'outdoor'}  />
+          </div>
         </div>
 
         {/* Report Table */}
