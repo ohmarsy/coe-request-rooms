@@ -15,7 +15,6 @@ app = Flask(__name__)
 
 load_dotenv()
 
-CORS(app)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://postgres:password@localhost:5433/roomdb')
@@ -23,6 +22,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 migrate = Migrate(app, db)
+
+CORS(app)
 
 AUTH_SERVICE_URL = "http://localhost:5002" 
 
@@ -87,9 +88,9 @@ def add_access_list():
 @app.route('/images', methods=['GET'])
 def get_images():
     mock_data = [
-        {"id": 1, "image": "https://example.com/images/img1.jpg", "name": "Image 1 description", "email": "a@a.com"},
-        {"id": 2, "image": "https://example.com/images/img2.jpg", "name": "Image 2 description", "email": "b@b.com"},
-        {"id": 3, "image": "https://example.com/images/img3.jpg", "name": "Image 3 description", "email": "c@c.com"}
+        {"id": 1, "image": "https://picsum.photos/id/237/200/300", "name": "Image 1 description", "email": "a@a.com"},
+        {"id": 2, "image": "https://picsum.photos/seed/picsum/200/300", "name": "Image 2 description", "email": "b@b.com"},
+        {"id": 3, "image": "https://picsum.photos/200/300?grayscale", "name": "Image 3 description", "email": "c@c.com"}
     ]
     
     return jsonify(mock_data)
