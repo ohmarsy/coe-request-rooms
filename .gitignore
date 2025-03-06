@@ -42,6 +42,8 @@ __pycache__/
 venv/
 .venv/
 migrations/versions/*
+migrations/pycache/
+migrations/__pycache__/
 
 
 # Docker
