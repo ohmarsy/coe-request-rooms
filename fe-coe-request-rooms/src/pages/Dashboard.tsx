@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import TemBox from "../components/TemBox";
 import DateBox from "../components/DateBox";
 import TimeBox from "../components/TimeBox";
@@ -286,6 +286,8 @@ const DashboardPage = () => {
 
   const handleClickRoom = (name: string) => {
     setSelectedRoom(name);
+    console.log(selectedRoom);
+    
   };
 
   const rooms = [

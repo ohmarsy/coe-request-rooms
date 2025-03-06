@@ -29,7 +29,7 @@ const MainPage = () => {
     setIsOpen(prevState => !prevState);
   };
 
-  const [menuFromUrl, setMenuFromUrl] = useState<string | null>(null);
+  // const [menuFromUrl, setMenuFromUrl] = useState<string | null>(null);
 
   // useEffect(() => {
   //   const updateMenuFromUrl = () => {

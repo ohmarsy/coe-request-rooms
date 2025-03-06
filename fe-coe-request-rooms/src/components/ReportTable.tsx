@@ -1,5 +1,3 @@
-import React from 'react';
-
 const ReportTable = () => {
   // Sample data for the table
   const reports = [
