@@ -148,7 +148,7 @@ const ManageRoomPage = () => {
   }, [selectedRoom]);
 
   return (
-    <div className="w-full h-full flex gap-3">
+    <div className="w-full h-full flex gap-3 overflow-x-scroll">
       <div className="flex flex-col flex-1/3 h-full gap-3">
         <div className="w-full flex gap-3 items-center justify-center max-[1024px]:flex-col">
           <DateBox />
@@ -187,13 +187,13 @@ const ManageRoomPage = () => {
                   onClick_left={handleLeft}
                   onClick_right={handleRight}
                 />
-                <div className="flex flex-col w-full px-8">
+                <div className="flex flex-col w-full px-8 ">
                   <p className="text-start">
                     {activeComponent === "RequestRooms"
                       ? "RequestRooms"
                       : "RequestHistory"}
                   </p>
-                  <Table columns={columns} data={data} maxRows={10} />
+                    <Table columns={columns} data={data} maxRows={10} />
                 </div>
               </div>
             </div>
