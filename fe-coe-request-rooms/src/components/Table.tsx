@@ -23,13 +23,13 @@ const Table: React.FC<TableProps> = ({ columns, data, maxRows,pagination=true })
   const visibleData = data.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
   return (
-    <div className="relative overflow-x-auto">
-      <div className="relative overflow-x-auto lg:overflow-scroll whitespace-nowrap max-w-[1200px]">
-        <table className="w-full min-w-full border-collapse border-spacing-0 table-auto max-w-[1200px] overflow-x-scroll">
+    <div className="overflow-x-auto">
+      <div className="w-full overflow-x-auto  whitespace-nowrap">
+        <table className="w-full min-w-max border-collapse border-spacing-0 table-auto">
           <thead>
             <tr className="text-gray-500 text-left text-sm">
               {columns.map((col, index) => (
-                <th key={index} className="px-4 py-2 font-medium whitespace-nowrap lg:whitespace-normal">
+                <th key={index} className="px-4 py-2 font-medium whitespace-nowrap">
                   {col.header}
                 </th>
               ))}
@@ -44,7 +44,7 @@ const Table: React.FC<TableProps> = ({ columns, data, maxRows,pagination=true })
                 {columns.map((col, colIndex) => (
                   <td
                     key={colIndex}
-                    className="px-4 py-2 whitespace-nowrap lg:whitespace-normal"
+                    className="px-4 py-2 whitespace-nowrap"
                   >
                     {col.accessor === "information" ? (
                       <a href="#" className="text-blue-600 hover:underline">

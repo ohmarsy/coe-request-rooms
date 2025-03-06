@@ -241,6 +241,22 @@ const data = [
     time: "19:35",
     date: "12-02-2025",
   },
+  {
+    room: "EM5103",
+    status: "Occupied",
+    information: "User_image",
+    device: "CAM-32",
+    time: "19:35",
+    date: "12-02-2025",
+  },
+  {
+    room: "EM5103",
+    status: "Occupied",
+    information: "User_image",
+    device: "CAM-32",
+    time: "19:35",
+    date: "12-02-2025",
+  },
 ];
 
 const DashboardPage = () => {
@@ -287,7 +303,6 @@ const DashboardPage = () => {
   const handleClickRoom = (name: string) => {
     setSelectedRoom(name);
     console.log(selectedRoom);
-    
   };
 
   const rooms = [
@@ -306,6 +321,24 @@ const DashboardPage = () => {
     {
       name: "EN4202",
     },
+    {
+      name: "EN4202",
+    },
+    {
+      name: "EN4202",
+    },
+    {
+      name: "EN4202",
+    },
+    {
+      name: "EN4202",
+    },
+    {
+      name: "EN4202",
+    },
+    {
+      name: "EN4202",
+    },
   ];
   if (loading) {
     return <div>Loading...</div>;
@@ -314,35 +347,43 @@ const DashboardPage = () => {
   return (
     <div className="w-full h-full flex flex-col gap-3">
       {/* Top Column */}
-      <div className="flex flex-col lg:flex-row gap-3 flex-1">
+      <div className="flex flex-col lg:flex-row gap-3 flex-2 max-xl:flex-1 h-1/2 max-lg:h-1/1">
         {/* AllRoom Left */}
         <div className="w-full lg:flex-1">
           <AllRoom
             rooms={rooms}
             handleClickRoom={handleClickRoom}
-            maxRooms={4}
+            classNameOuter={"min-h-[100%]"}
+            classNameInner={"max-h-[37.5vh] min-h-[16.375rem] h-full max-lg:h-[200px]"}
           />
         </div>
 
-        {/* Image Middle */}
-        <div className="w-full lg:flex-1">
-          {/* <Image/> */}
-          <Card
-            name={imageData[0].name}
-            email={imageData[0].email}
-            image={imageData[0].image}
-          />
-        </div>
+        <div className="flex flex-row gap-3 w-full flex-1 max-[1280px]:flex-2">
+          {/* Image Middle */}
+          <div className="flex flex-col w-full lg:flex-1 max-[1280px]:flex-1 gap-3">
+            {/* <Image/> */}
+            <Card
+              name={imageData[0].name}
+              email={imageData[0].email}
+              image={imageData[0].image}
+            />
+            <Card
+              name={imageData[0].name}
+              email={imageData[0].email}
+              image={imageData[0].image}
+            />
+          </div>
 
-        {/* Status/Quantity Right */}
-        <div className="w-full lg:flex-1 flex flex-col gap-3 lg:mt-0">
-          <RoomStatus />
-          <Quantity people={people[0].people} />
+          {/* Status/Quantity Right */}
+          <div className="w-full flex-1 flex flex-col gap-3 lg:mt-0">
+            <RoomStatus />
+            <Quantity people={people[0].people} />
+          </div>
         </div>
       </div>
 
       {/* Bottom Row */}
-      <div className="flex flex-col xl:flex-row gap-3 flex-1 ">
+      <div className="flex flex-col xl:flex-row gap-3 h-1/2 max-lg:h-1/1">
         {/* Date and Time Boxes + Temperature */}
         <div className="w-full xl:flex-1 flex flex-col gap-3 pb-0">
           <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">

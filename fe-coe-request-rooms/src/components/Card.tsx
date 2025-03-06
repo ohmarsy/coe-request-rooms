@@ -9,20 +9,21 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ image, name, email }) => {
   return (
-    <div className=" bg-white flex flex-col rounded-2xl shadow-sm overflow-hidden md:w-full h-full md:max-h-xs">
-      <div className="flex h-3/4">
+    <div className="bg-white flex flex-col rounded-2xl shadow-md overflow-hidden md:w-full h-full w-full">
+      <div className="h-1/1 flex justify-center">
         <img
-          className="max-h-48 w-full object-cover"
+          className="max-h-30 w-full object-cover rounded-t-2xl"
           src={image}
           alt={`${name}'s profile`}
         />
       </div>
-      <div className="h-1/4 flex flex-col justify-center items-center py-2">
-        <h2 className="antialiased mx-auto text-sm sm:text-base font-bold text-gray-600">
-          Name : {name}
+
+      <div className="h-1/1 flex flex-col justify-center items-center p-4">
+        <h2 className="text-base sm:text-lg font-semibold text-gray-700">
+          {name}
         </h2>
-        <p className="mx-auto text-sm text-clip text-gray-600 mt-2">
-          Email : {email}
+        <p className="text-sm text-gray-500 mt-1 truncate w-full text-center">
+          {email}
         </p>
       </div>
     </div>

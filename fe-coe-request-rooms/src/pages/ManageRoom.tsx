@@ -103,6 +103,21 @@ const ManageRoomPage = () => {
     {
       name: "EN4405",
     },
+    {
+      name: "EN4405",
+    },
+    {
+      name: "EN4405",
+    },
+    {
+      name: "EN4405",
+    },
+    {
+      name: "EN4405",
+    },
+    {
+      name: "EN4405",
+    },
   ];
 
   const [activeComponent, setActiveComponent] = React.useState<
@@ -143,7 +158,8 @@ const ManageRoomPage = () => {
           rooms={rooms}
           handleClickRoom={handleClickRoom}
           selectedRoom={selectedRoom}
-          maxRooms={8}
+          classNameOuter={"h-full"}
+          classNameInner={"max-h-[65vh] overflow-auto rounded-lg"}
         />
       </div>
       <div className="flex-2/3 h-full">

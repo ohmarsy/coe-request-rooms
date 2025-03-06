@@ -4,7 +4,8 @@ interface AllRoomProps {
   rooms: RoomProps[];
   handleClickRoom: (roomName: string) => void;
   selectedRoom?: string;
-  maxRooms?: number;
+  classNameInner?: string;
+  classNameOuter?: string;
 }
 
 interface RoomProps {
@@ -14,17 +15,17 @@ const AllRoom: React.FC<AllRoomProps> = ({
   rooms,
   handleClickRoom,
   selectedRoom,
-  maxRooms,
+  classNameInner,
+  classNameOuter
 }) => {
   return (
-    <div className={`w-full bg-white shadow-sm rounded-2xl flex flex-col h-full`}>
-      <div className="flex flex-col">
+    <div className={`w-full bg-white shadow-sm rounded-2xl flex flex-col ${classNameOuter}`}>
+      <div className="flex flex-col h-full">
         <p className="text-xl px-8 py-4 border-b border-b-gray-200 max-[1024px]:text-lg">
           All rooms
         </p>
         <div
-          className={`px-4 py-4 text-lg flex flex-col gap-2 overflow-scroll scrollbar-hidden`}
-          style={{ maxHeight: maxRooms ? `${maxRooms * 7}vh` : "auto" }}
+          className={`px-4 py-4 text-lg flex flex-col gap-2 overflow-scroll scrollbar-hidden ${classNameInner} max-[1280px]:max-h-[50vh]`}
         >
           {rooms.map((room, index) => (
             <p

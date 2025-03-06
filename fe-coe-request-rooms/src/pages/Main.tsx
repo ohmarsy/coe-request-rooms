@@ -72,7 +72,7 @@ const MainPage = () => {
         {/* Page Content */}
         <div
           className={`flex-1 p-4 transition-all duration-300 ease-in-out ${isOpen && !isMobile ? 'ml-64' : ''
-            } mt-16 w-full `}
+            } mt-16 min-w-[calc(100vw-295px)] min-h-[calc(100vh-64px)]`}
         >
           {renderComponent()}
         </div>
