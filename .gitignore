@@ -52,3 +52,5 @@ docker-compose.override.yml
 
 # Ignore local gitignore files inside services
 **/.gitignore
+
+.DS_Store
