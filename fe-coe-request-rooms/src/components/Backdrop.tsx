@@ -1,5 +1,3 @@
-import React from 'react'
-
 const Backdrop = ({ onClick }: { onClick: () => void }) => {
     return (
       <div

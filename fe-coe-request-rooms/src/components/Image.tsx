@@ -1,5 +1,3 @@
-import React from 'react';
-
 const Image = () => {
   return (
     <div className="flex flex-col bg-white shadow-sm rounded-2xl p-4 w-full">

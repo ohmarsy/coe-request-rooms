@@ -61,8 +61,8 @@ const RequestRooms = () => {
     ]
     return (
         <div>
-            <Navbar name={'Request rooms'} isOpen={false} />
-            <div className='flex flex-col items-center justify-center space-y-8 mt-8'>
+            <Navbar name={'Request rooms'} isMobile={false} />
+            <div className='flex flex-col items-center justify-center space-y-8 pt-16'>
                 <Switch leftname={'Request Rooms'} rightname={'Request History'} onClick_left={handleLeft} onClick_right={handleRight} />
                 <h1 className='text-xl font-medium'>{activeComponent === 'RequestRoom' ? 'Request to join rooms' : 'Request History'}</h1>
                 {activeComponent === 'RequestRoom' ? (

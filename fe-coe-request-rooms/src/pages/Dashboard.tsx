@@ -9,7 +9,6 @@ import Card from "../components/Card";
 import axios from "axios";
 import { getImages, ImageData } from "../services/getImages";
 import Table from "../components/Table";
-import ReportTablePage from "./ReportTable";
 import { useNavigate } from "react-router-dom";
 
 interface TemperatureIndoor {
