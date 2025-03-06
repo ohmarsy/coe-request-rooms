@@ -24,7 +24,7 @@ const AllRoom: React.FC<AllRoomProps> = ({
         </p>
         <div
           className={`px-4 py-4 text-lg flex flex-col gap-2 overflow-scroll scrollbar-hidden`}
-          style={{ maxHeight: maxRooms ? `${maxRooms * 7.75}vh` : "auto" }}
+          style={{ maxHeight: maxRooms ? `${maxRooms * 7}vh` : "auto" }}
         >
           {rooms.map((room, index) => (
             <p

@@ -143,7 +143,7 @@ const ManageRoomPage = () => {
           rooms={rooms}
           handleClickRoom={handleClickRoom}
           selectedRoom={selectedRoom}
-          maxRooms={7}
+          maxRooms={8}
         />
       </div>
       <div className="flex-2/3 h-full">
