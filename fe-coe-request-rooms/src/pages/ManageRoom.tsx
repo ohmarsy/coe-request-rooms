@@ -159,7 +159,7 @@ const ManageRoomPage = () => {
           handleClickRoom={handleClickRoom}
           selectedRoom={selectedRoom}
           classNameOuter={"h-full"}
-          classNameInner={"max-h-[65vh] overflow-auto rounded-lg"}
+          classNameInner={"max-h-[60vh] overflow-auto rounded-lg"}
         />
       </div>
       <div className="flex-2/3 h-full">

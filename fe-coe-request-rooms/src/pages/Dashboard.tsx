@@ -354,7 +354,7 @@ const DashboardPage = () => {
             rooms={rooms}
             handleClickRoom={handleClickRoom}
             classNameOuter={"min-h-[100%]"}
-            classNameInner={"max-h-[37.5vh] min-h-[16.375rem] h-full max-lg:h-[200px]"}
+            classNameInner={"max-h-[24vh] min-h-[13.75rem] max-lg:h-[200px]"}
           />
         </div>
 
@@ -362,11 +362,6 @@ const DashboardPage = () => {
           {/* Image Middle */}
           <div className="flex flex-col w-full lg:flex-1 max-[1280px]:flex-1 gap-3">
             {/* <Image/> */}
-            <Card
-              name={imageData[0].name}
-              email={imageData[0].email}
-              image={imageData[0].image}
-            />
             <Card
               name={imageData[0].name}
               email={imageData[0].email}

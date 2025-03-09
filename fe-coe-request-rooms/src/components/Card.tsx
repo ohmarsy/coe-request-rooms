@@ -12,7 +12,7 @@ const Card: React.FC<CardProps> = ({ image, name, email }) => {
     <div className="bg-white flex flex-col rounded-2xl shadow-md overflow-hidden md:w-full h-full w-full">
       <div className="h-1/1 flex justify-center">
         <img
-          className="max-h-30 w-full object-cover rounded-t-2xl"
+          className="max-h-40 w-full object-cover rounded-t-2xl"
           src={image}
           alt={`${name}'s profile`}
         />
