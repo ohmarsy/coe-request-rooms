@@ -50,7 +50,7 @@ const ManageRoomPage = () => {
       time: "16:45",
       date: "12-02-2025",
       room: "EN4102",
-    },    
+    },
   ];
 
   const initialValues = {
@@ -80,6 +80,8 @@ const ManageRoomPage = () => {
         title: "Add room successfully",
         icon: "success",
         confirmButtonText: "Ok",
+      }).then(() => {
+        window.location.reload();
       });
       setAddClick(false);
     } catch (error) {
@@ -99,7 +101,7 @@ const ManageRoomPage = () => {
     };
 
     fetchData();
-  }, [roomData]);
+  }, []);
 
   const [activeComponent, setActiveComponent] = React.useState<
     "RequestRooms" | "RequestHistory"
@@ -213,10 +215,15 @@ const ManageRoomPage = () => {
                 <div className="flex flex-col w-full px-8 ">
                   <p className="text-start">
                     {activeComponent === "RequestRooms"
-                      ? "RequestRooms" 
+                      ? "RequestRooms"
                       : "RequestHistory"}
                   </p>
-                  <Table columns={columns} data={data} maxRows={10} buttonShow={true}/>
+                  <Table
+                    columns={columns}
+                    data={data}
+                    maxRows={10}
+                    buttonShow={true}
+                  />
                 </div>
               </div>
             </div>

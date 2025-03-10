@@ -79,12 +79,13 @@ const Table: React.FC<TableProps> = ({
                     </button>
                     <button
                       // onClick={() => handleApprove(row)}
-                      className="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-green-700 focus:outline-none cursor-pointer"
+                      className="px-4 py-1 bg-red-500 text-white rounded-lg hover:bg-red-700 focus:outline-none cursor-pointer"
                     >
                       Reject
                     </button>
                   </td>
                 )}
+                
               </tr>
             ))}
           </tbody>
