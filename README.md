@@ -55,3 +55,11 @@ flask db init
 flask db migrate -m "Initial migration"
 flask db upgrade
 ```
+
+
+# how to use api
+add user
+
+add room
+
+add access-list
