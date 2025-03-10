@@ -156,8 +156,13 @@ const ManageRoomPage = () => {
   }, [selectedRoom]);
 
   return (
+<<<<<<< Updated upstream
     <div className="w-full h-full flex gap-3 overflow-x-scroll p-2">
       <div className="flex flex-col flex-1/3 h-full gap-3">
+=======
+    <div className="w-full h-full flex gap-3">
+      <div className="w-full flex flex-col flex-1/3 h-full gap-3">
+>>>>>>> Stashed changes
         <div className="w-full flex gap-3 items-center justify-center max-[1024px]:flex-col">
           <DateBox />
           <TimeBox />
@@ -172,11 +177,15 @@ const ManageRoomPage = () => {
           handleClickAdd={handleClickAdd}
         />
       </div>
+<<<<<<< Updated upstream
       <div className="flex-2/3 h-full">
         <Modal isOpen={addClick} onClose={handleClickAdd}>
           <p>Add room</p>
           
         </Modal>
+=======
+      <div className="flex-2/3 h-full w-full">
+>>>>>>> Stashed changes
         <div
           className={`h-full bg-white shadow-sm rounded-2xl text-[var(--text-color)] duration-300 ${
             animate ? "fade-in" : ""
@@ -194,7 +203,7 @@ const ManageRoomPage = () => {
                   {selectedRoom ?? " "}
                 </span>
               </p>
-              <div className="flex items-center justify-center flex-col">
+              <div className="w-full flex items-center justify-center flex-col">
                 <Switch
                   leftname={"Request Rooms"}
                   rightname={"Request History"}
@@ -204,7 +213,7 @@ const ManageRoomPage = () => {
                 <div className="flex flex-col w-full px-8 ">
                   <p className="text-start">
                     {activeComponent === "RequestRooms"
-                      ? "RequestRooms"
+                      ? "RequestRooms" 
                       : "RequestHistory"}
                   </p>
                   <Table columns={columns} data={data} maxRows={10} />

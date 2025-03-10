@@ -71,8 +71,12 @@ const MainPage = () => {
 
         {/* Page Content */}
         <div
+<<<<<<< Updated upstream
           className={`flex-1 p-2 transition-all duration-300 ease-in-out ${isOpen && !isMobile ? 'ml-64' : ''
             } mt-16 min-w-[calc(100vw-295px)] min-h-[calc(100vh-64px)]`}
+=======
+          className={`flex-1 p-4 transition-all duration-300 ease-in-out mt-16 w-full  ${isOpen && !isMobile ? 'ml-64' : ''} `}
+>>>>>>> Stashed changes
         >
           {renderComponent()}
         </div>

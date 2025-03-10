@@ -33,6 +33,7 @@ const columns = [
 ];
 
 const data = [
+<<<<<<< Updated upstream
   {
     room: "EN4102",
     status: "Occupied",
@@ -257,6 +258,14 @@ const data = [
     time: "19:35",
     date: "12-02-2025",
   },
+=======
+  { room: "EN4102", status: "Occupied", information: "35.8", device: "AN-3351-3", time: "16:45", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "35.8", device: "AN-3351-3", time: "17:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+  { room: "EM5103", status: "Occupied", information: "User_image", device: "CAM-32", time: "19:35", date: "12-02-2025" },
+>>>>>>> Stashed changes
 ];
 
 const DashboardPage = () => {
@@ -279,6 +288,7 @@ const DashboardPage = () => {
       try {
         const data = await getImages();
         setImageData(data);
+<<<<<<< Updated upstream
         const responseTempIndoor = await axios.get(
           "http://localhost:5003/temperature-indoor"
         );
@@ -286,6 +296,12 @@ const DashboardPage = () => {
           "http://localhost:5003/temperature-outdoor"
         );
         const responsePeople = await axios.get("http://localhost:5003/people");
+=======
+        const responseTempIndoor = await axios.get("http://localhost:5003/temperature-indoor");
+        const responseTempOutdoor = await axios.get("http://localhost:5003/temperature-outdoor");
+        const responsePeople = await axios.get("http://localhost:5003/people")
+
+>>>>>>> Stashed changes
 
         setTemperatureIndoorData(responseTempIndoor.data || {});
         setTemperatureOutdoorData(responseTempOutdoor.data || {});
