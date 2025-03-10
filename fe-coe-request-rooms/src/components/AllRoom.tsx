@@ -20,7 +20,6 @@ const AllRoom: React.FC<AllRoomProps> = ({
 }) => {
   return (
     <div className={`w-full bg-white shadow-sm rounded-2xl flex flex-col ${classNameOuter}`}>
-      <div className="flex flex-col h-full">
         <p className="text-xl px-8 py-4 border-b border-b-gray-200 max-[1024px]:text-lg">
           All rooms
         </p>
@@ -40,7 +39,6 @@ const AllRoom: React.FC<AllRoomProps> = ({
               {room.name}
             </p>
           ))}
-        </div>
       </div>
     </div>
   );
