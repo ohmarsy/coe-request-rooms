@@ -14,7 +14,6 @@ interface TableProps {
   data: RowData[];
   maxRows: number;
   pagination?: boolean;
-<<<<<<< HEAD
   buttonShow?: boolean;
   handleClickButton?: () => void;
 }
@@ -27,11 +26,6 @@ const Table: React.FC<TableProps> = ({
   buttonShow = false,
   handleClickButton,
 }) => {
-=======
-}
-
-const Table: React.FC<TableProps> = ({ columns, data, maxRows, pagination = true }) => {
->>>>>>> 00a65cc (feat(table): update under-line and  check-type image/temp)
   const [currentPage, setCurrentPage] = useState<number>(1);
   const rowsPerPage = maxRows;
   const totalPages = Math.ceil(data.length / rowsPerPage);
@@ -113,13 +107,9 @@ const Table: React.FC<TableProps> = ({ columns, data, maxRows, pagination = true
       {pagination && (
         <div className="flex justify-end items-center mt-4 space-x-2 text-gray-600 text-base">
           <button
-<<<<<<< HEAD
             className={`transition duration-200 ease-in-out ${
               currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
             }`}
-=======
-            className={`transition duration-200 ease-in-out ${currentPage === 1 ? "opacity-10 cursor-not-allowed" : ""}`}
->>>>>>> 00a65cc (feat(table): update under-line and  check-type image/temp)
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
@@ -128,30 +118,20 @@ const Table: React.FC<TableProps> = ({ columns, data, maxRows, pagination = true
           {Array.from({ length: totalPages }, (_, index) => (
             <button
               key={index}
-<<<<<<< HEAD
               className={`transition duration-200 ease-in-out ${
                 currentPage === index + 1
                   ? "text-black font-bold"
                   : "text-gray-600"
               }`}
-=======
-              className={`transition duration-200 ease-in-out ${currentPage === index + 1 ? "text-black font-bold" : "text-gray-300"
-                }`}
->>>>>>> 00a65cc (feat(table): update under-line and  check-type image/temp)
               onClick={() => setCurrentPage(index + 1)}
             >
               {index + 1}
             </button>
           ))}
           <button
-<<<<<<< HEAD
             className={`px-3 py-2 transition duration-200 ease-in-out ${
               currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
             }`}
-=======
-            className={`px-3 py-2 transition duration-200 ease-in-out ${currentPage === totalPages ? "opacity-10 cursor-not-allowed" : ""
-              }`}
->>>>>>> 00a65cc (feat(table): update under-line and  check-type image/temp)
             disabled={currentPage === totalPages}
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
@@ -162,10 +142,6 @@ const Table: React.FC<TableProps> = ({ columns, data, maxRows, pagination = true
         </div>
       )}
     </div>
-<<<<<<< HEAD
-=======
-
->>>>>>> 00a65cc (feat(table): update under-line and  check-type image/temp)
   );
 };
 
