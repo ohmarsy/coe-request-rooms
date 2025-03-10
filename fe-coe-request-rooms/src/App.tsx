@@ -1,13 +1,13 @@
-import "./App.css";
-import AppRouter from "./routes/AppRouter";
+import React from 'react';
+import AppRouter from './routes/AppRouter'; // นำเข้า AppRouter
+import { AuthProvider } from './context/AuthContext'; // นำเข้า AuthProvider
 
-function App() {
-
+const App: React.FC = () => {
   return (
-    <div>
-      <AppRouter/>
-    </div>
+    <AuthProvider>
+      <AppRouter />
+    </AuthProvider>
   );
-}
+};
 
 export default App;
