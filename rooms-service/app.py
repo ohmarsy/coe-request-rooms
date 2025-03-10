@@ -53,7 +53,6 @@ def add_room():
 def get_rooms():
     try:
         rooms = Room.query.all()
-        print(rooms)
         return jsonify([room.to_dict() for room in rooms])
     
     except Exception as e: 

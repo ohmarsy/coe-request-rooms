@@ -21,14 +21,22 @@ const ManageRoomPage = () => {
   const [roomData, setRoomData] = useState<RoomProps[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const columns = [
+  const columns_request = [
     { header: "Name", accessor: "name" },
     { header: "Date", accessor: "date" },
     { header: "Time", accessor: "time" },
     { header: "Room", accessor: "room" },
   ];
 
-  const data = [
+  const columns_history = [
+    { header: "Name", accessor: "name" },
+    { header: "Date", accessor: "date" },
+    { header: "Time", accessor: "time" },
+    { header: "Room", accessor: "room" },
+    { header: "Approved", accessor: "approved" },
+  ];
+
+  const data_request = [
     {
       name: "earth",
       time: "16:45",
@@ -52,6 +60,37 @@ const ManageRoomPage = () => {
       time: "16:45",
       date: "12-02-2025",
       room: "EN4102",
+    },
+  ];
+
+  const data_history = [
+    {
+      name: "earth",
+      time: "16:45",
+      date: "12-02-2025",
+      room: "EN4102",
+      approved: "Approved",
+    },
+    {
+      name: "earth",
+      time: "16:45",
+      date: "12-02-2025",
+      room: "EN4102",
+      approved: "Approved",
+    },
+    {
+      name: "earth",
+      time: "16:45",
+      date: "12-02-2025",
+      room: "EN4102",
+      approved: "Approved",
+    },
+    {
+      name: "earth",
+      time: "16:45",
+      date: "12-02-2025",
+      room: "EN4102",
+      approved: "Approved",
     },
   ];
 
@@ -221,12 +260,21 @@ const ManageRoomPage = () => {
                       ? "RequestRooms"
                       : "RequestHistory"}
                   </p>
-                  <Table
-                    columns={columns}
-                    data={data}
-                    maxRows={10}
-                    buttonShow={true}
-                  />
+                  {activeComponent === "RequestRooms" ? (
+                    <Table
+                      columns={columns_request}
+                      data={data_request}
+                      maxRows={10}
+                      buttonShow={true}
+                    />
+                  ) : (
+                    <Table
+                      columns={columns_history}
+                      data={data_history}
+                      maxRows={10}
+                      buttonShow={false}
+                    />
+                  )}
                 </div>
               </div>
             </div>
