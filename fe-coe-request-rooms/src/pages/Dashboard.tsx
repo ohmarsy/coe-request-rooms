@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import TemBox from "../components/TemBox";
 import DateBox from "../components/DateBox";
 import TimeBox from "../components/TimeBox";
-import AllRoom from "../components/AllRoom";
+import AllRoom, { RoomProps } from "../components/AllRoom";
 import RoomStatus from "../components/RoomStatus";
 import Quantity from "../components/Quantity";
 import Card from "../components/Card";
@@ -365,7 +365,7 @@ const DashboardPage = () => {
         {/* Report Table */}
         <div className="w-full xl:flex-2 bg-white  shadow-sm rounded-2xl p-6 h-full">
           <p className="text-xl font-bold py-2">Room Status Table</p>
-          <Table columns={columns} data={data} maxRows={4} pagination={false} />
+          <Table columns={columns} data={data} maxRows={4} pagination={false} buttonShow={false}/>
           <div className="flex justify-end pt-2">
             <p
               className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"

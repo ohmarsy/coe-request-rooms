@@ -19,47 +19,38 @@ const ManageRoomPage = () => {
   const [loading, setLoading] = useState(true);
 
   const columns = [
-    { header: "Room", accessor: "room" },
-    { header: "Room Status", accessor: "status" },
-    { header: "Information", accessor: "information" },
-    { header: "Device", accessor: "device" },
-    { header: "Time", accessor: "time" },
+    { header: "Name", accessor: "name" },
     { header: "Date", accessor: "date" },
+    { header: "Time", accessor: "time" },
+    { header: "Room", accessor: "room" },
+    // { header: "", accessor: "approved" },
   ];
 
   const data = [
     {
-      room: "EN4102",
-      status: "Occupied",
-      information: "35.8",
-      device: "AN-3351-3",
+      name: "earth",
       time: "16:45",
       date: "12-02-2025",
+      room: "EN4102",
     },
     {
-      room: "EM5103",
-      status: "Occupied",
-      information: "35.8",
-      device: "AN-3351-3",
-      time: "17:35",
+      name: "earth",
+      time: "16:45",
       date: "12-02-2025",
+      room: "EN4102",
     },
     {
-      room: "EM5103",
-      status: "Occupied",
-      information: "User_image",
-      device: "CAM-32",
-      time: "19:35",
+      name: "earth",
+      time: "16:45",
       date: "12-02-2025",
+      room: "EN4102",
     },
     {
-      room: "EM5103",
-      status: "Occupied",
-      information: "User_image",
-      device: "CAM-32",
-      time: "19:35",
+      name: "earth",
+      time: "16:45",
       date: "12-02-2025",
-    },
+      room: "EN4102",
+    },    
   ];
 
   const initialValues = {
@@ -225,7 +216,7 @@ const ManageRoomPage = () => {
                       ? "RequestRooms" 
                       : "RequestHistory"}
                   </p>
-                  <Table columns={columns} data={data} maxRows={10} />
+                  <Table columns={columns} data={data} maxRows={10} buttonShow={true}/>
                 </div>
               </div>
             </div>
