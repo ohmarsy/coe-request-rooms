@@ -8,6 +8,7 @@ import Table from '../components/Table';
 
 
 const RequestRooms = () => {
+    
     const [activeComponent, setActiveComponent] = React.useState<"RequestRoom" | "History">("RequestRoom");
     const handleLeft = () => {
         setActiveComponent("RequestRoom")
@@ -81,6 +82,7 @@ const RequestRooms = () => {
                                             <span>{room}</span>
                                         </label>
                                     ))}
+                                    <ErrorMessage name="room" component="div" className="text-red-500 text-sm" />
                                 </div>
                             </div>
                             <div className='flex-4 bg-white shadow-sm rounded-2xl p-8'>
@@ -129,7 +131,7 @@ const RequestRooms = () => {
                         </Form>
                     </Formik>
                 ) : (
-                    <div className='flex flex-col w-full px-8'>
+                    <div className='flex flex-col w-full px-8 space-y-8'>
                         <div className='flex flex-row space-x-4 justify-evenly items-center px-32'>
                             <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md'>
                                 <p className='text-sm'>Inprogress</p>

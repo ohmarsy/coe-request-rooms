@@ -35,6 +35,10 @@ username = `postgres`
 flask db stamp head
 flask db migrate -m "Fix schema"
 flask db upgrade
+or use 
+flask db revision --rev-id "versionID"
+flask db migrate
+flask db upgrade
 ```
 
 # new computer pls do

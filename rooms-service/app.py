@@ -64,32 +64,78 @@ def add_access_list():
     try:
         data = request.get_json()
 
-        required_fields = ["room_id", "from_date", "time", "approved", "user_id"]
+        required_fields = ["rooms", "date", "checkin", "checkout", "user_id"]
         if not all(k in data for k in required_fields):
             return jsonify({"error": "Missing required fields"}), 400
 
+        if not isinstance(data['rooms'], list) or len(data['rooms']) == 0:
+            return jsonify({"error": "Room must be a non-empty array"}), 400
+
         user_response = requests.get(f"{AUTH_SERVICE_URL}/user/{data['user_id']}")
-        
         if user_response.status_code != 200:
             return jsonify({"error": "User not found"}), 404
 
-        from_date = datetime.strptime(data['from_date'], "%Y-%m-%d %H:%M:%S")  
-        time = datetime.strptime(data['time'], "%Y-%m-%d %H:%M:%S")  
+        try:
+            date_obj = datetime.strptime(data['date'], "%Y-%m-%d").date()
+            
+            checkin_str = data['checkin']
+            if len(checkin_str.split(':')) == 2:
+                checkin_str += ":00"
+            checkin_time = datetime.strptime(checkin_str, "%H:%M:%S").time()
+            
+            checkout_str = data['checkout']
+            if len(checkout_str.split(':')) == 2:
+                checkout_str += ":00"
+            checkout_time = datetime.strptime(checkout_str, "%H:%M:%S").time()
+            
+        except ValueError as e:
+            return jsonify({"error": f"Invalid date or time format: {str(e)}"}), 400
 
-        new_access_list = AccessList(
-            room_id=data['room_id'],
-            from_date=from_date,
-            time=time,
-            approved=data['approved'],
-            user_id=data['user_id']
-        )
+        import uuid
+        request_group_id = str(uuid.uuid4())
+     
+        added_rooms = []
+        failed_rooms = []
+        
+        for room_id in data['rooms']:
+            try:
+                room = Room.query.filter_by(room_id=room_id).first()
+                if not room:
+                    failed_rooms.append({"room_id": room_id, "reason": "Room not found"})
+                    continue
+                
+                new_access_list = AccessList(
+                    room_id=room_id,
+                    date=date_obj,
+                    checkin=checkin_time,
+                    checkout=checkout_time,
+                    approved=False,
+                    user_id=data['user_id']
+                )
 
-        db.session.add(new_access_list)
+                db.session.add(new_access_list)
+                added_rooms.append(room_id)
+            except Exception as e:
+                failed_rooms.append({"room_id": room_id, "reason": str(e)})
+        
+        if not added_rooms:
+            db.session.rollback()
+            return jsonify({"error": "No rooms were added", "failed_rooms": failed_rooms}), 400
+
         db.session.commit()
-
-        return jsonify({"message": "Access list entry added successfully"}), 201
+        
+        result = {
+            "message": "Room access requests added successfully", 
+            "added_rooms": added_rooms
+        }
+        
+        if failed_rooms:
+            result["failed_rooms"] = failed_rooms
+            
+        return jsonify(result), 201
 
     except Exception as e:
+        db.session.rollback()
         return jsonify({"error": str(e)}), 500
     
 @app.route('/images/', methods=['GET'])
