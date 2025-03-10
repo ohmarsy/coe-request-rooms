@@ -175,19 +175,46 @@ def get_access_lists_by_user(user_id):
         if not access_lists:
             return jsonify([])  # ส่งค่ากลับเป็น array ว่าง ถ้าไม่พบข้อมูล
         
-        result = []
-        
-        for access in access_lists:
-            result.append({
+        result = [
+            {
                 "id": access.id,
                 "room_id": access.room_id,
-                "date": access.date,
+                "date": access.date.strftime('%Y-%m-%d'),
                 "checkin": str(access.checkin),
-                "checkout": str(access.checkin),
+                "checkout": str(access.checkout),  # Fix: should be checkout, not checkin
                 "approved": access.approved,
                 "user_id": access.user_id
-            })
-            return jsonify(result)
+            }
+            for access in access_lists
+        ]
+        
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/access-list/room/<string:room_id>', methods=['GET'])
+def get_access_lists_by_room(room_id):
+    try:
+        access_lists = AccessList.query.filter_by(room_id=room_id).all()
+        
+        if not access_lists:
+            return jsonify([]) 
+        
+        
+        result = [
+            {
+                "id": access.id,
+                "room_id": access.room_id,
+                "date": access.date.strftime('%Y-%m-%d'),
+                "checkin": str(access.checkin),
+                "checkout": str(access.checkout),  # Fix: should be checkout, not checkin
+                "approved": access.approved,
+                "user_id": access.user_id
+            }
+            for access in access_lists
+        ]
+        
+        return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
