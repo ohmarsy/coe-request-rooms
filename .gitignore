@@ -41,9 +41,9 @@ __pycache__/
 *.egg-info/
 venv/
 .venv/
-migrations/versions/*
-migrations/pycache/
-migrations/__pycache__/
+**/migrations/
+**/migrations/versions/*
+**/migrations/__pycache__/
 
 
 # Docker
