@@ -6,10 +6,14 @@ import Switch from "../components/Switch";
 import { useEffect } from "react";
 import Table from "../components/Table";
 import axios from "axios";
+import { Modal } from "../components/Modal";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 const ManageRoomPage = () => {
   const [selectedRoom, setSelectedRoom] = useState("");
   const [userData, setUserData] = useState(null);
+  const [addClick, setAddClick] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,6 +77,10 @@ const ManageRoomPage = () => {
   const handleClickRoom = (name: string) => {
     setSelectedRoom(name);
     console.log(JSON.stringify(userData, null, 2));
+  };
+
+  const handleClickAdd = () => {
+    setAddClick(!addClick);
   };
 
   const rooms = [
@@ -161,9 +169,14 @@ const ManageRoomPage = () => {
           classNameOuter={"h-full"}
           classNameInner={"max-h-[56vh] overflow-auto rounded-lg"}
           addRoom={true}
+          handleClickAdd={handleClickAdd}
         />
       </div>
       <div className="flex-2/3 h-full">
+        <Modal isOpen={addClick} onClose={handleClickAdd}>
+          <p>Add room</p>
+          
+        </Modal>
         <div
           className={`h-full bg-white shadow-sm rounded-2xl text-[var(--text-color)] duration-300 ${
             animate ? "fade-in" : ""
