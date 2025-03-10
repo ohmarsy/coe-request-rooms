@@ -8,7 +8,7 @@ export default function SignUpPage() {
     
     const handleSignUp = async (firstname?: string, lastname?: string, email?: string, password?: string, role?: string) => {
         try {
-            const response = await fetch('http://localhost:5002/add-user', {
+            const response = await fetch('http://localhost:5002/registers', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
