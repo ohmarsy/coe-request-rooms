@@ -10,6 +10,7 @@ import axios from "axios";
 import { getImages, ImageData } from "../services/getImages";
 import Table from "../components/Table";
 import { useNavigate } from "react-router-dom";
+import { getRooms } from "../services/getRooms";
 
 interface TemperatureIndoor {
   indoor: number;
@@ -264,6 +265,8 @@ const DashboardPage = () => {
 
   const [selectedRoom, setSelectedRoom] = useState("");
   const [imageData, setImageData] = useState<ImageData[]>([]);
+  const [roomData, setRoomData] = useState<RoomProps[]>([]);
+
   const [temperatureIndoor, setTemperatureIndoorData] = useState<
     TemperatureIndoor[]
   >([]);
@@ -278,7 +281,10 @@ const DashboardPage = () => {
     const fetchData = async () => {
       try {
         const data = await getImages();
+        const roomData = await getRooms();
         setImageData(data);
+        setRoomData(roomData);
+
         const responseTempIndoor = await axios.get("http://localhost:5003/temperature-indoor");
         const responseTempOutdoor = await axios.get("http://localhost:5003/temperature-outdoor");
         const responsePeople = await axios.get("http://localhost:5003/people")
@@ -302,41 +308,6 @@ const DashboardPage = () => {
     console.log(selectedRoom);
   };
 
-  const rooms = [
-    {
-      room_id: "EN4204",
-    },
-    {
-      room_id: "EN4203",
-    },
-    {
-      room_id: "EN4202",
-    },
-    {
-      room_id: "EN4202",
-    },
-    {
-      room_id: "EN4202",
-    },
-    {
-      room_id: "EN4202",
-    },
-    {
-      room_id: "EN4202",
-    },
-    {
-      room_id: "EN4202",
-    },
-    {
-      room_id: "EN4202",
-    },
-    {
-      room_id: "EN4202",
-    },
-    {
-      room_id: "EN4202",
-    },
-  ];
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -348,7 +319,7 @@ const DashboardPage = () => {
         {/* AllRoom Left */}
         <div className="w-full lg:flex-1">
           <AllRoom
-            rooms={rooms}
+            rooms={roomData}
             handleClickRoom={handleClickRoom}
             classNameOuter={"min-h-[100%]"}
             classNameInner={"max-h-[22vh] min-h-[13.75rem] max-lg:h-[200px]"}
