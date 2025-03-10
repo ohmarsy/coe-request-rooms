@@ -1,14 +1,8 @@
-"""Initial migration.
+"""empty message
 
-<<<<<<<< HEAD:auth-service/migrations/versions/d91b6d450039_.py
-Revision ID: d91b6d450039
+Revision ID: fdddcd26640e
 Revises: 
-Create Date: 2025-03-06 19:41:40.457246
-========
-Revision ID: b6fc669efbd2
-Revises: 
-Create Date: 2025-03-05 16:38:29.239583
->>>>>>>> 093ac90 (feat(auth): implement user authentication with sign-up and sign-in endpoints):auth-service/migrations/versions/b6fc669efbd2_initial_migration.py
+Create Date: 2025-03-10 11:26:44.590569
 
 """
 from alembic import op
@@ -16,11 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<<< HEAD:auth-service/migrations/versions/d91b6d450039_.py
-revision = 'd91b6d450039'
-========
-revision = 'b6fc669efbd2'
->>>>>>>> 093ac90 (feat(auth): implement user authentication with sign-up and sign-in endpoints):auth-service/migrations/versions/b6fc669efbd2_initial_migration.py
+revision = 'fdddcd26640e'
 down_revision = None
 branch_labels = None
 depends_on = None
