@@ -21,7 +21,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # CORS configuration
-CORS(app, supports_credentials=True)
+CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
 
 # Configure database and JWT settings
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://postgres:password@localhost:5432/authdb')
@@ -60,38 +60,13 @@ def token_required(f):
 def health_check():
     return jsonify({"message": "Hello from Auth Service!"})
 
-@app.route('/user/<int:id>', methods=['GET'])
-def get_user_by_id(id):
-    user = User.query.get(id)
-    
-    if user is None:
-        return jsonify({'message': 'User not found'}), 404
-    
-    # Return the user data as a JSON response
-    return jsonify({
-        'id': user.id,
-        'first_name': user.first_name,
-        'last_name': user.last_name,
-        'email': user.email,
-        'role': user.role,
-        'created_at': user.created_at
-    })
-    
 
-
-@app.route('/add-user', methods=['POST'])
-def add_user():
-    data = request.get_json()
+@app.route('/register', methods=['POST'])
+def register_user():
+    user_data = request.get_json()
+    required_fields = ['first_name', 'last_name', 'email', 'password', 'role']
     
-    # Extract user data
-    first_name = data.get('first_name')
-    last_name = data.get('last_name')
-    email = data.get('email')
-    password = data.get('password')
-    role = data.get('role', 'user')  # Default to 'user' if not provided
-    
-    # Validate required fields
-    if not all([first_name, last_name, email, password, role]):
+    if not all(user_data.get(field) for field in required_fields):
         return jsonify({"error": "All fields are required"}), 400
     
     existing_user = User.query.filter_by(email=user_data['email']).first()
@@ -124,13 +99,11 @@ def add_user():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-@app.route('/access_account', methods=['POST'])
-def access_account():
-    data = request.get_json()
-    
-    # Extract login credentials
-    email = data.get('email')
-    password = data.get('password')
+@app.route('/login', methods=['POST'])
+def login_user():
+    login_data = request.get_json()
+    email = login_data.get('email')
+    password = login_data.get('password')
     
     if not all([email, password]):
         return jsonify({"error": "Email and password are required"}), 400
@@ -196,25 +169,6 @@ def get_user_info(user):
             "role": user.role
         }
     }), 200
-
-@app.route('/user/<int:user_id>', methods=['GET'])
-@token_required
-def get_user_by_id(user_id, user):
-    user = User.query.get(user_id)
-    
-    if user is None:
-        return jsonify({'message': 'User not found'}), 404
-    
-    # Return the user data as a JSON response
-    return jsonify({
-        'id': user.id,
-        'first_name': user.first_name,
-        'last_name': user.last_name,
-        'email': user.email,
-        'role': user.role,
-        'created_at': user.created_at
-    })
-
 
 if __name__ == '__main__':
     with app.app_context():
