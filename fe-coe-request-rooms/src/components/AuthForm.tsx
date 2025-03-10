@@ -1,10 +1,10 @@
 import { useState } from "react";
-import Button
-    from "./Button";
+import Button from "./Button";
+
 interface AuthFormProps {
     buttonText: string;
     linkTo: string;
-    onSubmit: (firstname?: string, lastname?: string, email?: string, password?: string) => void;
+    onSubmit: (firstname?: string, lastname?: string, email?: string, password?: string, role?:string) => void;
     showDomainSelect?: boolean;
     showFirstNameLastName?: boolean;
 }
@@ -23,14 +23,20 @@ const AuthForm: React.FC<AuthFormProps> = ({
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+    
         const fullEmail = email.trim() + domain;
+    
+        const role = domain === "@kkumail.ac.th" ? "staff" : "student"; 
+
         onSubmit(
             showFirstNameLastName ? firstname.trim() : undefined,
             showFirstNameLastName ? lastname.trim() : undefined,
             fullEmail,
-            password
+            password,
+            role
         );
     };
+    
 
     return (
         <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto p-4 text-sm md:text-base">
@@ -110,7 +116,6 @@ const AuthForm: React.FC<AuthFormProps> = ({
             <Button typeButton="submit">
                 {buttonText}
             </Button>
-
         </form>
     );
 };
