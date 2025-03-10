@@ -142,16 +142,29 @@ def get_all_access_lists():
         result = []
         
         for access in access_list:
+            user_response = requests.get(f"{AUTH_SERVICE_URL}/user/{access.user_id}")
+            user_info = {}
+            if user_response.status_code == 200:
+                user_data = user_response.json()
+                user_info = {
+                    "first_name": user_data.get("first_name", ""),
+                    "last_name": user_data.get("last_name", "")
+                }
+                
+            full_name = f"{user_info.get('first_name', '')} {user_info.get('last_name', '')}".strip()
+
             result.append({
                 "id": access.id,
                 "room_id": access.room_id,
-                "date": access.date,
+                "date": access.date.strftime('%Y-%m-%d'),  
                 "checkin": str(access.checkin),
-                "checkout": str(access.checkin),
+                "checkout": str(access.checkout),
                 "approved": access.approved,
-                "user_id": access.user_id
+                "user_id": access.user_id,
+                "name": full_name
             })
-            return jsonify(result)
+        
+        return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     

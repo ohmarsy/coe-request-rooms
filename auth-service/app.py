@@ -45,8 +45,6 @@ def get_user_by_id(id):
         'created_at': user.created_at
     })
     
-
-
 @app.route('/add-user/', methods=['POST'])
 def add_user():
     data = request.get_json()
