@@ -12,13 +12,20 @@ import { addRoom } from "../services/addRoom";
 import { getRooms } from "../services/getRooms";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import {
+  AccessListData,
+  getAccessListByRoom,
+} from "../services/getAccessListByRoom";
+import { getUserById, UserData } from "../services/getUserById";
 
 const ManageRoomPage = () => {
   const navigate = useNavigate();
 
   const [selectedRoom, setSelectedRoom] = useState("");
+  const [accessListData, setAccessListData] = useState<AccessListData[]>([]);
   const [addClick, setAddClick] = useState(false);
   const [roomData, setRoomData] = useState<RoomProps[]>([]);
+  const [userData, setUserData] = useState<UserData[]>([]);
   const [loading, setLoading] = useState(true);
 
   const columns_request = [
@@ -36,32 +43,16 @@ const ManageRoomPage = () => {
     { header: "Approved", accessor: "approved" },
   ];
 
-  const data_request = [
-    {
-      name: "earth",
-      time: "16:45",
-      date: "12-02-2025",
-      room: "EN4102",
-    },
-    {
-      name: "earth",
-      time: "16:45",
-      date: "12-02-2025",
-      room: "EN4102",
-    },
-    {
-      name: "earth",
-      time: "16:45",
-      date: "12-02-2025",
-      room: "EN4102",
-    },
-    {
-      name: "earth",
-      time: "16:45",
-      date: "12-02-2025",
-      room: "EN4102",
-    },
-  ];
+  const data_request = accessListData.map((item) => {
+    const user = userData.find((user) => user.id === item.user_id);
+    return {
+      name: user?.first_name ?? "Unknown",
+      time: item.checkin,
+      date: item.date,
+      room: item.room_id,
+    };
+  });  
+  
 
   const data_history = [
     {
@@ -135,6 +126,19 @@ const ManageRoomPage = () => {
     const fetchData = async () => {
       try {
         const data = await getRooms();
+        if (selectedRoom) {
+          const accessData = await getAccessListByRoom(selectedRoom);
+          setAccessListData(accessData);
+
+          const userIds = accessData.map((item) => item.user_id);
+
+        const userPromises = userIds.map((id) => getUserById(id));
+        const users = await Promise.all(userPromises); 
+
+        const flattenedUsers = users.flat();
+
+        setUserData(flattenedUsers);
+        }
         setRoomData(data);
         setLoading(false);
       } catch (err) {
@@ -143,7 +147,7 @@ const ManageRoomPage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [selectedRoom]);
 
   const [activeComponent, setActiveComponent] = React.useState<
     "RequestRooms" | "RequestHistory"
@@ -188,7 +192,9 @@ const ManageRoomPage = () => {
           handleClickRoom={handleClickRoom}
           selectedRoom={selectedRoom}
           classNameOuter={"h-full"}
-          classNameInner={"max-h-[58vh] max-xl:max-h-[59vh] overflow-auto rounded-lg"}
+          classNameInner={
+            "max-h-[58vh] max-xl:max-h-[59vh] overflow-auto rounded-lg"
+          }
           addRoom={true}
           handleClickAdd={handleClickAdd}
         />
