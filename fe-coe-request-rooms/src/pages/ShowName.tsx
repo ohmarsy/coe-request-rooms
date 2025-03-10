@@ -35,7 +35,7 @@ const ShowName: React.FC = () => {
     const refreshAccessToken = async () => {
         const refreshToken = localStorage.getItem('refresh_token');
         try {
-            const response = await axios.post('http://localhost:5002/refresh', {
+            const response = await axios.post('http://localhost:5002/refresh/', {
                 refresh_token: refreshToken
             });
             const { access_token } = response.data;

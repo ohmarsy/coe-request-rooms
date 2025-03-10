@@ -21,7 +21,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # CORS configuration
-CORS(app, supports_credentials=True, origins=["http://localhost:5173"])
+CORS(app, supports_credentials=True)
 
 # Configure database and JWT settings
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://postgres:password@localhost:5432/authdb')
@@ -60,8 +60,23 @@ def token_required(f):
 def health_check():
     return jsonify({"message": "Hello from Auth Service!"})
 
+@app.route('/user/<int:id>/', methods=['GET'])
+def get_user_by_id(id):
+    user = User.query.get(id)
+    
+    if user is None:
+        return jsonify({'message': 'User not found'}), 404
+    
+    return jsonify({
+        'id': user.id,
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'email': user.email,
+        'role': user.role,
+        'created_at': user.created_at
+    })
 
-@app.route('/register', methods=['POST'])
+@app.route('/register/', methods=['POST'])
 def register_user():
     user_data = request.get_json()
     required_fields = ['first_name', 'last_name', 'email', 'password', 'role']
@@ -99,7 +114,7 @@ def register_user():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-@app.route('/login', methods=['POST'])
+@app.route('/login/', methods=['POST'])
 def login_user():
     login_data = request.get_json()
     email = login_data.get('email')
@@ -128,7 +143,7 @@ def login_user():
 
     return jsonify({"error": "Invalid email or password"}), 401
 
-@app.route('/refresh', methods=['POST'])
+@app.route('/refresh/', methods=['POST'])
 def refresh_token():
     refresh_token = request.json.get('refresh_token')
     if not refresh_token:
@@ -156,7 +171,7 @@ def refresh_token():
     except jwt.InvalidTokenError:
         return jsonify({"error": "Invalid refresh token"}), 401
 
-@app.route('/protected', methods=['GET'])
+@app.route('/protected/', methods=['GET'])
 @token_required
 def get_user_info(user):
     return jsonify({

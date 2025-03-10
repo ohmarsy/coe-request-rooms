@@ -22,7 +22,7 @@ export default function SignInPage() {
         console.log('Received values:', { firstname, lastname, email, password, role });
         setLoading(true); // Set loading state
         try {
-            const response = await axios.post('http://localhost:5002/login', { email, password }, { withCredentials: true });
+            const response = await axios.post('http://localhost:5002/login/', { email, password }, { withCredentials: true });
             if (response.status === 200) {
                 login(response.data.access_token, response.data.refresh_token); // Store tokens
                 navigate('/main'); 

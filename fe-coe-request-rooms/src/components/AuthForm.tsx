@@ -25,7 +25,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
         e.preventDefault();
         
         const fullEmail = email.trim() + domain;
-        console.log('Full email:', fullEmail); // Log full email for debugging
+        console.log('Full email:', fullEmail); 
         const role = domain === "@kku.ac.th" ? "staff" : "student"; 
 
         onSubmit(

@@ -12,9 +12,15 @@ export interface UserData {
 export const getUserById = async (
   user_id: number
 ): Promise<UserData[]> => {
+    const accessToken = localStorage.getItem('access_token');
+
   try {
     const response = await axios.get(
-      `http://localhost:5002/user/${user_id}`
+      `http://localhost:5002/user/${user_id}/`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    }
     );
     return response.data;
   } catch (err) {
