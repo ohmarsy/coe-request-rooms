@@ -7,28 +7,60 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import bcrypt
 import os
-from flask_cors import CORS
+import jwt
+import datetime
+import secrets
+from functools import wraps
 
+def generate_secret_key():
+    return secrets.token_hex(16)
+
+# Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app) 
 
-# Configure database
+# CORS configuration
+CORS(app, supports_credentials=True)
+
+# Configure database and JWT settings
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://postgres:password@localhost:5432/authdb')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', generate_secret_key())
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(minutes=15)
+app.config['JWT_REFRESH_TOKEN_EXPIRES'] = datetime.timedelta(days=7)
 
-# Initialize database
+# Initialize database and migration
 db.init_app(app)
 migrate = Migrate(app, db)
 
-CORS(app)
+# Middleware for JWT token verification
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = request.headers.get("Authorization")
+        if not token:
+            return jsonify({'message': 'Token is missing!'}), 403
+
+        try:
+            token = token.split(" ")[1] if " " in token else token
+            decoded = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
+            user = User.query.get(decoded['user_id'])
+            if not user:
+                return jsonify({'message': 'User not found!'}), 404
+            return f(user, *args, **kwargs)
+        except jwt.ExpiredSignatureError:
+            return jsonify({'message': 'Token has expired!'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'message': 'Invalid token!'}), 401
+
+    return decorated
 
 @app.route('/', methods=['GET'])
-def auth():
+def health_check():
     return jsonify({"message": "Hello from Auth Service!"})
 
-@app.route('/user/<int:id>/', methods=['GET'])
+@app.route('/user/<int:id>', methods=['GET'])
 def get_user_by_id(id):
     user = User.query.get(id)
     
@@ -45,7 +77,9 @@ def get_user_by_id(id):
         'created_at': user.created_at
     })
     
-@app.route('/add-user/', methods=['POST'])
+
+
+@app.route('/add-user', methods=['POST'])
 def add_user():
     data = request.get_json()
     
@@ -60,24 +94,19 @@ def add_user():
     if not all([first_name, last_name, email, password, role]):
         return jsonify({"error": "All fields are required"}), 400
     
-    # Check if user already exists
-    existing_user = User.query.filter_by(email=email).first()
+    existing_user = User.query.filter_by(email=user_data['email']).first()
     if existing_user:
         return jsonify({"error": "User with this email already exists"}), 409
-    
-    # Hash password for security
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-    
-    # Create new user
+
+    hashed_password = bcrypt.hashpw(user_data['password'].encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
     new_user = User(
-        first_name=first_name,
-        last_name=last_name,
-        email=email,
+        first_name=user_data['first_name'],
+        last_name=user_data['last_name'],
+        email=user_data['email'],
         password=hashed_password,
-        role=role
+        role=user_data.get('role', 'user')
     )
-    
-    # Save user to database
+
     try:
         db.session.add(new_user)
         db.session.commit()
@@ -95,7 +124,7 @@ def add_user():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-@app.route('/access_account/', methods=['POST'])
+@app.route('/access_account', methods=['POST'])
 def access_account():
     data = request.get_json()
     
@@ -103,31 +132,89 @@ def access_account():
     email = data.get('email')
     password = data.get('password')
     
-    # Validate required fields
     if not all([email, password]):
         return jsonify({"error": "Email and password are required"}), 400
     
-    # Find user by email
     user = User.query.filter_by(email=email).first()
-    
-    # Check if user exists and password is correct
     if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
+        access_token = jwt.encode({
+            'user_id': user.id,
+            'exp': datetime.datetime.utcnow() + app.config['JWT_ACCESS_TOKEN_EXPIRES']
+        }, app.config['SECRET_KEY'], algorithm='HS256')
+
+        refresh_token = jwt.encode({
+            'user_id': user.id,
+            'exp': datetime.datetime.utcnow() + app.config['JWT_REFRESH_TOKEN_EXPIRES']
+        }, app.config['SECRET_KEY'], algorithm='HS256')
+
         return jsonify({
             "message": "Login successful",
-            "user": {
-                "id": user.id,
-                "email": user.email,
-                "first_name": user.first_name,
-                "last_name": user.last_name,
-                "role": user.role
-            }
+            "access_token": access_token,
+            "refresh_token": refresh_token
         }), 200
-    else:
-        return jsonify({"error": "Invalid email or password"}), 401
 
-@app.route('/', methods=['GET'])
-def health_check():
-    return jsonify({"status": "API is running"}), 200
+    return jsonify({"error": "Invalid email or password"}), 401
+
+@app.route('/refresh', methods=['POST'])
+def refresh_token():
+    refresh_token = request.json.get('refresh_token')
+    if not refresh_token:
+        return jsonify({"error": "Refresh token is required"}), 400
+
+    try:
+        decoded = jwt.decode(refresh_token, app.config['SECRET_KEY'], algorithms=['HS256'])
+        user_id = decoded['user_id']
+        user = User.query.get(user_id)
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        access_token = jwt.encode({
+            'user_id': user.id,
+            'exp': datetime.datetime.utcnow() + app.config['JWT_ACCESS_TOKEN_EXPIRES']
+        }, app.config['SECRET_KEY'], algorithm='HS256')
+
+        return jsonify({
+            "access_token": access_token,
+            "refresh_token": refresh_token  # Return the same refresh token
+        }), 200
+
+    except jwt.ExpiredSignatureError:
+        return jsonify({"error": "Refresh token has expired"}), 401
+    except jwt.InvalidTokenError:
+        return jsonify({"error": "Invalid refresh token"}), 401
+
+@app.route('/protected', methods=['GET'])
+@token_required
+def get_user_info(user):
+    return jsonify({
+        'message': f'Hello, {user.first_name}! This is a protected route.',
+        'user': {
+            "id": user.id,
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "role": user.role
+        }
+    }), 200
+
+@app.route('/user/<int:user_id>', methods=['GET'])
+@token_required
+def get_user_by_id(user_id, user):
+    user = User.query.get(user_id)
+    
+    if user is None:
+        return jsonify({'message': 'User not found'}), 404
+    
+    # Return the user data as a JSON response
+    return jsonify({
+        'id': user.id,
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'email': user.email,
+        'role': user.role,
+        'created_at': user.created_at
+    })
+
 
 if __name__ == '__main__':
     with app.app_context():
