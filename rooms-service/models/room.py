@@ -8,3 +8,8 @@ class Room(db.Model):
     room_id = Column(String, primary_key=True)
 
     access_list = relationship("AccessList", back_populates="room", cascade="all, delete-orphan")
+
+    def to_dict(self):
+        return {
+            'room_id': self.room_id,
+        }

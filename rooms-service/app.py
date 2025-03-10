@@ -10,20 +10,16 @@ from dotenv import load_dotenv
 import os
 from flask_cors import CORS
 
-
-app = Flask(__name__)
-
 load_dotenv()
 
-
 app = Flask(__name__)
+CORS(app)
+
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://postgres:password@localhost:5433/roomdb')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 migrate = Migrate(app, db)
-
-CORS(app)
 
 AUTH_SERVICE_URL = "http://localhost:5002" 
 
@@ -51,6 +47,17 @@ def add_room():
     except Exception as e:
         db.session.rollback() 
         return jsonify({"error": "Failed to add room", "details": str(e)}), 500
+    
+
+@app.route('/rooms/', methods=['GET'])
+def get_rooms():
+    try:
+        rooms = Room.query.all()
+        print(rooms)
+        return jsonify([room.to_dict() for room in rooms])
+    
+    except Exception as e: 
+        return jsonify({"error": "Room service is unavailable", "details": str(e)}), 500
 
 @app.route('/access-list/', methods=['POST'])
 def add_access_list():

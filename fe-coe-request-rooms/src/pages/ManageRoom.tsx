@@ -1,34 +1,22 @@
 import React, { useState } from "react";
-import AllRoom from "../components/AllRoom";
+import AllRoom, { RoomProps } from "../components/AllRoom";
 import DateBox from "../components/DateBox";
 import TimeBox from "../components/TimeBox";
 import Switch from "../components/Switch";
 import { useEffect } from "react";
 import Table from "../components/Table";
-import axios from "axios";
 import { Modal } from "../components/Modal";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { addRoom } from "../services/addRoom";
+import { getRooms } from "../services/getRooms";
+import Swal from "sweetalert2";
 
 const ManageRoomPage = () => {
   const [selectedRoom, setSelectedRoom] = useState("");
-  const [userData, setUserData] = useState(null);
   const [addClick, setAddClick] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Make the API request
-        const response = await axios.get("http://localhost:5002/user/1");
-
-        setUserData(response.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const [roomData, setRoomData] = useState<RoomProps[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const columns = [
     { header: "Room", accessor: "room" },
@@ -74,59 +62,53 @@ const ManageRoomPage = () => {
     },
   ];
 
+  const initialValues = {
+    room_id: "",
+  };
+  const validationSchema = Yup.object({
+    room_id: Yup.string()
+      .required("Room name is required")
+      .trim()
+      .min(1, "Room name cannot be empty"),
+  });
+
   const handleClickRoom = (name: string) => {
     setSelectedRoom(name);
-    console.log(JSON.stringify(userData, null, 2));
   };
 
   const handleClickAdd = () => {
     setAddClick(!addClick);
   };
 
-  const rooms = [
-    {
-      name: "EN4204",
-    },
-    {
-      name: "EN4203",
-    },
-    {
-      name: "EN4201",
-    },
-    {
-      name: "EN4301",
-    },
-    {
-      name: "EN4302",
-    },
-    {
-      name: "EN4303",
-    },
-    {
-      name: "EN4402",
-    },
-    {
-      name: "EN4403",
-    },
-    {
-      name: "EN4405",
-    },
-    {
-      name: "EN4405",
-    },
-    {
-      name: "EN4405",
-    },
-    {
-      name: "EN4405",
-    },
-    {
-      name: "EN4405",
-    },
-    {
-      name: "EN4405",
-    },
-  ];
+  const handleSubmit = async (values: typeof initialValues) => {
+    console.log("Form values:", values);
+    try {
+      const roomData = await addRoom(values.room_id);
+      console.log("Room added successfully:", roomData);
+      Swal.fire({
+        title: "Add room successfully",
+        icon: "success",
+        confirmButtonText: "Ok",
+      });
+      setAddClick(false);
+    } catch (error) {
+      console.error("Error adding room:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getRooms();
+        setRoomData(data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    fetchData();
+  }, [roomData]);
 
   const [activeComponent, setActiveComponent] = React.useState<
     "RequestRooms" | "RequestHistory"
@@ -155,20 +137,19 @@ const ManageRoomPage = () => {
     }
   }, [selectedRoom]);
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
-<<<<<<< Updated upstream
-    <div className="w-full h-full flex gap-3 overflow-x-scroll p-2">
-      <div className="flex flex-col flex-1/3 h-full gap-3">
-=======
     <div className="w-full h-full flex gap-3">
       <div className="w-full flex flex-col flex-1/3 h-full gap-3">
->>>>>>> Stashed changes
         <div className="w-full flex gap-3 items-center justify-center max-[1024px]:flex-col">
           <DateBox />
           <TimeBox />
         </div>
         <AllRoom
-          rooms={rooms}
+          rooms={roomData}
           handleClickRoom={handleClickRoom}
           selectedRoom={selectedRoom}
           classNameOuter={"h-full"}
@@ -177,15 +158,43 @@ const ManageRoomPage = () => {
           handleClickAdd={handleClickAdd}
         />
       </div>
-<<<<<<< Updated upstream
       <div className="flex-2/3 h-full">
-        <Modal isOpen={addClick} onClose={handleClickAdd}>
-          <p>Add room</p>
-          
+        <Modal isOpen={addClick} onClose={handleClickAdd} title="Add new room">
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+          >
+            <Form className="flex flex-col space-y-4">
+              {/* Room Name Input */}
+              <div>
+                <label htmlFor="room_id" className="block text-sm font-normal">
+                  Room Name
+                </label>
+                <Field
+                  type="text"
+                  name="room_id"
+                  className="border border-gray-300 p-2 w-full rounded-md focus:ring focus:ring-blue-300"
+                />
+                <ErrorMessage
+                  name="room_id"
+                  component="div"
+                  className="text-red-500 text-sm mt-1"
+                />
+              </div>
+
+              {/* Submit Button */}
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-8 rounded-md transition disabled:bg-gray-400 cursor-pointer"
+                >
+                  Submit
+                </button>
+              </div>
+            </Form>
+          </Formik>
         </Modal>
-=======
-      <div className="flex-2/3 h-full w-full">
->>>>>>> Stashed changes
         <div
           className={`h-full bg-white shadow-sm rounded-2xl text-[var(--text-color)] duration-300 ${
             animate ? "fade-in" : ""

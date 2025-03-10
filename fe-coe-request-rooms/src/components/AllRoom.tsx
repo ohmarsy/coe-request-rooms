@@ -12,8 +12,8 @@ interface AllRoomProps {
   handleClickAdd?: () => void; 
 }
 
-interface RoomProps {
-  name: string;
+export interface RoomProps {
+  room_id: string;
 }
 const AllRoom: React.FC<AllRoomProps> = ({
   rooms,
@@ -42,14 +42,14 @@ const AllRoom: React.FC<AllRoomProps> = ({
         {rooms.map((room, index) => (
           <p
             className={`duration-100 rounded-lg w-full px-6 py-2 font-medium cursor-pointer ${
-              selectedRoom === room.name
+              selectedRoom === room.room_id
                 ? "hover:bg-[#2366d2] text-white bg-[var(--primary-color)]"
                 : "bg-gray-100 hover:bg-gray-300 "
             }`}
             key={index}
-            onClick={() => handleClickRoom(room.name)}
+            onClick={() => handleClickRoom(room.room_id)}
           >
-            {room.name}
+            {room.room_id}
           </p>
         ))}
       </div>
