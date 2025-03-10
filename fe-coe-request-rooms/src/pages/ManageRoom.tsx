@@ -148,7 +148,7 @@ const ManageRoomPage = () => {
   }, [selectedRoom]);
 
   return (
-    <div className="w-full h-full flex gap-3 overflow-x-scroll">
+    <div className="w-full h-full flex gap-3 overflow-x-scroll p-2">
       <div className="flex flex-col flex-1/3 h-full gap-3">
         <div className="w-full flex gap-3 items-center justify-center max-[1024px]:flex-col">
           <DateBox />
@@ -159,7 +159,7 @@ const ManageRoomPage = () => {
           handleClickRoom={handleClickRoom}
           selectedRoom={selectedRoom}
           classNameOuter={"h-full"}
-          classNameInner={"max-h-[60vh] overflow-auto rounded-lg"}
+          classNameInner={"max-h-[56vh] overflow-auto rounded-lg"}
           addRoom={true}
         />
       </div>

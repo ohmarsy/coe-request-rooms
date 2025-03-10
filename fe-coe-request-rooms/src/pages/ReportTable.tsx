@@ -40,7 +40,7 @@ const data = [
 
 const ReportTablePage: React.FC = () => {
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full p-2">
       <h1 className="text-xl font-bold mb-4">Room Status Table</h1>
       <Table columns={columns} data={data} maxRows={10} />
     </div>

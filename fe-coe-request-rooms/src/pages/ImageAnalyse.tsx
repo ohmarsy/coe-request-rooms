@@ -34,7 +34,7 @@ const ImageAnalysePage = () => {
   };
 
   return (
-    <div className="flex gap-5 flex-col h-[84vh] overflow-y-scroll pb-2 scrollbar-hidden">
+    <div className="flex gap-5 flex-col h-[84vh] overflow-y-scroll p-2 scrollbar-hidden">
       <Switch
         leftname="Human face"
         rightname="Number plate"
