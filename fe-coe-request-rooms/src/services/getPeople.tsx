@@ -4,9 +4,9 @@ export interface PeopleData {
     totalMovements: number;
     maxTimestamp: string;
 }
-export const getPeople = async (): Promise<PeopleData> => {
+export const getPeople = async (): Promise<PeopleData[]> => {
     try {
-        const response = await axios.get("https://1d0e-202-12-97-195.ngrok-free.app/motion/group");
+        const response = await axios.get("http://localhost:5003/people");
         return response.data;
     } catch (err) {
         console.error("Error fetching people:", err);

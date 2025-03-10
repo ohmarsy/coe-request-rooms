@@ -11,6 +11,7 @@ import { getImages, ImageData } from "../services/getImages";
 import Table from "../components/Table";
 import { useNavigate } from "react-router-dom";
 import { getRooms } from "../services/getRooms";
+import { getPeople, PeopleData } from "../services/getPeople";
 
 interface TemperatureIndoor {
   indoor: number;
@@ -18,10 +19,6 @@ interface TemperatureIndoor {
 
 interface TemperatureOutdoor {
   outdoor: number;
-}
-
-interface People {
-  people: number;
 }
 
 const columns = [
@@ -58,6 +55,7 @@ const data = [
     time: "19:35",
     date: "12-02-2025",
   },
+<<<<<<< Updated upstream
   {
     room: "EM5103",
     status: "Occupied",
@@ -186,6 +184,10 @@ const data = [
     time: "19:35",
     date: "12-02-2025",
   },
+=======
+
+ 
+>>>>>>> Stashed changes
 ];
 
 const DashboardPage = () => {
@@ -194,15 +196,15 @@ const DashboardPage = () => {
   const [selectedRoom, setSelectedRoom] = useState("");
   const [imageData, setImageData] = useState<ImageData[]>([]);
   const [roomData, setRoomData] = useState<RoomProps[]>([]);
-
+  const [peopleData, setPeopleData] = useState<PeopleData[]>([]);
+  
   const [temperatureIndoor, setTemperatureIndoorData] = useState<
     TemperatureIndoor[]
   >([]);
   const [temperatureOutdoor, setTemperatureOutdoorData] = useState<
     TemperatureOutdoor[]
   >([]);
-  const [people, setPeopleData] = useState<People[]>([]);
-
+  
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -210,17 +212,18 @@ const DashboardPage = () => {
       try {
         const data = await getImages();
         const roomData = await getRooms();
+        const peopleData = await getPeople();
         setImageData(data);
         setRoomData(roomData);
+        setPeopleData(peopleData);
+        console.log("peopleData: ", peopleData);
+        
 
         const responseTempIndoor = await axios.get("http://localhost:5003/temperature-indoor");
         const responseTempOutdoor = await axios.get("http://localhost:5003/temperature-outdoor");
-        const responsePeople = await axios.get("http://localhost:5003/people")
-
 
         setTemperatureIndoorData(responseTempIndoor.data || {});
         setTemperatureOutdoorData(responseTempOutdoor.data || {});
-        setPeopleData(responsePeople.data || {});
 
         setLoading(false);
       } catch (err) {
@@ -268,7 +271,7 @@ const DashboardPage = () => {
           {/* Status/Quantity Right */}
           <div className="w-full flex-1 flex flex-col gap-3 lg:mt-0">
             <RoomStatus />
-            <Quantity people={people[0].people} />
+            <Quantity peopleData={peopleData}/>
           </div>
         </div>
       </div>
