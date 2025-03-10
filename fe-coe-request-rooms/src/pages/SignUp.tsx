@@ -1,12 +1,37 @@
-// 📌 /pages/SignUpPage.tsx
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthLayout from "../layout/AuthLayout";
 import AuthForm from "../components/AuthForm";
 
 export default function SignUpPage() {
-    const handleSignUp = (firstname?: string, lastname?: string, email?: string, password?: string) => {
-        console.log("Signing up:", firstname, lastname, email, password);
+    const navigate = useNavigate();
+    
+    const handleSignUp = async (firstname?: string, lastname?: string, email?: string, password?: string, role?: string) => {
+        try {
+            const response = await fetch('http://localhost:5002/add-user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ 
+                    first_name: firstname,  
+                    last_name: lastname,  
+                    email, 
+                    password,
+                    role: role  
+                }),
+            });
+    
+            if (response.ok) {
+                console.log("Sign up successful!");
+                navigate('/sign-in');
+            } else {
+                const errorData = await response.json();
+                console.error("Error:", errorData.error || errorData.message);
+            }
+        } catch (error) {
+            console.error("Network error:", error);
+        }
     };
 
     return (
