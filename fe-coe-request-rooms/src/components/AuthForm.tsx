@@ -4,7 +4,7 @@ import Button from "./Button";
 interface AuthFormProps {
     buttonText: string;
     linkTo: string;
-    onSubmit: (firstname?: string, lastname?: string, email?: string, password?: string, role?:string) => void;
+    onSubmit: (firstname?: string, lastname?: string, email?: string, password?: string, role?: string) => void;
     showDomainSelect?: boolean;
     showFirstNameLastName?: boolean;
 }
@@ -19,14 +19,14 @@ const AuthForm: React.FC<AuthFormProps> = ({
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [domain, setDomain] = useState("@kkumail.ac.th");
+    const [domain, setDomain] = useState("@kku.ac.th");
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-    
+        
         const fullEmail = email.trim() + domain;
-    
-        const role = domain === "@kkumail.ac.th" ? "staff" : "student"; 
+        console.log('Full email:', fullEmail); // Log full email for debugging
+        const role = domain === "@kku.ac.th" ? "staff" : "student"; 
 
         onSubmit(
             showFirstNameLastName ? firstname.trim() : undefined,
@@ -37,7 +37,6 @@ const AuthForm: React.FC<AuthFormProps> = ({
         );
     };
     
-
     return (
         <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto p-4 text-sm md:text-base">
             {/* Firstname & Lastname */}
@@ -90,7 +89,7 @@ const AuthForm: React.FC<AuthFormProps> = ({
                             value={domain}
                             onChange={(e) => setDomain(e.target.value)}
                         >
-                            <option value="@kkumail.ac.th">@kkumail.ac.th</option>
+                            <option value="@kku.ac.th">@kku.ac.th</option>
                             <option value="@kkumail.com">@kkumail.com</option>
                         </select>
                     </div>
