@@ -31,7 +31,7 @@ AUTH_SERVICE_URL = "http://localhost:5002"
 def rooms():
     return jsonify({"message": "Hello from Rooms Service!"})
 
-@app.route('/add-room', methods=['POST'])
+@app.route('/add-room/', methods=['POST'])
 def add_room():
     try:
         data = request.get_json()
@@ -52,7 +52,7 @@ def add_room():
         db.session.rollback() 
         return jsonify({"error": "Failed to add room", "details": str(e)}), 500
 
-@app.route('/access-list', methods=['POST'])
+@app.route('/access-list/', methods=['POST'])
 def add_access_list():
     try:
         data = request.get_json()
@@ -85,7 +85,7 @@ def add_access_list():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
-@app.route('/images', methods=['GET'])
+@app.route('/images/', methods=['GET'])
 def get_images():
     mock_data = [
         {"id": 1, "image": "https://picsum.photos/id/237/200/300", "name": "Image 1 description", "email": "a@a.com"},
@@ -95,7 +95,7 @@ def get_images():
     
     return jsonify(mock_data)
 
-@app.route('/temperature-indoor', methods=['GET'])
+@app.route('/temperature-indoor/', methods=['GET'])
 def get_temp_indoor():
     mock_data = [
         {"id": 1, "indoor": 24},
@@ -103,7 +103,7 @@ def get_temp_indoor():
     
     return jsonify(mock_data)
 
-@app.route('/temperature-outdoor', methods=['GET'])
+@app.route('/temperature-outdoor/', methods=['GET'])
 def get_temp_outdoor():
     mock_data = [
         {"id": 1, "outdoor": 38},
@@ -111,7 +111,7 @@ def get_temp_outdoor():
     
     return jsonify(mock_data)
 
-@app.route('/people', methods=['GET'])
+@app.route('/people/', methods=['GET'])
 def get_people():
     mock_data = [
         {"id": 1, "people": 10},

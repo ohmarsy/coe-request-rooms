@@ -28,7 +28,7 @@ CORS(app)
 def auth():
     return jsonify({"message": "Hello from Auth Service!"})
 
-@app.route('/user/<int:id>', methods=['GET'])
+@app.route('/user/<int:id>/', methods=['GET'])
 def get_user_by_id(id):
     user = User.query.get(id)
     
@@ -47,7 +47,7 @@ def get_user_by_id(id):
     
 
 
-@app.route('/add-user', methods=['POST'])
+@app.route('/add-user/', methods=['POST'])
 def add_user():
     data = request.get_json()
     
@@ -97,7 +97,7 @@ def add_user():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-@app.route('/access_account', methods=['POST'])
+@app.route('/access_account/', methods=['POST'])
 def access_account():
     data = request.get_json()
     
