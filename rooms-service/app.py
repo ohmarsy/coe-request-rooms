@@ -90,9 +90,6 @@ def add_access_list():
             
         except ValueError as e:
             return jsonify({"error": f"Invalid date or time format: {str(e)}"}), 400
-
-        import uuid
-        request_group_id = str(uuid.uuid4())
      
         added_rooms = []
         failed_rooms = []
@@ -136,6 +133,50 @@ def add_access_list():
 
     except Exception as e:
         db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/access-list/all', methods=['GET'])
+def get_all_access_lists():
+    try:
+        access_list = AccessList.query.all()
+        result = []
+        
+        for access in access_list:
+            result.append({
+                "id": access.id,
+                "room_id": access.room_id,
+                "date": access.date,
+                "checkin": str(access.checkin),
+                "checkout": str(access.checkin),
+                "approved": access.approved,
+                "user_id": access.user_id
+            })
+            return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@app.route('/access-list/user/<int:user_id>', methods=['GET'])
+def get_access_lists_by_user(user_id):
+    try:
+        access_lists = AccessList.query.filter_by(user_id=user_id).all()
+        
+        if not access_lists:
+            return jsonify([])  # ส่งค่ากลับเป็น array ว่าง ถ้าไม่พบข้อมูล
+        
+        result = []
+        
+        for access in access_lists:
+            result.append({
+                "id": access.id,
+                "room_id": access.room_id,
+                "date": access.date,
+                "checkin": str(access.checkin),
+                "checkout": str(access.checkin),
+                "approved": access.approved,
+                "user_id": access.user_id
+            })
+            return jsonify(result)
+    except Exception as e:
         return jsonify({"error": str(e)}), 500
     
 @app.route('/images/', methods=['GET'])

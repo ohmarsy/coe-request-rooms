@@ -1,28 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../layout/Navbar'
 import Switch from '../components/Switch'
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
 import Table from '../components/Table';
+import Swal from 'sweetalert2';
 
 
 
 const RequestRooms = () => {
-    
+
     const [activeComponent, setActiveComponent] = React.useState<"RequestRoom" | "History">("RequestRoom");
+    const [rooms, setRooms] = useState<string[]>([]);
+
     const handleLeft = () => {
         setActiveComponent("RequestRoom")
     }
     const handleRight = () => {
         setActiveComponent("History")
     }
-    const rooms = [
-        'EN4101',
-        'EN4102',
-        'EN4103',
-        'EN4104',
-        'EN4105',
-    ]
+    const fetchRooms = async () => {
+        try {
+            const response = await fetch('http://127.0.0.1:5003/rooms');
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch rooms');
+            }
+
+            const data = await response.json();
+
+            // สมมติว่า API ส่งข้อมูลมาในรูปแบบ array ของ objects ที่มี field room_id
+            const roomIds = data.map((room: { room_id: string }) => room.room_id);
+            setRooms(roomIds);
+        } catch (error) {
+            console.error('Error fetching rooms:', error);
+        }
+    };
+    useEffect(() => {
+        fetchRooms();
+    }, []);
+    
     const initialValues = {
         room: [],
         date: '',
@@ -39,8 +56,54 @@ const RequestRooms = () => {
         firstName: Yup.string().required('First name is required'),
         lastName: Yup.string().required('Last name is required'),
     })
-    const handleSubmit = (values: typeof initialValues) => {
-        console.log('Form values:', values)
+    const handleSubmit = async (values: typeof initialValues, { resetForm }: FormikHelpers<typeof initialValues>) => {
+        Swal.fire({
+            title: 'Submitting...',
+            text: 'Please wait',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+        try {
+            const requestBody = {
+                rooms: values.room,
+                date: values.date,
+                checkin: values.checkin,
+                checkout: values.checkout,
+                user_id: 1
+            }
+            const response = await fetch('http://127.0.0.1:5003/access-list/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody),
+            })
+
+            if (!response.ok) {
+                throw new Error('Failed to submit')
+            }
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Your request has been submitted successfully',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#3085d6'
+            }).then(() => {
+                resetForm();
+            }
+            );
+        } catch {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to submit your request. Please try again.',
+                confirmButtonText: 'OK',
+                confirmButtonColor: '#d33'
+            });
+        }
     }
     const columns = [
         { header: 'Room ID', accessor: 'roomID', title: 'Room ID', dataIndex: 'roomID', key: 'roomID' },
@@ -138,11 +201,11 @@ const RequestRooms = () => {
                                 <p className='text-2xl font-bold'>0</p>
                             </div>
                             <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md'>
-                                    <p className='text-sm'>Approved</p>
+                                <p className='text-sm'>Approved</p>
                                 <p className='text-2xl font-bold'>0</p>
                             </div>
                             <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md'>
-                                    <p className='text-sm'>Reject</p>
+                                <p className='text-sm'>Reject</p>
                                 <p className='text-2xl font-bold'>0</p>
                             </div>
                         </div>
