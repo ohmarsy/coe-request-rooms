@@ -8,4 +8,8 @@ Flask-Migrate
 Flask-RESTx
 Flask-Swagger-UI
 bcrypt
+<<<<<<< HEAD
 PyJWT
+=======
+PyJWT
+>>>>>>> 3f667be (feat(auth): update route /user/<int:user_id> and update route sign-up)

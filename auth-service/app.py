@@ -171,9 +171,25 @@ def refresh_token():
     except jwt.InvalidTokenError:
         return jsonify({"error": "Invalid refresh token"}), 401
 
-@app.route('/protected/', methods=['GET'])
+@app.route('/user/<int:user_id>', methods=['GET'])
 @token_required
-def get_user_info(user):
+def get_user_by_id(user, user_id): 
+    fetched_user = User.query.get(user_id) 
+    if fetched_user is None:
+        return jsonify({'message': 'User not found'}), 404
+
+    return jsonify({
+        'id': fetched_user.id,
+        'first_name': fetched_user.first_name,
+        'last_name': fetched_user.last_name,
+        'email': fetched_user.email,
+        'role': fetched_user.role,
+        'created_at': fetched_user.created_at.isoformat()
+    })
+
+@app.route('/protected', methods=['GET'])
+@token_required
+def get_user_info(user):  # เปลี่ยนชื่อฟังก์ชันที่นี่
     return jsonify({
         'message': f'Hello, {user.first_name}! This is a protected route.',
         'user': {
@@ -185,7 +201,8 @@ def get_user_info(user):
         }
     }), 200
 
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all() 
-    app.run(host='0.0.0.0', port=5002, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
