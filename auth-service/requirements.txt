@@ -1,10 +1,18 @@
-flask
+Flask
 requests
-flask_sqlalchemy
+Flask-SQLAlchemy
 psycopg2-binary
-flask_cors
+Flask-CORS
 python-dotenv
+<<<<<<< HEAD
 flask-migrate
 flask-restx
 flask-swagger-ui
 bcrypt
+=======
+Flask-Migrate
+Flask-RESTx
+Flask-Swagger-UI
+bcrypt
+PyJWT
+>>>>>>> 8efe61b (chore: add requirements.txt for project dependencies)
