@@ -160,6 +160,7 @@ const ManageRoomPage = () => {
           selectedRoom={selectedRoom}
           classNameOuter={"h-full"}
           classNameInner={"max-h-[60vh] overflow-auto rounded-lg"}
+          addRoom={true}
         />
       </div>
       <div className="flex-2/3 h-full">
@@ -193,7 +194,7 @@ const ManageRoomPage = () => {
                       ? "RequestRooms"
                       : "RequestHistory"}
                   </p>
-                    <Table columns={columns} data={data} maxRows={10} />
+                  <Table columns={columns} data={data} maxRows={10} />
                 </div>
               </div>
             </div>
