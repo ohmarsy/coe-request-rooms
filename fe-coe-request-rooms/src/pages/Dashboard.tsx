@@ -115,14 +115,14 @@ const DashboardPage = () => {
   return (
     <div className="w-full h-full flex flex-col gap-3 p-2">
       {/* Top Column */}
-      <div className="flex flex-col lg:flex-row gap-3 flex-2 max-xl:flex-1 h-1/2 max-lg:h-1/1">
+      <div className="flex flex-col lg:flex-row gap-3 flex-2 max-xl:flex-1 h-1/2 max-xl:h-1/3 max-lg:h-1/1">
         {/* AllRoom Left */}
         <div className="w-full lg:flex-1">
           <AllRoom
             rooms={roomData}
             handleClickRoom={handleClickRoom}
             classNameOuter={"min-h-[100%]"}
-            classNameInner={"max-h-[22vh] min-h-[13.75rem] max-lg:h-[200px]"}
+            classNameInner={"max-h-[22vh] min-h-[13.75rem] max-lg:h-[200px] max-[1280px]:max-h-[155px]"}
           />
         </div>
 
@@ -146,7 +146,7 @@ const DashboardPage = () => {
       </div>
 
       {/* Bottom Row */}
-      <div className="flex flex-col xl:flex-row gap-3 h-1/2 max-lg:h-1/1">
+      <div className="flex flex-col xl:flex-row gap-3 h-1/1 max-lg:h-1/1">
         {/* Date and Time Boxes + Temperature */}
         <div className="w-full xl:flex-1 flex flex-col gap-3 pb-0">
           <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">
