@@ -10,9 +10,12 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { addRoom } from "../services/addRoom";
 import { getRooms } from "../services/getRooms";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const ManageRoomPage = () => {
+  const navigate = useNavigate();
+
   const [selectedRoom, setSelectedRoom] = useState("");
   const [addClick, setAddClick] = useState(false);
   const [roomData, setRoomData] = useState<RoomProps[]>([]);
@@ -23,7 +26,6 @@ const ManageRoomPage = () => {
     { header: "Date", accessor: "date" },
     { header: "Time", accessor: "time" },
     { header: "Room", accessor: "room" },
-    // { header: "", accessor: "approved" },
   ];
 
   const data = [
@@ -81,6 +83,7 @@ const ManageRoomPage = () => {
         icon: "success",
         confirmButtonText: "Ok",
       }).then(() => {
+        navigate("/main?menu=manage-room");
         window.location.reload();
       });
       setAddClick(false);
