@@ -60,22 +60,6 @@ def token_required(f):
 def health_check():
     return jsonify({"message": "Hello from Auth Service!"})
 
-@app.route('/user/<int:id>/', methods=['GET'])
-def get_user_by_id(id):
-    user = User.query.get(id)
-    
-    if user is None:
-        return jsonify({'message': 'User not found'}), 404
-    
-    return jsonify({
-        'id': user.id,
-        'first_name': user.first_name,
-        'last_name': user.last_name,
-        'email': user.email,
-        'role': user.role,
-        'created_at': user.created_at
-    })
-
 @app.route('/register/', methods=['POST'])
 def register_user():
     user_data = request.get_json()
@@ -171,7 +155,7 @@ def refresh_token():
     except jwt.InvalidTokenError:
         return jsonify({"error": "Invalid refresh token"}), 401
 
-@app.route('/user/<int:user_id>', methods=['GET'])
+@app.route('/user/<int:user_id>/', methods=['GET'])
 @token_required
 def get_user_by_id(user, user_id): 
     fetched_user = User.query.get(user_id) 
@@ -205,4 +189,4 @@ def get_user_info(user):  # เปลี่ยนชื่อฟังก์ช�
 if __name__ == '__main__':
     with app.app_context():
         db.create_all() 
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=5002, debug=True)
