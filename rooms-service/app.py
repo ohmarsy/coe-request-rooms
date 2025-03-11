@@ -272,51 +272,51 @@ def get_access_lists_by_room(room_id):
     
 
 
-@app.route('/images', methods=['GET'])
-def get_images():
-    mock_data = [
-        {"id": 1, "image": "https://picsum.photos/id/237/200/300", "name": "Image 1 description", "email": "a@a.com"},
-        {"id": 2, "image": "https://picsum.photos/seed/picsum/200/300", "name": "Image 2 description", "email": "b@b.com"},
-        {"id": 3, "image": "https://picsum.photos/200/300?grayscale", "name": "Image 3 description", "email": "c@c.com"}
-    ]
+# @app.route('/images', methods=['GET'])
+# def get_images():
+#     mock_data = [
+#         {"id": 1, "image": "https://picsum.photos/id/237/200/300", "name": "Image 1 description", "email": "a@a.com"},
+#         {"id": 2, "image": "https://picsum.photos/seed/picsum/200/300", "name": "Image 2 description", "email": "b@b.com"},
+#         {"id": 3, "image": "https://picsum.photos/200/300?grayscale", "name": "Image 3 description", "email": "c@c.com"}
+#     ]
     
-    return jsonify(mock_data)
+#     return jsonify(mock_data)
 
-@app.route('/temperature-indoor', methods=['GET'])
-def get_temp_indoor():
-    mock_data = [
-        {"id": 1, "indoor": 24},
-    ]
+# @app.route('/temperature-indoor', methods=['GET'])
+# def get_temp_indoor():
+#     mock_data = [
+#         {"id": 1, "indoor": 24},
+#     ]
     
-    return jsonify(mock_data)
+#     return jsonify(mock_data)
 
-@app.route('/temperature-outdoor', methods=['GET'])
-def get_temp_outdoor():
-    mock_data = [
-        {"id": 1, "outdoor": 38},
-    ]
+# @app.route('/temperature-outdoor', methods=['GET'])
+# def get_temp_outdoor():
+#     mock_data = [
+#         {"id": 1, "outdoor": 38},
+#     ]
     
-    return jsonify(mock_data)
+#     return jsonify(mock_data)
 
-@app.route('/people', methods=['GET'])
-def get_people():
-    mock_data = [
-        {"id": 1, "people": 10},
-    ]
+# @app.route('/people', methods=['GET'])
+# def get_people():
+#     mock_data = [
+#     {"totalMovements": 10, "maxTimestamp": "1741361899"}
+#     ]
     
-    return jsonify(mock_data)
+#     return jsonify(mock_data)
 
-@app.route('/report-table', methods=['GET'])
-def get_report_table():
-    mock_data = [
-        { "room": "EN4102", "status": "Occupied", "information": "35.8", "device": "AN-3351-3", "time": "16:45", "date": "12-02-2025" },
-        { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
-        { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
-        { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
-        { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
-        { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" }
-    ]
-    return jsonify(mock_data)
+# @app.route('/report-table', methods=['GET'])
+# def get_report_table():
+#     mock_data = [
+#         { "room": "EN4102", "status": "Occupied", "information": "35.8", "device": "AN-3351-3", "time": "16:45", "date": "12-02-2025" },
+#         { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
+#         { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
+#         { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
+#         { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
+#         { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" }
+#     ]
+#     return jsonify(mock_data)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5003)
