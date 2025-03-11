@@ -12,6 +12,7 @@ import Table from "../components/Table";
 import { useNavigate } from "react-router-dom";
 import { getRooms } from "../services/getRooms";
 import { getPeople, PeopleData } from "../services/getPeople";
+import { getReportTable, ReportTableData } from "../services/getReportTable";
 
 interface TemperatureIndoor {
   indoor: number;
@@ -30,35 +31,6 @@ const columns = [
   { header: "Date", accessor: "date" },
 ];
 
-const data = [
-  {
-    room: "EN4102",
-    status: "Occupied",
-    information: "35.8",
-    device: "AN-3351-3",
-    time: "16:45",
-    date: "12-02-2025",
-  },
-  {
-    room: "EM5103",
-    status: "Occupied",
-    information: "35.8",
-    device: "AN-3351-3",
-    time: "17:35",
-    date: "12-02-2025",
-  },
-  {
-    room: "EM5103",
-    status: "Occupied",
-    information: "User_image",
-    device: "CAM-32",
-    time: "19:35",
-    date: "12-02-2025",
-  },
-
- 
-];
-
 const DashboardPage = () => {
   const navigate = useNavigate();
 
@@ -66,6 +38,7 @@ const DashboardPage = () => {
   const [imageData, setImageData] = useState<ImageData[]>([]);
   const [roomData, setRoomData] = useState<RoomProps[]>([]);
   const [peopleData, setPeopleData] = useState<PeopleData[]>([]);
+  const [ReportTable, setReportTable] = useState<ReportTableData[]>([]);
   
   const [temperatureIndoor, setTemperatureIndoorData] = useState<
     TemperatureIndoor[]
@@ -82,10 +55,11 @@ const DashboardPage = () => {
         const data = await getImages();
         const roomData = await getRooms();
         const peopleData = await getPeople();
+        const dataTable = await getReportTable();
+        setReportTable(dataTable);
         setImageData(data);
         setRoomData(roomData);
         setPeopleData(peopleData);
-        console.log("peopleData: ", peopleData);
         
 
         const responseTempIndoor = await axios.get("http://localhost:5003/temperature-indoor");
@@ -165,7 +139,7 @@ const DashboardPage = () => {
         {/* Report Table */}
         <div className="w-full xl:flex-2 bg-white  shadow-sm rounded-2xl p-6 h-full">
           <p className="text-xl font-bold py-2">Room Status Table</p>
-          <Table columns={columns} data={data} maxRows={4} pagination={false} buttonShow={false}/>
+          <Table columns={columns} data={ReportTable} maxRows={6} pagination={false} buttonShow={false}/>
           <div className="flex justify-end pt-2">
             <p
               className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
