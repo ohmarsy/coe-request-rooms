@@ -6,7 +6,7 @@ import AllRoom, { RoomProps } from "../components/AllRoom";
 import RoomStatus from "../components/RoomStatus";
 import Quantity from "../components/Quantity";
 import Card from "../components/Card";
-// import axios from "axios";
+import axios from "axios";
 import { getImages, ImageData } from "../services/getImages";
 import Table from "../components/Table";
 import { useNavigate } from "react-router-dom";
@@ -14,14 +14,6 @@ import { getRooms } from "../services/getRooms";
 import { getPeople, PeopleData } from "../services/getPeople";
 import { getReportTable, ReportTableData } from "../services/getReportTable";
 import { AllTemperatureProps, getTemperature } from "../services/getTemperature";
-
-// interface TemperatureIndoor {
-//   indoor: number;
-// }
-
-// interface TemperatureOutdoor {
-//   outdoor: number;
-// }
 
 const columns = [
   { header: "Room", accessor: "room" },
@@ -38,17 +30,9 @@ const DashboardPage = () => {
   const [selectedRoom, setSelectedRoom] = useState("");
   const [imageData, setImageData] = useState<ImageData[]>([]);
   const [roomData, setRoomData] = useState<RoomProps[]>([]);
-  const [peopleData, setPeopleData] = useState<PeopleData[]>([]);
+  const [peopleData, setPeopleData] = useState<PeopleData>({ totalMovements: 0, maxTimestamp: "" });
   const [ReportTable, setReportTable] = useState<ReportTableData[]>([]);
   const [temperatureData, setTemperatureData] = useState<AllTemperatureProps | null>(null);
-
-
-  // const [temperatureIndoor, setTemperatureIndoorData] = useState<
-  //   TemperatureIndoor[]
-  // >([]);
-  // const [temperatureOutdoor, setTemperatureOutdoorData] = useState<
-  //   TemperatureOutdoor[]
-  // >([]);
 
   const [loading, setLoading] = useState(true);
 
@@ -66,12 +50,6 @@ const DashboardPage = () => {
         setPeopleData(peopleData);
         setTemperatureData(temperatureData);
 
-
-        // const responseTempIndoor = await axios.get("http://localhost:5003/temperature-indoor");
-        // const responseTempOutdoor = await axios.get("http://localhost:5003/temperature-outdoor");
-
-        // setTemperatureIndoorData(responseTempIndoor.data || {});
-        // setTemperatureOutdoorData(responseTempOutdoor.data || {});
 
         setLoading(false);
       } catch (err) {
@@ -91,6 +69,8 @@ const DashboardPage = () => {
     return <div>Loading...</div>;
   }
 
+  console.log('peopleData: ', peopleData);
+  
   return (
     <div className="w-full h-full flex flex-col gap-3 p-2">
       {/* Top Column */}
@@ -121,7 +101,12 @@ const DashboardPage = () => {
           {/* Status/Quantity Right */}
           <div className="w-full flex-1 flex flex-col gap-3 lg:mt-0">
             <RoomStatus />
-            <Quantity peopleData={peopleData} />
+            <Quantity peopleData={peopleData} 
+            />
+          
+            
+
+
           </div>
         </div>
       </div>

@@ -18,6 +18,7 @@ import {
 } from "../services/getAccessListByRoom";
 import { getUserById, UserData } from "../services/getUserById";
 import { putAccessApproved } from "../services/putAccessApproved";
+import { deleteAccess } from "../services/deleteAccess";
 
 const ManageRoomPage = () => {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ const ManageRoomPage = () => {
         time: item.checkin,
         date: item.date,
         room: item.room_id,
-        user_id: `${item.user_id}`,
+        id: `${item.id}`,
       };
     });
 
@@ -108,11 +109,11 @@ const ManageRoomPage = () => {
     }
   };
 
-  const handleApprove = (user_id: string, room_id: string) => {
-    const putData = putAccessApproved(true, user_id, room_id);
+  const handleApprove = (id: string) => {
+    const putData = putAccessApproved(true, id);
     console.log("Approve: ", putData);
     Swal.fire({
-      title: "Add room successfully",
+      title: "Approve access successfully",
       icon: "success",
       confirmButtonText: "Ok",
     }).then(() => {
@@ -121,6 +122,18 @@ const ManageRoomPage = () => {
     });
   };
 
+  const handleReject = async (id:string) => {
+    const deleteData = await deleteAccess(id);
+    console.log("Delete: ", deleteData);
+    Swal.fire({
+      title: "Delete access successfully",
+      icon: "success",
+      confirmButtonText: "Ok",
+    }).then(() => {
+      navigate("/main?menu=manage-room");
+      window.location.reload();
+    });
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -271,9 +284,12 @@ const ManageRoomPage = () => {
                       data={data_request}
                       maxRows={10}
                       buttonShow={true}
-                      handleApprove={(user_id: string, room: string) =>
-                        handleApprove(user_id, room)
+                      handleApprove={(id: string) =>
+                        handleApprove(id)
                       }
+                      handleReject={(id:string)=>{
+                        handleReject(id)
+                      }}
                     />
                   ) : (
                     <Table

@@ -1,9 +1,9 @@
 import axios from "axios";
 import { RoomProps } from "../components/AllRoom";
 
-export const putAccessApproved = async (approved: boolean, user_id: string, room_id: string): Promise<RoomProps> => {
+export const putAccessApproved = async (approved: boolean, id: string): Promise<RoomProps> => {
   try {
-    const response = await axios.put(`http://localhost:5003/access-list/approve/${user_id}/${room_id}`, {
+    const response = await axios.put(`http://localhost:5003/access-list/approve/${id}`, {
       approved
     });
 
