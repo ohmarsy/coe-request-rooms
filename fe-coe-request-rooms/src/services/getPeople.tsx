@@ -1,8 +1,10 @@
 import axios from "axios";
 
 export interface PeopleData {
-    totalMovements: number;
-    maxTimestamp: string;
+    // totalMovements: number;
+    // maxTimestamp: string;
+    id : number;
+    people: number
 }
 export const getPeople = async (): Promise<PeopleData[]> => {
     try {

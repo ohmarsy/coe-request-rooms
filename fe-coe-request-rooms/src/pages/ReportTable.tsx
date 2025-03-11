@@ -19,8 +19,8 @@ const ReportTablePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // const data = await getReportTable();
-        // setReportTable(data);
+        const data = await getReportTable();
+        setReportTable(data);
         setLoading(false);
       } catch (err) {
         console.error("Error fetching report table:", err);
