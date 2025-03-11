@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { getUserName } from "../services/getUserName";
+import { User } from "../pages/ShowName";
 
 interface NavbarProps {
   name: string;
@@ -9,7 +11,28 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ toggleSidebar, isMobile }) => {
-  const name = "User";
+  const [userName, setUserName] = useState<User>();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getUserName();
+        console.log("userName", data);
+
+        setUserName(data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-[var(--primary-color)] h-16 flex items-center justify-between px-6 shadow-md z-50">
@@ -24,7 +47,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar, isMobile }) => {
       </div>
 
       <h1 className="text-white text-lg font-bold">
-        {name}
+        {userName!.first_name ?? "User"}
       </h1>
     </nav>
   );
