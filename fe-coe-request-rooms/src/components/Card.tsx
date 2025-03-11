@@ -10,7 +10,11 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ image, name, email, page }) => {
   return (
-    <div className="bg-white flex-col rounded-2xl shadow-md overflow-hidden w-full h-[336px] flex-grow ">
+    <div
+      className={`bg-white flex-col rounded-2xl shadow-md overflow-hidden w-full flex-grow ${
+        page === "imageAnalyze" ? "" : " h-[300px] "
+      }`}
+    >
       <img
         className={`max-h-2/3 w-full object-cover rounded-t-2xl ${
           page === "imageAnalyze" ? "aspect-[3/2]" : " "
