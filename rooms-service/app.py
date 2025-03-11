@@ -252,7 +252,17 @@ def get_people():
     
     return jsonify(mock_data)
 
-
+@app.route('/report-table/', methods=['GET'])
+def get_report_table():
+    mock_data = [
+        { "room": "EN4102", "status": "Occupied", "information": "35.8", "device": "AN-3351-3", "time": "16:45", "date": "12-02-2025" },
+        { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
+        { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
+        { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
+        { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
+        { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" }
+    ]
+    return jsonify(mock_data)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5003)
