@@ -101,7 +101,7 @@ const RequestRooms = () => {
 
             const data = await response.json();
 
-            const formattedData = data.map((item: { id: number, room_id: string, date: string, checkin: string, checkout: string, approved: boolean }) => {
+            const formattedData = data.map((item: { id: number, room_id: string, date: string, checkin: string, checkout: string, approved: string }) => {
                 const dateObj = new Date(item.date);
                 const formattedDate = dateObj.toISOString().split('T')[0];
 
@@ -109,7 +109,7 @@ const RequestRooms = () => {
                 const checkinTime = item.checkin.substring(0, 5);
                 const checkoutTime = item.checkout.substring(0, 5);
 
-                const status = item.approved ? 'Approved' : 'Pending';
+                const status = item.approved == "approved" ? 'Approved' : 'Pending';
 
                 return {
                     key: item.id.toString(),

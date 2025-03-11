@@ -132,7 +132,7 @@ const DashboardPage = () => {
         {/* Report Table */}
         <div className="w-full xl:flex-2 bg-white  shadow-sm rounded-2xl p-6 h-full">
           <p className="text-xl font-bold py-2">Room Status Table</p>
-          <Table columns={columns} data={ReportTable} maxRows={4} pagination={false} buttonShow={false} />
+          <Table columns={columns} data={ReportTable} maxRows={3} pagination={false} buttonShow={false} />
           <div className="flex justify-end pt-2">
             <p
               className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"

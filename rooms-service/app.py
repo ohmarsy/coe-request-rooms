@@ -107,7 +107,7 @@ def add_access_list():
                     date=date_obj,
                     checkin=checkin_time,
                     checkout=checkout_time,
-                    approved=False,
+                    approved="pending",
                     user_id=data['user_id']
                 )
 
@@ -136,7 +136,7 @@ def add_access_list():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-@app.route('/access-list/approve/<int:id>', methods=['PUT'])
+@app.route('/access-list/approve/<string:id>', methods=['PUT'])
 def update_access_list_approval(id):
     try:
         data = request.get_json()
@@ -144,8 +144,6 @@ def update_access_list_approval(id):
         if 'approved' not in data:
             return jsonify({"error": "Missing required field: approved"}), 400
         
-        if not isinstance(data['approved'], bool):
-            return jsonify({"error": "approved must be a boolean value"}), 400
 
         access_entry = AccessList.query.get(id)
 
