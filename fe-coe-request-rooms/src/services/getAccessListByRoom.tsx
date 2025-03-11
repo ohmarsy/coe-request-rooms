@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export interface AccessListData {
-  approved: boolean;
+  approved: string;
   checkin: string;
   checkout: string;
   date: string;

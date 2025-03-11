@@ -107,7 +107,7 @@ def add_access_list():
                     date=date_obj,
                     checkin=checkin_time,
                     checkout=checkout_time,
-                    approved=False,
+                    approved="pending",
                     user_id=data['user_id']
                 )
 
@@ -136,7 +136,7 @@ def add_access_list():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-@app.route('/access-list/approve/<int:id>', methods=['PUT'])
+@app.route('/access-list/approve/<string:id>', methods=['PUT'])
 def update_access_list_approval(id):
     try:
         data = request.get_json()
@@ -144,8 +144,6 @@ def update_access_list_approval(id):
         if 'approved' not in data:
             return jsonify({"error": "Missing required field: approved"}), 400
         
-        if not isinstance(data['approved'], bool):
-            return jsonify({"error": "approved must be a boolean value"}), 400
 
         access_entry = AccessList.query.get(id)
 
@@ -225,7 +223,7 @@ def get_access_lists_by_user(user_id):
         access_lists = AccessList.query.filter_by(user_id=user_id).all()
         
         if not access_lists:
-            return jsonify([])  # ส่งค่ากลับเป็น array ว่าง ถ้าไม่พบข้อมูล
+            return jsonify([]) 
         
         result = [
             {
@@ -272,15 +270,15 @@ def get_access_lists_by_room(room_id):
     
 
 
-# @app.route('/images', methods=['GET'])
-# def get_images():
-#     mock_data = [
-#         {"id": 1, "image": "https://picsum.photos/id/237/200/300", "name": "Image 1 description", "email": "a@a.com"},
-#         {"id": 2, "image": "https://picsum.photos/seed/picsum/200/300", "name": "Image 2 description", "email": "b@b.com"},
-#         {"id": 3, "image": "https://picsum.photos/200/300?grayscale", "name": "Image 3 description", "email": "c@c.com"}
-#     ]
+@app.route('/images', methods=['GET'])
+def get_images():
+    mock_data = [
+        {"id": 1, "image": "https://picsum.photos/id/237/200/300", "name": "Image 1 description", "email": "a@a.com"},
+        {"id": 2, "image": "https://picsum.photos/seed/picsum/200/300", "name": "Image 2 description", "email": "b@b.com"},
+        {"id": 3, "image": "https://picsum.photos/200/300?grayscale", "name": "Image 3 description", "email": "c@c.com"}
+    ]
     
-#     return jsonify(mock_data)
+    return jsonify(mock_data)
 
 # @app.route('/temperature-indoor', methods=['GET'])
 # def get_temp_indoor():
@@ -306,17 +304,17 @@ def get_access_lists_by_room(room_id):
     
 #     return jsonify(mock_data)
 
-# @app.route('/report-table', methods=['GET'])
-# def get_report_table():
-#     mock_data = [
-#         { "room": "EN4102", "status": "Occupied", "information": "35.8", "device": "AN-3351-3", "time": "16:45", "date": "12-02-2025" },
-#         { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
-#         { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
-#         { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
-#         { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
-#         { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" }
-#     ]
-#     return jsonify(mock_data)
+@app.route('/report-table', methods=['GET'])
+def get_report_table():
+    mock_data = [
+        { "room": "EN4102", "status": "Occupied", "information": "35.8", "device": "AN-3351-3", "time": "16:45", "date": "12-02-2025" },
+        { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
+        { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
+        { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
+        { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" },
+        { "room": "EM5103", "status": "Occupied", "information": "User_image", "device": "CAM-32", "time": "19:35", "date": "12-02-2025" }
+    ]
+    return jsonify(mock_data)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5003)

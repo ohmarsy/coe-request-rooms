@@ -6,6 +6,7 @@ import AllRoom, { RoomProps } from "../components/AllRoom";
 import RoomStatus from "../components/RoomStatus";
 import Quantity from "../components/Quantity";
 import Card from "../components/Card";
+// import axios from "axios";
 import { getImages, ImageData } from "../services/getImages";
 import Table from "../components/Table";
 import { useNavigate } from "react-router-dom";
@@ -73,7 +74,7 @@ const DashboardPage = () => {
   return (
     <div className="w-full h-full flex flex-col gap-3 p-2">
       {/* Top Column */}
-      <div className="flex flex-col lg:flex-row gap-3 flex-2 max-xl:flex-1 h-1/2 max-xl:h-1/3 max-lg:h-1/1">
+      <div className="flex flex-col lg:flex-row  gap-3 flex-2 max-xl:flex-1 h-1/2 max-lg:h-1/1">
         {/* AllRoom Left */}
         <div className="w-full lg:flex-1">
           <AllRoom
@@ -84,14 +85,16 @@ const DashboardPage = () => {
           />
         </div>
 
-        <div className="flex flex-row gap-3 w-full flex-1 max-[1280px]:flex-2">
+        <div className="flex flex-row gap-3 w-full  flex-1 max-[1280px]:flex-2">
           {/* Image Middle */}
-          <div className="flex flex-col w-full lg:flex-1 max-[1280px]:flex-1 gap-3">
-            {/* <Image/> */}
-            <Card
+          <div className="flex flex-col w-full lg:flex-1 max-[1280px]:flex-1 gap-3  ">
+          {/* <Image/> */}
+          {/* <div className="flex w-full lg:flex-1 max-[1280px]:flex-1 gap-3  bg-red-500"> */}
+            <Card 
               name={imageData[0].name}
               email={imageData[0].email}
               image={imageData[0].image}
+              page="dashboard"
             />
           </div>
 
@@ -129,7 +132,7 @@ const DashboardPage = () => {
         {/* Report Table */}
         <div className="w-full xl:flex-2 bg-white  shadow-sm rounded-2xl p-6 h-full">
           <p className="text-xl font-bold py-2">Room Status Table</p>
-          <Table columns={columns} data={ReportTable} maxRows={4} pagination={false} buttonShow={false} />
+          <Table columns={columns} data={ReportTable} maxRows={3} pagination={false} buttonShow={false} />
           <div className="flex justify-end pt-2">
             <p
               className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"

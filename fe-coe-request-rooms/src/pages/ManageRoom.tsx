@@ -18,7 +18,6 @@ import {
 } from "../services/getAccessListByRoom";
 import { getUserById, UserData } from "../services/getUserById";
 import { putAccessApproved } from "../services/putAccessApproved";
-import { deleteAccess } from "../services/deleteAccess";
 
 const ManageRoomPage = () => {
   const navigate = useNavigate();
@@ -46,7 +45,7 @@ const ManageRoomPage = () => {
   ];
 
   const data_request = accessListData
-    .filter((item) => item.approved == false)
+    .filter((item) => item.approved == "pending")
     .map((item) => {
       const user = userData.find((user) => user.id === item.user_id);
       return {
@@ -59,7 +58,7 @@ const ManageRoomPage = () => {
     });
 
   const data_history = accessListData
-    .filter((item) => item.approved)
+    .filter((item) => item.approved == "approved" || item.approved == "rejected")
     .map((item) => {
       const user = userData.find((user) => user.id === item.user_id);
 
@@ -68,7 +67,7 @@ const ManageRoomPage = () => {
         time: item.checkin,
         date: item.date,
         room: item.room_id,
-        approved: item.approved ? "Approved" : "Pending",
+        approved: item.approved == "approved" ? "Approved" : "Rejected",
       };
     });
 
@@ -99,6 +98,7 @@ const ManageRoomPage = () => {
         title: "Add room successfully",
         icon: "success",
         confirmButtonText: "Ok",
+        confirmButtonColor: '#3085d6'
       }).then(() => {
         navigate("/main?menu=manage-room");
         window.location.reload();
@@ -110,30 +110,33 @@ const ManageRoomPage = () => {
   };
 
   const handleApprove = (id: string) => {
-    const putData = putAccessApproved(true, id);
+    const putData = putAccessApproved("approved", id);
     console.log("Approve: ", putData);
     Swal.fire({
       title: "Approve access successfully",
       icon: "success",
       confirmButtonText: "Ok",
+      confirmButtonColor: '#3085d6'
     }).then(() => {
       navigate("/main?menu=manage-room");
       window.location.reload();
     });
   };
 
-  const handleReject = async (id:string) => {
-    const deleteData = await deleteAccess(id);
-    console.log("Delete: ", deleteData);
+  const handleReject = (id: string) => {
+    const putData = putAccessApproved("rejected", id);
+    console.log("Approve: ", putData);
     Swal.fire({
-      title: "Delete access successfully",
+      title: "Reject access successfully",
       icon: "success",
       confirmButtonText: "Ok",
+      confirmButtonColor: '#3085d6'
     }).then(() => {
       navigate("/main?menu=manage-room");
       window.location.reload();
     });
-  }
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
