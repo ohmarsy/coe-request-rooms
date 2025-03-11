@@ -276,11 +276,6 @@ const ManageRoomPage = () => {
                   onClick_right={handleRight}
                 />
                 <div className="flex flex-col w-full px-8 ">
-                  <p className="text-start">
-                    {activeComponent === "RequestRooms"
-                      ? "RequestRooms"
-                      : "RequestHistory"}
-                  </p>
                   {activeComponent === "RequestRooms" ? (
                     <Table
                       columns={columns_request}
