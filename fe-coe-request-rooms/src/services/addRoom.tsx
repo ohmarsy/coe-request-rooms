@@ -3,7 +3,7 @@ import { RoomProps } from "../components/AllRoom";
 
 export const addRoom = async (room_id: string): Promise<RoomProps> => {
   try {
-    const response = await axios.post("http://localhost:5003/add-room/", {
+    const response = await axios.post("http://localhost:5003/add-room", {
       room_id: room_id,
     });
 

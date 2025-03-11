@@ -13,6 +13,8 @@ from flask_cors import CORS
 load_dotenv()
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
+
 CORS(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://postgres:password@localhost:5433/roomdb')
@@ -27,7 +29,7 @@ AUTH_SERVICE_URL = "http://localhost:5002"
 def rooms():
     return jsonify({"message": "Hello from Rooms Service!"})
 
-@app.route('/add-room/', methods=['POST'])
+@app.route('/add-room', methods=['POST'])
 def add_room():
     try:
         data = request.get_json()
@@ -58,7 +60,7 @@ def get_rooms():
     except Exception as e: 
         return jsonify({"error": "Room service is unavailable", "details": str(e)}), 500
 
-@app.route('/access-list/', methods=['POST'])
+@app.route('/access-list', methods=['POST'])
 def add_access_list():
     try:
         data = request.get_json()
@@ -218,7 +220,7 @@ def get_access_lists_by_room(room_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
-@app.route('/images/', methods=['GET'])
+@app.route('/images', methods=['GET'])
 def get_images():
     mock_data = [
         {"id": 1, "image": "https://picsum.photos/id/237/200/300", "name": "Image 1 description", "email": "a@a.com"},
@@ -228,7 +230,7 @@ def get_images():
     
     return jsonify(mock_data)
 
-@app.route('/temperature-indoor/', methods=['GET'])
+@app.route('/temperature-indoor', methods=['GET'])
 def get_temp_indoor():
     mock_data = [
         {"id": 1, "indoor": 24},
@@ -236,7 +238,7 @@ def get_temp_indoor():
     
     return jsonify(mock_data)
 
-@app.route('/temperature-outdoor/', methods=['GET'])
+@app.route('/temperature-outdoor', methods=['GET'])
 def get_temp_outdoor():
     mock_data = [
         {"id": 1, "outdoor": 38},
@@ -244,7 +246,7 @@ def get_temp_outdoor():
     
     return jsonify(mock_data)
 
-@app.route('/people/', methods=['GET'])
+@app.route('/people', methods=['GET'])
 def get_people():
     mock_data = [
         {"id": 1, "people": 10},
@@ -252,7 +254,7 @@ def get_people():
     
     return jsonify(mock_data)
 
-@app.route('/report-table/', methods=['GET'])
+@app.route('/report-table', methods=['GET'])
 def get_report_table():
     mock_data = [
         { "room": "EN4102", "status": "Occupied", "information": "35.8", "device": "AN-3351-3", "time": "16:45", "date": "12-02-2025" },

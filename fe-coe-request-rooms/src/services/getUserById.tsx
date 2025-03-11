@@ -16,7 +16,7 @@ export const getUserById = async (
 
   try {
     const response = await axios.get(
-      `http://localhost:5002/user/${user_id}/`, {
+      `http://localhost:5002/user/${user_id}`, {
         // headers: {
         //     Authorization: `Bearer ${accessToken}`
         // }

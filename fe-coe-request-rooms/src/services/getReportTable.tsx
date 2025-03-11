@@ -12,7 +12,7 @@ export interface ReportTableData {
 
 export const getReportTable = async (): Promise<ReportTableData[]> => {
     try {
-        const response = await axios.get("http://localhost:5003/report-table/");
+        const response = await axios.get("http://localhost:5003/report-table");
         return response.data;
     } catch (err) {
         console.error("Error fetching report table:", err);

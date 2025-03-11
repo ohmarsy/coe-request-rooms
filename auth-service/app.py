@@ -19,6 +19,7 @@ def generate_secret_key():
 load_dotenv()
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 
 # CORS configuration
 CORS(app, supports_credentials=True)
@@ -60,7 +61,7 @@ def token_required(f):
 def health_check():
     return jsonify({"message": "Hello from Auth Service!"})
 
-@app.route('/register/', methods=['POST'])
+@app.route('/register', methods=['POST'])
 def register_user():
     user_data = request.get_json()
     required_fields = ['first_name', 'last_name', 'email', 'password', 'role']
@@ -98,7 +99,7 @@ def register_user():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-@app.route('/login/', methods=['POST'])
+@app.route('/login', methods=['POST'])
 def login_user():
     login_data = request.get_json()
     email = login_data.get('email')
@@ -127,7 +128,7 @@ def login_user():
 
     return jsonify({"error": "Invalid email or password"}), 401
 
-@app.route('/refresh/', methods=['POST'])
+@app.route('/refresh', methods=['POST'])
 def refresh_token():
     refresh_token = request.json.get('refresh_token')
     if not refresh_token:
@@ -155,7 +156,7 @@ def refresh_token():
     except jwt.InvalidTokenError:
         return jsonify({"error": "Invalid refresh token"}), 401
 
-@app.route('/user/<int:user_id>/', methods=['GET'])
+@app.route('/user/<int:user_id>', methods=['GET'])
 def get_user_by_id(user_id): 
     fetched_user = User.query.get(user_id) 
     if fetched_user is None:
