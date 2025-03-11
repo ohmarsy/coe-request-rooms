@@ -15,7 +15,8 @@ interface TableProps {
   maxRows: number;
   pagination?: boolean;
   buttonShow?: boolean;
-  handleClickButton?: () => void;
+  handleApprove?: (user_id: string, room: string) => void;
+  handleReject?: () => void;
 }
 
 const Table: React.FC<TableProps> = ({
@@ -24,7 +25,8 @@ const Table: React.FC<TableProps> = ({
   maxRows,
   pagination = true,
   buttonShow = false,
-  handleClickButton,
+  handleApprove,
+  handleReject,
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const rowsPerPage = maxRows;
@@ -86,13 +88,15 @@ const Table: React.FC<TableProps> = ({
                 {buttonShow && (
                   <td className="px-4 py-2 whitespace-nowrap flex gap-2">
                     <button
-                      // onClick={() => handleApprove(row)}
+                      onClick={() => {
+                        handleApprove?.(row.user_id as string, row.room as string);
+                      }}
                       className="px-4 py-0.5 text-sm text-green-500 bg-green-200 shadow-2xs rounded-lg hover:bg-green-300 hover:text-green-700 focus:outline-none cursor-pointer"
                     >
                       Approve
                     </button>
                     <button
-                      // onClick={() => handleApprove(row)}
+                      onClick={handleReject}
                       className="px-4 py-0.5 text-sm text-red-500 bg-red-200 shadow-2xs rounded-lg hover:bg-red-300 hover:text-red-700 focus:outline-none cursor-pointer"
                     >
                       Reject

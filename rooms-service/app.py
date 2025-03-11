@@ -51,7 +51,7 @@ def add_room():
         return jsonify({"error": "Failed to add room", "details": str(e)}), 500
     
 
-@app.route('/rooms/', methods=['GET'])
+@app.route('/rooms', methods=['GET'])
 def get_rooms():
     try:
         rooms = Room.query.all()
@@ -135,6 +135,37 @@ def add_access_list():
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+
+@app.route('/access-list/approve/<int:user_id>/<string:room_id>', methods=['PUT'])
+def update_access_list_approval(user_id, room_id):
+    try:
+        data = request.get_json()
+
+        if 'approved' not in data:
+            return jsonify({"error": "Missing required field: approved"}), 400
+        
+        if not isinstance(data['approved'], bool):
+            return jsonify({"error": "approved must be a boolean value"}), 400
+
+        access_entry = AccessList.query.filter_by(user_id=user_id, room_id=room_id).first()
+
+        if not access_entry:
+            return jsonify({"error": f"No access entry found for user_id {user_id} and room_id {room_id}"}), 404
+
+        access_entry.approved = data['approved']
+        db.session.commit()
+
+        return jsonify({
+            "message": "Access list approval updated successfully",
+            "user_id": user_id,
+            "room_id": room_id,
+            "approved": data['approved']
+        }), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
 
 @app.route('/access-list/all', methods=['GET'])
 def get_all_access_lists():
@@ -220,6 +251,8 @@ def get_access_lists_by_room(room_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     
+
+
 @app.route('/images', methods=['GET'])
 def get_images():
     mock_data = [

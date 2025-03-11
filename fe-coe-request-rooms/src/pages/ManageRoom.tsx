@@ -17,6 +17,7 @@ import {
   getAccessListByRoom,
 } from "../services/getAccessListByRoom";
 import { getUserById, UserData } from "../services/getUserById";
+import { putAccessApproved } from "../services/putAccessApproved";
 
 const ManageRoomPage = () => {
   const navigate = useNavigate();
@@ -52,6 +53,7 @@ const ManageRoomPage = () => {
         time: item.checkin,
         date: item.date,
         room: item.room_id,
+        user_id: `${item.user_id}`,
       };
     });
 
@@ -91,7 +93,7 @@ const ManageRoomPage = () => {
     console.log("Form values:", values);
     try {
       const roomData = await addRoom(values.room_id);
-      console.log("Room added successfully:", roomData);
+      console.log("Room added successfully: ", roomData);
       Swal.fire({
         title: "Add room successfully",
         icon: "success",
@@ -104,6 +106,19 @@ const ManageRoomPage = () => {
     } catch (error) {
       console.error("Error adding room:", error);
     }
+  };
+
+  const handleApprove = (user_id: string, room_id: string) => {
+    const putData = putAccessApproved(true, user_id, room_id);
+    console.log("Approve: ", putData);
+    Swal.fire({
+      title: "Add room successfully",
+      icon: "success",
+      confirmButtonText: "Ok",
+    }).then(() => {
+      navigate("/main?menu=manage-room");
+      window.location.reload();
+    });
   };
 
   useEffect(() => {
@@ -256,6 +271,9 @@ const ManageRoomPage = () => {
                       data={data_request}
                       maxRows={10}
                       buttonShow={true}
+                      handleApprove={(user_id: string, room: string) =>
+                        handleApprove(user_id, room)
+                      }
                     />
                   ) : (
                     <Table
