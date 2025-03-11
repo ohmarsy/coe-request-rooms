@@ -171,6 +171,7 @@ def get_user_by_id(user_id):
         'created_at': fetched_user.created_at.isoformat()
     })
 
+# if u want to get user data use this endpoint to get
 @app.route('/protected', methods=['GET'])
 @token_required
 def get_user_info(user):  # เปลี่ยนชื่อฟังก์ชันที่นี่

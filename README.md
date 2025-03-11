@@ -67,3 +67,13 @@ add user
 add room
 
 add access-list
+
+# if u stuck about jwt
+
+first try u should run this command
+
+```
+pip3 uninstall jwt
+pip3 uninstall PyJWT
+pip3 install PyJWT
+```
