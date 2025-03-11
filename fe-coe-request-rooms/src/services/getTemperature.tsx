@@ -19,7 +19,7 @@ interface Outside {
 
 export const getTemperature = async (): Promise<AllTemperatureProps> => {
     try {
-        const response = await axios.get("https://6d2b-202-28-119-45.ngrok-free.app/temp");
+        const response = await axios.get("http://10.161.112.106:8000/temp");
         console.log('temp data: ', response.data);
         return response.data;
     } catch (err) {
