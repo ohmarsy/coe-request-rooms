@@ -38,8 +38,6 @@ const Table: React.FC<TableProps> = ({
     return !isNaN(Number(value));
   }
 
-
-
   return (
     <div className="overflow-x-auto">
       <div className="w-full overflow-x-auto  whitespace-nowrap">
@@ -68,17 +66,22 @@ const Table: React.FC<TableProps> = ({
                   <td key={colIndex} className="px-4 py-2 whitespace-nowrap">
                     {col.accessor === "information" ? (
                       checkTypeDataInfo(row[col.accessor]) ? (
-                        <span className="">{row[col.accessor]}</span> 
+                        <span>{row[col.accessor]}</span>
                       ) : (
                         <a href="#" className="text-blue-600 underline">
                           {row[col.accessor]}
                         </a>
                       )
+                    ) : col.accessor === "approved" ? (
+                      row[col.accessor] === "Approved" ? (
+                        <p className="text-green-500">{row[col.accessor]}</p>
+                      ) : (
+                        <p className="text-red-500">{row[col.accessor]}</p>
+                      )
                     ) : (
                       row[col.accessor]
                     )}
                   </td>
-
                 ))}
                 {buttonShow && (
                   <td className="px-4 py-2 whitespace-nowrap flex gap-2">
@@ -96,7 +99,6 @@ const Table: React.FC<TableProps> = ({
                     </button>
                   </td>
                 )}
-                
               </tr>
             ))}
           </tbody>

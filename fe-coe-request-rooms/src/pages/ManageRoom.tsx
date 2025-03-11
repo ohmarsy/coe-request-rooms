@@ -43,47 +43,31 @@ const ManageRoomPage = () => {
     { header: "Approved", accessor: "approved" },
   ];
 
-  const data_request = accessListData.map((item) => {
-    const user = userData.find((user) => user.id === item.user_id);
-    return {
-      name: user?.first_name ?? "Unknown",
-      time: item.checkin,
-      date: item.date,
-      room: item.room_id,
-    };
-  });  
-  
+  const data_request = accessListData
+    .filter((item) => item.approved == false)
+    .map((item) => {
+      const user = userData.find((user) => user.id === item.user_id);
+      return {
+        name: user?.first_name ?? "Unknown",
+        time: item.checkin,
+        date: item.date,
+        room: item.room_id,
+      };
+    });
 
-  const data_history = [
-    {
-      name: "earth",
-      time: "16:45",
-      date: "12-02-2025",
-      room: "EN4102",
-      approved: "Approved",
-    },
-    {
-      name: "earth",
-      time: "16:45",
-      date: "12-02-2025",
-      room: "EN4102",
-      approved: "Approved",
-    },
-    {
-      name: "earth",
-      time: "16:45",
-      date: "12-02-2025",
-      room: "EN4102",
-      approved: "Approved",
-    },
-    {
-      name: "earth",
-      time: "16:45",
-      date: "12-02-2025",
-      room: "EN4102",
-      approved: "Approved",
-    },
-  ];
+  const data_history = accessListData
+    .filter((item) => item.approved)
+    .map((item) => {
+      const user = userData.find((user) => user.id === item.user_id);
+
+      return {
+        name: user ? user.first_name : "Unknown",
+        time: item.checkin,
+        date: item.date,
+        room: item.room_id,
+        approved: item.approved ? "Approved" : "Pending",
+      };
+    });
 
   const initialValues = {
     room_id: "",
@@ -132,12 +116,12 @@ const ManageRoomPage = () => {
 
           const userIds = accessData.map((item) => item.user_id);
 
-        const userPromises = userIds.map((id) => getUserById(id));
-        const users = await Promise.all(userPromises); 
+          const userPromises = userIds.map((id) => getUserById(id));
+          const users = await Promise.all(userPromises);
 
-        const flattenedUsers = users.flat();
+          const flattenedUsers = users.flat();
 
-        setUserData(flattenedUsers);
+          setUserData(flattenedUsers);
         }
         setRoomData(data);
         setLoading(false);
