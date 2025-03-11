@@ -62,6 +62,7 @@ const DashboardPage = () => {
 
   const handleClickRoom = (name: string) => {
     setSelectedRoom(name);
+  
     console.log(selectedRoom);
   };
 
@@ -80,6 +81,7 @@ const DashboardPage = () => {
           <AllRoom
             rooms={roomData}
             handleClickRoom={handleClickRoom}
+            selectedRoom={selectedRoom}
             classNameOuter={"min-h-[100%]"}
             classNameInner={"max-h-[22vh] min-h-[13.75rem] max-lg:h-[200px] max-[1280px]:max-h-[155px]"}
           />
@@ -103,10 +105,6 @@ const DashboardPage = () => {
             <RoomStatus />
             <Quantity peopleData={peopleData} 
             />
-          
-            
-
-
           </div>
         </div>
       </div>
