@@ -1,20 +1,14 @@
 import axios from "axios";
 
+export interface TemperatureData {
+    Location: string;
+    Timestamps: number;
+    Temperature: number;
+}
+
 export interface AllTemperatureProps {
-    A: Inside[];
-    B: Outside[];
-}
-
-interface Inside {
-    Location: string;
-    Timestamps: number;
-    Temperature: number;
-}
-
-interface Outside {
-    Location: string;
-    Timestamps: number;
-    Temperature: number;
+    Inside: TemperatureData;
+    Outside: TemperatureData;
 }
 
 export const getTemperature = async (): Promise<AllTemperatureProps> => {

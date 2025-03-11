@@ -13,14 +13,15 @@ import { useNavigate } from "react-router-dom";
 import { getRooms } from "../services/getRooms";
 import { getPeople, PeopleData } from "../services/getPeople";
 import { getReportTable, ReportTableData } from "../services/getReportTable";
+import { AllTemperatureProps, getTemperature } from "../services/getTemperature";
 
-interface TemperatureIndoor {
-  indoor: number;
-}
+// interface TemperatureIndoor {
+//   indoor: number;
+// }
 
-interface TemperatureOutdoor {
-  outdoor: number;
-}
+// interface TemperatureOutdoor {
+//   outdoor: number;
+// }
 
 const columns = [
   { header: "Room", accessor: "room" },
@@ -39,14 +40,16 @@ const DashboardPage = () => {
   const [roomData, setRoomData] = useState<RoomProps[]>([]);
   const [peopleData, setPeopleData] = useState<PeopleData[]>([]);
   const [ReportTable, setReportTable] = useState<ReportTableData[]>([]);
-  
-  const [temperatureIndoor, setTemperatureIndoorData] = useState<
-    TemperatureIndoor[]
-  >([]);
-  const [temperatureOutdoor, setTemperatureOutdoorData] = useState<
-    TemperatureOutdoor[]
-  >([]);
-  
+  const [temperatureData, setTemperatureData] = useState<AllTemperatureProps | null>(null);
+
+
+  // const [temperatureIndoor, setTemperatureIndoorData] = useState<
+  //   TemperatureIndoor[]
+  // >([]);
+  // const [temperatureOutdoor, setTemperatureOutdoorData] = useState<
+  //   TemperatureOutdoor[]
+  // >([]);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -56,17 +59,19 @@ const DashboardPage = () => {
         const roomData = await getRooms();
         const peopleData = await getPeople();
         const dataTable = await getReportTable();
+        const temperatureData = await getTemperature();
         setReportTable(dataTable);
         setImageData(data);
         setRoomData(roomData);
         setPeopleData(peopleData);
-        
+        setTemperatureData(temperatureData);
 
-        const responseTempIndoor = await axios.get("http://localhost:5003/temperature-indoor");
-        const responseTempOutdoor = await axios.get("http://localhost:5003/temperature-outdoor");
 
-        setTemperatureIndoorData(responseTempIndoor.data || {});
-        setTemperatureOutdoorData(responseTempOutdoor.data || {});
+        // const responseTempIndoor = await axios.get("http://localhost:5003/temperature-indoor");
+        // const responseTempOutdoor = await axios.get("http://localhost:5003/temperature-outdoor");
+
+        // setTemperatureIndoorData(responseTempIndoor.data || {});
+        // setTemperatureOutdoorData(responseTempOutdoor.data || {});
 
         setLoading(false);
       } catch (err) {
@@ -114,7 +119,7 @@ const DashboardPage = () => {
           {/* Status/Quantity Right */}
           <div className="w-full flex-1 flex flex-col gap-3 lg:mt-0">
             <RoomStatus />
-            <Quantity peopleData={peopleData}/>
+            <Quantity peopleData={peopleData} />
           </div>
         </div>
       </div>
@@ -128,18 +133,19 @@ const DashboardPage = () => {
             <TimeBox />
           </div>
           <div className="flex gap-3 h-full">
-            <TemBox indoor={temperatureIndoor[0].indoor} tempType={"indoor"} />
-            <TemBox
-              outdoor={temperatureOutdoor[0].outdoor}
-              tempType={"outdoor"}
-            />
+            {temperatureData && (
+              <>
+                <TemBox AllTemperatureData={temperatureData} tempType="inside" />
+                <TemBox AllTemperatureData={temperatureData} tempType="outside" />
+              </>
+            )}
           </div>
         </div>
 
         {/* Report Table */}
         <div className="w-full xl:flex-2 bg-white  shadow-sm rounded-2xl p-6 h-full">
           <p className="text-xl font-bold py-2">Room Status Table</p>
-          <Table columns={columns} data={ReportTable} maxRows={6} pagination={false} buttonShow={false}/>
+          <Table columns={columns} data={ReportTable} maxRows={6} pagination={false} buttonShow={false} />
           <div className="flex justify-end pt-2">
             <p
               className="font-medium text-blue-600 dark:text-blue-500 hover:underline cursor-pointer"
