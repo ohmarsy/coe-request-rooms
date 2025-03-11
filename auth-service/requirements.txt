@@ -8,4 +8,4 @@ flask-migrate
 flask-restx
 flask-swagger-ui
 bcrypt
-jwt
+PyJWT
