@@ -14,7 +14,6 @@ interface SideBarProps {
   setSelectedMenu: (menu: string) => void;
 }
 
-
 const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
   const navigate = useNavigate();
 
@@ -58,7 +57,14 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
         </ul>
 
         <div className="mt-auto border-t border-gray-200 pt-6">
-          <button className="flex items-center gap-4 p-3 text-[var(--text-color)] hover:bg-gray-100 rounded-lg w-full text-left cursor-pointer">
+          <button
+            className="flex items-center gap-4 p-3 text-[var(--text-color)] hover:bg-gray-100 rounded-lg w-full text-left cursor-pointer"
+            onClick={()=>{
+              localStorage.removeItem("access_token");
+              localStorage.removeItem("refresh_token");
+              window.location.reload();
+            }}
+          >
             <FontAwesomeIcon icon={faRightFromBracket} />
             <span>Sign out</span>
           </button>
