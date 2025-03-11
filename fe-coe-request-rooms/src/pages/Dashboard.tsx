@@ -6,7 +6,6 @@ import AllRoom, { RoomProps } from "../components/AllRoom";
 import RoomStatus from "../components/RoomStatus";
 import Quantity from "../components/Quantity";
 import Card from "../components/Card";
-import axios from "axios";
 import { getImages, ImageData } from "../services/getImages";
 import Table from "../components/Table";
 import { useNavigate } from "react-router-dom";
@@ -14,14 +13,6 @@ import { getRooms } from "../services/getRooms";
 import { getPeople, PeopleData } from "../services/getPeople";
 import { getReportTable, ReportTableData } from "../services/getReportTable";
 import { AllTemperatureProps, getTemperature } from "../services/getTemperature";
-
-// interface TemperatureIndoor {
-//   indoor: number;
-// }
-
-// interface TemperatureOutdoor {
-//   outdoor: number;
-// }
 
 const columns = [
   { header: "Room", accessor: "room" },

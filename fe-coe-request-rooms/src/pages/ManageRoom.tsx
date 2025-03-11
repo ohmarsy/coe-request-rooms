@@ -18,6 +18,7 @@ import {
 } from "../services/getAccessListByRoom";
 import { getUserById, UserData } from "../services/getUserById";
 import { putAccessApproved } from "../services/putAccessApproved";
+import { deleteAccess } from "../services/deleteAccess";
 
 const ManageRoomPage = () => {
   const navigate = useNavigate();
@@ -112,7 +113,7 @@ const ManageRoomPage = () => {
     const putData = putAccessApproved(true, id);
     console.log("Approve: ", putData);
     Swal.fire({
-      title: "Add room successfully",
+      title: "Approve access successfully",
       icon: "success",
       confirmButtonText: "Ok",
     }).then(() => {
@@ -121,6 +122,18 @@ const ManageRoomPage = () => {
     });
   };
 
+  const handleReject = async (id:string) => {
+    const deleteData = await deleteAccess(id);
+    console.log("Delete: ", deleteData);
+    Swal.fire({
+      title: "Delete access successfully",
+      icon: "success",
+      confirmButtonText: "Ok",
+    }).then(() => {
+      navigate("/main?menu=manage-room");
+      window.location.reload();
+    });
+  }
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -274,6 +287,9 @@ const ManageRoomPage = () => {
                       handleApprove={(id: string) =>
                         handleApprove(id)
                       }
+                      handleReject={(id:string)=>{
+                        handleReject(id)
+                      }}
                     />
                   ) : (
                     <Table

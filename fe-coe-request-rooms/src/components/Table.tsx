@@ -16,7 +16,7 @@ interface TableProps {
   pagination?: boolean;
   buttonShow?: boolean;
   handleApprove?: (id: string) => void;
-  handleReject?: () => void;
+  handleReject?: (id: string) => void;
 }
 
 const Table: React.FC<TableProps> = ({
@@ -96,7 +96,9 @@ const Table: React.FC<TableProps> = ({
                       Approve
                     </button>
                     <button
-                      onClick={handleReject}
+                      onClick={() => {
+                        handleReject?.(row.id as string);
+                      }}
                       className="px-4 py-0.5 text-sm text-red-500 bg-red-200 shadow-2xs rounded-lg hover:bg-red-300 hover:text-red-700 focus:outline-none cursor-pointer"
                     >
                       Reject

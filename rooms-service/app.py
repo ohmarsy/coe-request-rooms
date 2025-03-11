@@ -165,7 +165,7 @@ def update_access_list_approval(id):
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
     
-@app.route('/access-list/approve/<int:id>', methods=['DELETE'])
+@app.route('/access-list/delete/<int:id>', methods=['DELETE'])
 def delete_access_list_approval(id):
     try:
         access_entry = AccessList.query.get(id)
