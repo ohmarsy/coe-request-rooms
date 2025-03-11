@@ -225,7 +225,7 @@ def get_access_lists_by_user(user_id):
         access_lists = AccessList.query.filter_by(user_id=user_id).all()
         
         if not access_lists:
-            return jsonify([])  # ส่งค่ากลับเป็น array ว่าง ถ้าไม่พบข้อมูล
+            return jsonify([]) 
         
         result = [
             {

@@ -112,12 +112,12 @@ def login_user():
     if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
         access_token = jwt.encode({
             'user_id': user.id,
-            'exp': datetime.datetime.utcnow() + app.config['JWT_ACCESS_TOKEN_EXPIRES']
+            'exp': datetime.datetime.now() + app.config['JWT_ACCESS_TOKEN_EXPIRES']
         }, app.config['SECRET_KEY'], algorithm='HS256')
 
         refresh_token = jwt.encode({
             'user_id': user.id,
-            'exp': datetime.datetime.utcnow() + app.config['JWT_REFRESH_TOKEN_EXPIRES']
+            'exp': datetime.datetime.now() + app.config['JWT_REFRESH_TOKEN_EXPIRES']
         }, app.config['SECRET_KEY'], algorithm='HS256')
 
         return jsonify({
@@ -143,7 +143,7 @@ def refresh_token():
 
         access_token = jwt.encode({
             'user_id': user.id,
-            'exp': datetime.datetime.utcnow() + app.config['JWT_ACCESS_TOKEN_EXPIRES']
+            'exp': datetime.datetime.now() + app.config['JWT_ACCESS_TOKEN_EXPIRES']
         }, app.config['SECRET_KEY'], algorithm='HS256')
 
         return jsonify({
