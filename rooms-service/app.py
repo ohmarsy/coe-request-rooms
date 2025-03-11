@@ -136,8 +136,8 @@ def add_access_list():
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
-@app.route('/access-list/approve/<int:user_id>/<string:room_id>', methods=['PUT'])
-def update_access_list_approval(user_id, room_id):
+@app.route('/access-list/approve/<int:id>', methods=['PUT'])
+def update_access_list_approval(id):
     try:
         data = request.get_json()
 
@@ -147,24 +147,43 @@ def update_access_list_approval(user_id, room_id):
         if not isinstance(data['approved'], bool):
             return jsonify({"error": "approved must be a boolean value"}), 400
 
-        access_entry = AccessList.query.filter_by(user_id=user_id, room_id=room_id).first()
+        access_entry = AccessList.query.get(id)
 
         if not access_entry:
-            return jsonify({"error": f"No access entry found for user_id {user_id} and room_id {room_id}"}), 404
+            return jsonify({"error": f"No access entry found with id {id}"}), 404
 
         access_entry.approved = data['approved']
         db.session.commit()
 
         return jsonify({
             "message": "Access list approval updated successfully",
-            "user_id": user_id,
-            "room_id": room_id,
+            "id": id,
             "approved": data['approved']
         }), 200
 
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
+    
+@app.route('/access-list/approve/<int:id>', methods=['DELETE'])
+def delete_access_list_approval(id):
+    try:
+        access_entry = AccessList.query.get(id)
+
+        if not access_entry:
+            return jsonify({"error": f"No access entry found with id {id}"}), 404
+
+        db.session.delete(access_entry)
+        db.session.commit()
+
+        return jsonify({
+            "message": f"Access entry with id {id} deleted successfully"
+        }), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
 
 
 @app.route('/access-list/all', methods=['GET'])

@@ -53,7 +53,7 @@ const ManageRoomPage = () => {
         time: item.checkin,
         date: item.date,
         room: item.room_id,
-        user_id: `${item.user_id}`,
+        id: `${item.id}`,
       };
     });
 
@@ -108,8 +108,8 @@ const ManageRoomPage = () => {
     }
   };
 
-  const handleApprove = (user_id: string, room_id: string) => {
-    const putData = putAccessApproved(true, user_id, room_id);
+  const handleApprove = (id: string) => {
+    const putData = putAccessApproved(true, id);
     console.log("Approve: ", putData);
     Swal.fire({
       title: "Add room successfully",
@@ -271,8 +271,8 @@ const ManageRoomPage = () => {
                       data={data_request}
                       maxRows={10}
                       buttonShow={true}
-                      handleApprove={(user_id: string, room: string) =>
-                        handleApprove(user_id, room)
+                      handleApprove={(id: string) =>
+                        handleApprove(id)
                       }
                     />
                   ) : (
