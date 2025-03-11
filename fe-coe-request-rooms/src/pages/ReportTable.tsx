@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "../components/Table";
 import { getReportTable, ReportTableData } from "../services/getReportTable";
 const columns = [

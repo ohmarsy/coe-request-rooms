@@ -94,7 +94,7 @@ const DashboardPage = () => {
   return (
     <div className="w-full h-full flex flex-col gap-3 p-2">
       {/* Top Column */}
-      <div className="flex flex-col lg:flex-row gap-3 flex-2 max-xl:flex-1 h-1/2 max-xl:h-1/3 max-lg:h-1/1">
+      <div className="flex flex-col lg:flex-row  gap-3 flex-2 max-xl:flex-1 h-1/2 max-lg:h-1/1">
         {/* AllRoom Left */}
         <div className="w-full lg:flex-1">
           <AllRoom
@@ -105,14 +105,16 @@ const DashboardPage = () => {
           />
         </div>
 
-        <div className="flex flex-row gap-3 w-full flex-1 max-[1280px]:flex-2">
+        <div className="flex flex-row gap-3 w-full  flex-1 max-[1280px]:flex-2">
           {/* Image Middle */}
-          <div className="flex flex-col w-full lg:flex-1 max-[1280px]:flex-1 gap-3">
-            {/* <Image/> */}
-            <Card
+          <div className="flex flex-col w-full lg:flex-1 max-[1280px]:flex-1 gap-3  ">
+          {/* <Image/> */}
+          {/* <div className="flex w-full lg:flex-1 max-[1280px]:flex-1 gap-3  bg-red-500"> */}
+            <Card 
               name={imageData[0].name}
               email={imageData[0].email}
               image={imageData[0].image}
+              page="dashboard"
             />
           </div>
 
