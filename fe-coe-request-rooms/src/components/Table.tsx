@@ -59,7 +59,7 @@ const Table: React.FC<TableProps> = ({
           <tbody>
             {visibleData.map((row, rowIndex) => (
               <tr
-                className={`hover:bg-blue-500 hover:text-white ${
+                className={`${
                   rowIndex % 2 === 0 ? "bg-gray-100" : "bg-white"
                 }`}
                 key={rowIndex}

@@ -32,14 +32,16 @@ const ManageRoomPage = () => {
   const columns_request = [
     { header: "Name", accessor: "name" },
     { header: "Date", accessor: "date" },
-    { header: "Time", accessor: "time" },
+    { header: "Check in", accessor: "time_checkin" },
+    { header: "Check out", accessor: "time_checkout" },
     { header: "Room", accessor: "room" },
   ];
 
   const columns_history = [
     { header: "Name", accessor: "name" },
     { header: "Date", accessor: "date" },
-    { header: "Time", accessor: "time" },
+    { header: "Check in", accessor: "time_checkin" },
+    { header: "Check out", accessor: "time_checkout" },
     { header: "Room", accessor: "room" },
     { header: "Approved", accessor: "approved" },
   ];
@@ -50,7 +52,8 @@ const ManageRoomPage = () => {
       const user = userData.find((user) => user.id === item.user_id);
       return {
         name: user?.first_name ?? "Unknown",
-        time: item.checkin,
+        time_checkin: item.checkin.split(":").slice(0, 2).join(":"),
+        time_checkout: item.checkout.split(":").slice(0, 2).join(":"),
         date: item.date,
         room: item.room_id,
         id: `${item.id}`,
@@ -58,13 +61,16 @@ const ManageRoomPage = () => {
     });
 
   const data_history = accessListData
-    .filter((item) => item.approved == "approved" || item.approved == "rejected")
+    .filter(
+      (item) => item.approved == "approved" || item.approved == "rejected"
+    )
     .map((item) => {
       const user = userData.find((user) => user.id === item.user_id);
 
       return {
         name: user ? user.first_name : "Unknown",
-        time: item.checkin,
+        time_checkin: item.checkin.split(":").slice(0, 2).join(":"),
+        time_checkout: item.checkout.split(":").slice(0, 2).join(":"),
         date: item.date,
         room: item.room_id,
         approved: item.approved == "approved" ? "Approved" : "Rejected",
@@ -98,7 +104,7 @@ const ManageRoomPage = () => {
         title: "Add room successfully",
         icon: "success",
         confirmButtonText: "Ok",
-        confirmButtonColor: '#3085d6'
+        confirmButtonColor: "#3085d6",
       }).then(() => {
         navigate("/main?menu=manage-room");
         window.location.reload();
@@ -116,7 +122,7 @@ const ManageRoomPage = () => {
       title: "Approve access successfully",
       icon: "success",
       confirmButtonText: "Ok",
-      confirmButtonColor: '#3085d6'
+      confirmButtonColor: "#3085d6",
     }).then(() => {
       navigate("/main?menu=manage-room");
       window.location.reload();
@@ -130,7 +136,7 @@ const ManageRoomPage = () => {
       title: "Reject access successfully",
       icon: "success",
       confirmButtonText: "Ok",
-      confirmButtonColor: '#3085d6'
+      confirmButtonColor: "#3085d6",
     }).then(() => {
       navigate("/main?menu=manage-room");
       window.location.reload();
@@ -282,11 +288,9 @@ const ManageRoomPage = () => {
                       data={data_request}
                       maxRows={10}
                       buttonShow={true}
-                      handleApprove={(id: string) =>
-                        handleApprove(id)
-                      }
-                      handleReject={(id:string)=>{
-                        handleReject(id)
+                      handleApprove={(id: string) => handleApprove(id)}
+                      handleReject={(id: string) => {
+                        handleReject(id);
                       }}
                     />
                   ) : (
