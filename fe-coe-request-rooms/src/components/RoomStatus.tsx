@@ -15,7 +15,7 @@ const RoomStatus: React.FC<RoomStatusProps> = ({ peopleData }) => {
           roomStatus === "Available" ? "text-green-500" : "text-red-500"
         }`}
       >
-        {roomStatus}
+        {roomStatus ?? "No data"}
       </p>
       <p className="text-gray-500 font-medium text-lg">Room status</p>
     </div>
