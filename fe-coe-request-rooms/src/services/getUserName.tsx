@@ -1,18 +1,21 @@
-import axios from "axios";
-import { User } from "../pages/ShowName";
+import useApiService from "./useApiService";
+
+export interface User {
+  id: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  role: string;
+}
 
 export const getUserName = async (): Promise<User> => {
-    const token = localStorage.getItem('access_token');
+  const { apiRequest } = useApiService('http://localhost:5002'); // Pass the desired baseURL
+
   try {
-    const response = await axios.get(`http://localhost:5002/protected`, {
-      headers: {
-          Authorization: `Bearer ${token}`
-      }
-    });
-    
-    return response.data.user;
+      const userData = await apiRequest('get', '/protected');
+      return userData.user; // Assuming the response contains a user object
   } catch (err) {
-    console.error("Error fetching access list:", err);
-    throw err;
+      console.error("Error fetching user data:", err);
+      throw err;
   }
 };
