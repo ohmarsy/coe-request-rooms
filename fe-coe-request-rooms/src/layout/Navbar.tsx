@@ -20,8 +20,6 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar, isMobile }) => {
     const fetchData = async () => {
       try {
         const data = await getUserName();
-        console.log("userName", data);
-
         setUserName(data);
         setLoading(false);
       } catch (err) {
@@ -61,7 +59,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar, isMobile }) => {
   }
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-[var(--primary-color)] h-16 flex items-center justify-between px-6 shadow-md z-50 ">
+    <nav className={`${pathname === '/request-rooms' ? "max-w-[1556px] mx-auto" : "fixed"}  top-0 left-0 w-full  h-16 flex items-center justify-between px-6 shadow-md z-50 bg-[var(--primary-color)] `}>
       <div className="flex items-center gap-4 max-[500px]:gap-2">
         {isMobile && (
           <button onClick={toggleSidebar} className="text-white">

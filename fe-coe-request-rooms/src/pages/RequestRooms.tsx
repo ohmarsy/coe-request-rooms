@@ -136,7 +136,7 @@ const RequestRooms = () => {
             fetchHistoryData();
         }
     }, [activeComponent, fetchHistoryData]);
-    
+
 
     const initialValues = {
         room: [],
@@ -239,7 +239,7 @@ const RequestRooms = () => {
         { header: 'Check in', accessor: 'checkin', title: 'Check in', dataIndex: 'checkin', key: 'checkin' },
         { header: 'Check out', accessor: 'checkout', title: 'Check out', dataIndex: 'checkout', key: 'checkout' },
         { header: 'Status', accessor: 'status', title: 'Status', dataIndex: 'status', key: 'status' },
-    ];    
+    ];
     const getStatusCounts = useCallback(() => {
         if (!historyData || historyData.length === 0) {
             return { pending: 0, approved: 0, rejected: 0 };
@@ -258,7 +258,7 @@ const RequestRooms = () => {
     }, [historyData]);
 
     return (
-        <div className='max-w-[1280px] mx-auto'>
+        <div className='max-w-[1556px] min-[1280px]:mx-auto'>
             {isLoading ? (
                 <div className="w-full min-h-screen flex flex-col justify-center items-center bg-white">
                     <svg className="animate-spin h-12 w-12 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -270,8 +270,10 @@ const RequestRooms = () => {
             )
                 :
                 (
-                    <div>
-                        <Navbar name={'Request rooms'} isMobile={false} />
+                    <div >
+                        <div className='w-full fixed left-0 right-0 bg-[var(--primary-color)]'>
+                            <Navbar name={'Request rooms'} isMobile={false} />
+                        </div>
                         <div className='flex flex-col items-center justify-center space-y-8 pt-16 h-fit'>
                             <Switch leftname={'Request Rooms'} rightname={'Request History'} onClick_left={handleLeft} onClick_right={handleRight} />
                             <h1 className='text-xl font-medium'>{activeComponent === 'RequestRoom' ? 'Request to join rooms' : 'Request History'}</h1>
@@ -355,25 +357,25 @@ const RequestRooms = () => {
                                 </Formik>
                             ) : (
                                 <div className='flex flex-col w-full px-8 space-y-8'>
-                                        {historyData.length > 0 ? (
-                                            <div>
-                                                <div className='flex flex-row space-x-4 justify-evenly items-center px-32 mb-16 w-full max-lg:px-0 max-md:flex-col max-md:space-x-0 max-md:space-y-6'>
-                                                    <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md max-md:w-full max-md:px-24'>
-                                                        <p className='text-sm'>Pending</p>
-                                                        <p className='text-2xl font-bold'>{getStatusCounts().pending}</p>
-                                                    </div>
-                                                    <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md max-md:w-full max-md:px-24'>
-                                                        <p className='text-sm'>Approved</p>
-                                                        <p className='text-2xl font-bold'>{getStatusCounts().approved}</p>
-                                                    </div>
-                                                    <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md max-md:w-full max-md:px-24'>
-                                                        <p className='text-sm'>Reject</p>
-                                                        <p className='text-2xl font-bold'>{getStatusCounts().rejected}</p>
-                                                    </div>
+                                    {historyData.length > 0 ? (
+                                        <div>
+                                            <div className='flex flex-row space-x-4 justify-evenly items-center px-32 mb-16 w-full max-lg:px-0 max-md:flex-col max-md:space-x-0 max-md:space-y-6'>
+                                                <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md max-md:w-full max-md:px-24'>
+                                                    <p className='text-sm'>Pending</p>
+                                                    <p className='text-2xl font-bold'>{getStatusCounts().pending}</p>
                                                 </div>
-                                                <Table columns={columns} data={historyData} maxRows={5} />
+                                                <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md max-md:w-full max-md:px-24'>
+                                                    <p className='text-sm'>Approved</p>
+                                                    <p className='text-2xl font-bold'>{getStatusCounts().approved}</p>
+                                                </div>
+                                                <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md max-md:w-full max-md:px-24'>
+                                                    <p className='text-sm'>Reject</p>
+                                                    <p className='text-2xl font-bold'>{getStatusCounts().rejected}</p>
+                                                </div>
                                             </div>
-                                        ) : (
+                                            <Table columns={columns} data={historyData} maxRows={5} />
+                                        </div>
+                                    ) : (
                                         <div className='flex flex-row justify-center items-center h-96'>
                                             <p className='text-xl font-medium'>No data</p>
                                         </div>
