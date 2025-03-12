@@ -62,7 +62,6 @@ const DashboardPage = () => {
 
   const handleClickRoom = (name: string) => {
     setSelectedRoom(name);
-  
     console.log(selectedRoom);
   };
 
@@ -102,7 +101,7 @@ const DashboardPage = () => {
 
           {/* Status/Quantity Right */}
           <div className="w-full flex-1 flex flex-col gap-3 lg:mt-0">
-            <RoomStatus />
+            <RoomStatus peopleData={peopleData} />
             <Quantity peopleData={peopleData} 
             />
           </div>
