@@ -9,7 +9,7 @@ class AccessList(db.Model):
     date = Column(Date, nullable=False)
     checkin = Column(Time, nullable=False)
     checkout = Column(Time, nullable=False)
-    approved = Column(Enum('approved', 'rejected', 'pending', name="approval_status"), nullable=False, default='pending')
+    approved = Column(Enum('approved', 'rejected', 'pending', name="approval_status"), nullable=False, default='pending', create_type=False)
     user_id = Column(Integer, nullable=False)
     room_id = Column(String, ForeignKey("rooms.room_id"), nullable=False)
     created_at = Column(DateTime, default=db.func.current_timestamp())
