@@ -18,14 +18,13 @@ interface UserInfo {
 }
 
 const RequestRooms = () => {
-    const today = new Date().toISOString().split('T')[0]; // Gets today's date in YYYY-MM-DD format
+    const today = new Date().toISOString().split('T')[0];
 
     const [activeComponent, setActiveComponent] = React.useState<"RequestRoom" | "History">("RequestRoom");
     const [rooms, setRooms] = useState<string[]>([]);
     const [historyData, setHistoryData] = useState<[]>([]);
     const [userInfo, setUserInfo] = useState<UserInfo>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
-
 
     const handleLeft = () => {
         setActiveComponent("RequestRoom")
@@ -120,7 +119,6 @@ const RequestRooms = () => {
                     status: status
                 };
             });
-
             setHistoryData(formattedData);
         } catch (error) {
             console.error('Error fetching history:', error);
@@ -138,6 +136,7 @@ const RequestRooms = () => {
             fetchHistoryData();
         }
     }, [activeComponent, fetchHistoryData]);
+    
 
     const initialValues = {
         room: [],
@@ -172,13 +171,13 @@ const RequestRooms = () => {
                 if (inputHours === hours && inputMinutes < minutes) return false;
 
                 return true;
-            }),        checkout: Yup.string()
-            .required('Check-out time is required')
-            .test('is-after-checkin', 'Check-out time must be after check-in time', function (value) {
-                const { checkin } = this.parent;
-                if (!checkin || !value) return true; // Let required validation handle empty case
-                return value > checkin;
-            }), firstName: Yup.string().required('First name is required'),
+            }), checkout: Yup.string()
+                .required('Check-out time is required')
+                .test('is-after-checkin', 'Check-out time must be after check-in time', function (value) {
+                    const { checkin } = this.parent;
+                    if (!checkin || !value) return true; // Let required validation handle empty case
+                    return value > checkin;
+                }), firstName: Yup.string().required('First name is required'),
         lastName: Yup.string().required('Last name is required'),
     })
     const handleSubmit = async (values: typeof initialValues, { resetForm }: FormikHelpers<typeof initialValues>) => {
@@ -240,7 +239,24 @@ const RequestRooms = () => {
         { header: 'Check in', accessor: 'checkin', title: 'Check in', dataIndex: 'checkin', key: 'checkin' },
         { header: 'Check out', accessor: 'checkout', title: 'Check out', dataIndex: 'checkout', key: 'checkout' },
         { header: 'Status', accessor: 'status', title: 'Status', dataIndex: 'status', key: 'status' },
-    ]
+    ];    
+    const getStatusCounts = useCallback(() => {
+        if (!historyData || historyData.length === 0) {
+            return { pending: 0, approved: 0, rejected: 0 };
+        }
+
+        return historyData.reduce((counts, item: { status: string }) => {
+            if (item.status === 'Approved') {
+                counts.approved += 1;
+            } else if (item.status === 'Pending') {
+                counts.pending += 1;
+            } else if (item.status === 'Rejected') {
+                counts.rejected += 1;
+            }
+            return counts;
+        }, { pending: 0, approved: 0, rejected: 0 });
+    }, [historyData]);
+
     return (
         <div>
             {isLoading ? (
@@ -306,7 +322,7 @@ const RequestRooms = () => {
                                                                 </div>
                                                                 <div className='h-20'>
                                                                     <label htmlFor="checkout">Check out</label>
-                                                                    <Field min={values.checkin || minCheckinTime}  type="time" name="checkout" step="60" className="border border-[var(--border-color)] p-2 w-full rounded-md" />
+                                                                    <Field min={values.checkin || minCheckinTime} type="time" name="checkout" step="60" className="border border-[var(--border-color)] p-2 w-full rounded-md" />
                                                                     <ErrorMessage name="checkout" component="div" className="text-red-500 text-sm" />
                                                                 </div>
                                                             </div>
@@ -339,25 +355,25 @@ const RequestRooms = () => {
                                 </Formik>
                             ) : (
                                 <div className='flex flex-col w-full px-8 space-y-8'>
-                                    {historyData.length > 0 ? (
-                                        <div>
-                                            <div className='flex flex-row space-x-4 justify-evenly items-center px-32 mb-16 w-full max-lg:px-0 max-md:flex-col max-md:space-x-0 max-md:space-y-6'>
-                                                <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md max-md:w-full max-md:px-24'>
-                                                    <p className='text-sm'>Inprogress</p>
-                                                    <p className='text-2xl font-bold'>0</p>
+                                        {historyData.length > 0 ? (
+                                            <div>
+                                                <div className='flex flex-row space-x-4 justify-evenly items-center px-32 mb-16 w-full max-lg:px-0 max-md:flex-col max-md:space-x-0 max-md:space-y-6'>
+                                                    <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md max-md:w-full max-md:px-24'>
+                                                        <p className='text-sm'>Pending</p>
+                                                        <p className='text-2xl font-bold'>{getStatusCounts().pending}</p>
+                                                    </div>
+                                                    <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md max-md:w-full max-md:px-24'>
+                                                        <p className='text-sm'>Approved</p>
+                                                        <p className='text-2xl font-bold'>{getStatusCounts().approved}</p>
+                                                    </div>
+                                                    <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md max-md:w-full max-md:px-24'>
+                                                        <p className='text-sm'>Reject</p>
+                                                        <p className='text-2xl font-bold'>{getStatusCounts().rejected}</p>
+                                                    </div>
                                                 </div>
-                                                <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md max-md:w-full max-md:px-24'>
-                                                    <p className='text-sm'>Approved</p>
-                                                    <p className='text-2xl font-bold'>0</p>
-                                                </div>
-                                                <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md max-md:w-full max-md:px-24'>
-                                                    <p className='text-sm'>Reject</p>
-                                                    <p className='text-2xl font-bold'>0</p>
-                                                </div>
+                                                <Table columns={columns} data={historyData} maxRows={5} />
                                             </div>
-                                            <Table columns={columns} data={historyData} maxRows={5} />
-                                        </div>
-                                    ) : (
+                                        ) : (
                                         <div className='flex flex-row justify-center items-center h-96'>
                                             <p className='text-xl font-medium'>No data</p>
                                         </div>
