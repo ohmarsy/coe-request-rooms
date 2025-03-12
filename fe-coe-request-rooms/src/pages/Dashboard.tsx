@@ -6,7 +6,6 @@ import AllRoom, { RoomProps } from "../components/AllRoom";
 import RoomStatus from "../components/RoomStatus";
 import Quantity from "../components/Quantity";
 import Card from "../components/Card";
-// import axios from "axios";
 import { getImages, ImageData } from "../services/getImages";
 import Table from "../components/Table";
 import { useNavigate } from "react-router-dom";
@@ -33,7 +32,7 @@ const DashboardPage = () => {
   const [selectedRoom, setSelectedRoom] = useState("");
   const [imageData, setImageData] = useState<ImageData[]>([]);
   const [roomData, setRoomData] = useState<RoomProps[]>([]);
-  const [peopleData, setPeopleData] = useState<PeopleData>({
+  const [peopleData, setPeopleData] = useState<PeopleData | null>({
     totalMovements: 0,
     maxTimestamp: "",
   });
@@ -51,11 +50,12 @@ const DashboardPage = () => {
         const peopleData = await getPeople();
         const dataTable = await getReportTable();
         const temperatureData = await getTemperature();
+
         setReportTable(dataTable);
         setImageData(data);
         setRoomData(roomData);
-        setPeopleData(peopleData);
-        setTemperatureData(temperatureData);
+        setPeopleData(selectedRoom === "EN4412" ? peopleData : null);
+        setTemperatureData(selectedRoom === "EN4412" ? temperatureData : null);
 
         setLoading(false);
       } catch (err) {
@@ -63,8 +63,9 @@ const DashboardPage = () => {
       }
     };
 
+
     fetchData();
-  }, []);
+  }, [selectedRoom]);
 
   const handleClickRoom = (name: string) => {
     setSelectedRoom(name);
@@ -101,6 +102,7 @@ const DashboardPage = () => {
 
   console.log("peopleData: ", peopleData);
 
+
   return (
     <div className="w-full h-full flex flex-col gap-3 p-2">
       {/* Top Column */}
@@ -133,8 +135,8 @@ const DashboardPage = () => {
 
           {/* Status/Quantity Right */}
           <div className="w-full flex-1 flex flex-col gap-3 lg:mt-0">
-            <RoomStatus peopleData={peopleData ?? 0} />
-            <Quantity peopleData={peopleData ?? 0} />
+            <RoomStatus peopleData={peopleData} />
+            <Quantity peopleData={peopleData} />
           </div>
         </div>
       </div>
@@ -148,18 +150,16 @@ const DashboardPage = () => {
             <TimeBox />
           </div>
           <div className="flex gap-3 h-full">
-            {temperatureData && (
-              <>
-                <TemBox
-                  AllTemperatureData={temperatureData}
-                  tempType="inside"
-                />
-                <TemBox
-                  AllTemperatureData={temperatureData}
-                  tempType="outside"
-                />
-              </>
-            )}
+            <>
+              <TemBox
+                AllTemperatureData={temperatureData}
+                tempType="inside"
+              />
+              <TemBox
+                AllTemperatureData={temperatureData}
+                tempType="outside"
+              />
+            </>
           </div>
         </div>
 
