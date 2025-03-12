@@ -11,7 +11,7 @@ const columns = [
 ];
 
 const ReportTablePage = () => {
-  const [ReportTable, setReportTable] = useState<ReportTableData[]>([]);
+  const [reportTable, setReportTable] = useState<ReportTableData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const ReportTablePage = () => {
   return (
     <div className="flex flex-col w-full p-2">
       <h1 className="text-xl font-bold mb-4">Room Status Table</h1>
-      <Table columns={columns} data={ReportTable} maxRows={10} />
+      <Table columns={columns} data={reportTable} maxRows={10} />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { api } from "./useApiService";
 
 export interface UserData {
   created_at: string;
@@ -9,19 +10,9 @@ export interface UserData {
   role: string;
 }
 
-export const getUserById = async (
-  user_id: number
-): Promise<UserData[]> => {
-    // const accessToken = localStorage.getItem('access_token');
-
+export const getUserById = async (user_id: number): Promise<UserData[]> => {
   try {
-    const response = await axios.get(
-      `http://localhost:5002/user/${user_id}`, {
-        // headers: {
-        //     Authorization: `Bearer ${accessToken}`
-        // }
-    }
-    );
+    const response = await api.get(`http://localhost:5002/user/${user_id}`);
     return response.data;
   } catch (err) {
     console.error("Error fetching access list:", err);
