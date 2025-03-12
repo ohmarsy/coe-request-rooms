@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { getUserName } from "../services/getUserName";
 import { User } from "../pages/ShowName";
 
@@ -46,9 +46,22 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar, isMobile }) => {
         <span className="text-white text-xl font-bold">CoE Rooms</span>
       </div>
 
-      <h1 className="text-white text-lg font-bold">
-        {userName!.first_name ?? "User"}
-      </h1>
+
+      <div className="flex flex-row  items-center space-x-6">
+        <h1 className="text-white text-lg font-bold">
+          {userName!.first_name ?? "User"}
+        </h1>
+        <button
+          className="flex items-center gap-4 p-3 text-[var(--text-color)] w-full cursor-pointer"
+          onClick={() => {
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token");
+            window.location.reload();
+          }}
+        >
+          <FontAwesomeIcon icon={faRightFromBracket} style={{color:'white'}}/>
+        </button>
+      </div>
     </nav>
   );
 };

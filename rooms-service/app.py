@@ -220,7 +220,9 @@ def get_all_access_lists():
 @app.route('/access-list/user/<int:user_id>', methods=['GET'])
 def get_access_lists_by_user(user_id):
     try:
-        access_lists = AccessList.query.filter_by(user_id=user_id).all()
+        access_lists = AccessList.query.filter_by(user_id=user_id)\
+            .order_by(AccessList.date.desc(), AccessList.checkin.desc())\
+            .all()       
         
         if not access_lists:
             return jsonify([]) 

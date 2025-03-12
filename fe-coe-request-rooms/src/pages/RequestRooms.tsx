@@ -341,7 +341,7 @@ const RequestRooms = () => {
                                 <div className='flex flex-col w-full px-8 space-y-8'>
                                     {historyData.length > 0 ? (
                                         <div>
-                                            <div className='flex flex-row space-x-4 justify-evenly items-center px-32'>
+                                            <div className='flex flex-row space-x-4 justify-evenly items-center px-32 mb-16'>
                                                 <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md'>
                                                     <p className='text-sm'>Inprogress</p>
                                                     <p className='text-2xl font-bold'>0</p>

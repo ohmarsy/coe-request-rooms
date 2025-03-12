@@ -78,7 +78,11 @@ const Table: React.FC<TableProps> = ({
                       row[col.accessor] === "Approved" ? (
                         <p className="text-green-500">{row[col.accessor]}</p>
                       ) : (
-                        <p className="text-red-500">{row[col.accessor]}</p>
+                        row[col.accessor] === "Pending" ? (
+                          <p className="text-gray-500">{row[col.accessor]}</p>
+                        ) : (
+                          <p className="text-red-500">{row[col.accessor]}</p>
+                        )
                       )
                     ) : (
                       row[col.accessor]
