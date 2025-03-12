@@ -244,7 +244,7 @@ const RequestRooms = () => {
     return (
         <div>
             {isLoading ? (
-                <div className="w-[100vw] h-[100vh] flex flex-col justify-center items-center bg-white">
+                <div className="w-full min-h-screen flex flex-col justify-center items-center bg-white">
                     <svg className="animate-spin h-12 w-12 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -274,7 +274,7 @@ const RequestRooms = () => {
                                         const minCheckinTime = isToday ? currentTime : '';
                                         return (
                                             (
-                                                <Form className='flex flex-row w-full px-8 space-x-8'>
+                                                <Form className='flex flex-row w-full px-8 space-x-8 max-md:flex-col max-md:space-x-0 max-md:space-y-8'>
                                                     <div className='flex-1 flex flex-col bg-white shadow-sm rounded-2xl p-8 h-full max-h-[28rem]'>
                                                         <p className='text-center text-lg font-medium text-nowrap'>Room can join</p>
                                                         <div className='flex flex-col space-y-4 mt-8 h-full overflow-y-auto scrollbar-hidden'>
@@ -298,7 +298,7 @@ const RequestRooms = () => {
                                                                     <ErrorMessage name="date" component="div" className="text-red-500 text-sm" />
                                                                 </div>
                                                             </div>
-                                                            <div className='grid grid-cols-2 gap-4'>
+                                                            <div className='grid grid-cols-2 gap-4 max-sm:grid-cols-1'>
                                                                 <div className='h-20'>
                                                                     <label htmlFor="checkin">Check in</label>
                                                                     <Field min={minCheckinTime} type="time" name="checkin" step="60" className="border border-[var(--border-color)] p-2 w-full rounded-md" />
@@ -310,7 +310,7 @@ const RequestRooms = () => {
                                                                     <ErrorMessage name="checkout" component="div" className="text-red-500 text-sm" />
                                                                 </div>
                                                             </div>
-                                                            <div className='grid grid-cols-2 gap-4'>
+                                                            <div className='grid grid-cols-2 gap-4 max-sm:grid-cols-1'>
                                                                 <div className='h-20'>
                                                                     <label htmlFor="firstName">FirstName</label>
                                                                     <Field type="text" name="firstName" className="border border-[var(--border-color)] p-2 w-full rounded-md" />
@@ -341,16 +341,16 @@ const RequestRooms = () => {
                                 <div className='flex flex-col w-full px-8 space-y-8'>
                                     {historyData.length > 0 ? (
                                         <div>
-                                            <div className='flex flex-row space-x-4 justify-evenly items-center px-32 mb-16'>
-                                                <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md'>
+                                            <div className='flex flex-row space-x-4 justify-evenly items-center px-32 mb-16 w-full max-lg:px-0 max-md:flex-col max-md:space-x-0 max-md:space-y-6'>
+                                                <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md max-md:w-full max-md:px-24'>
                                                     <p className='text-sm'>Inprogress</p>
                                                     <p className='text-2xl font-bold'>0</p>
                                                 </div>
-                                                <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md'>
+                                                <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md max-md:w-full max-md:px-24'>
                                                     <p className='text-sm'>Approved</p>
                                                     <p className='text-2xl font-bold'>0</p>
                                                 </div>
-                                                <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md'>
+                                                <div className='flex flex-col justify-center items-center h-24 min-w-40 rounded-md bg-white shadow-md max-md:w-full max-md:px-24'>
                                                     <p className='text-sm'>Reject</p>
                                                     <p className='text-2xl font-bold'>0</p>
                                                 </div>
