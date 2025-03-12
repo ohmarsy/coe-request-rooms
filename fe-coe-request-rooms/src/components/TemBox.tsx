@@ -26,7 +26,9 @@ const TemperatureDisplay: React.FC<TemperatureProps> = ({
     <div className="flex flex-col items-center justify-center bg-white shadow-sm rounded-2xl p-4 w-full h-full text-sm sm:text-base">
       <div className="flex flex-col items-center min-h-[100px] justify-center">
         <div className="flex items-center">
-          <span className="text-2xl sm:text-5xl font-bold text-black">
+          <span
+            className={`text-2xl sm:text-5xl font-bold ${temperature === undefined || temperature === null ? "text-gray-400" : "text-black"}`}
+          >
             {temperature ?? "--"}
           </span>
           <span className="text-base sm:text-3xl font-bold text-gray-400">
@@ -47,7 +49,6 @@ const TemperatureDisplay: React.FC<TemperatureProps> = ({
             </>
           )}
         </div>
-
       </div>
     </div>
   );
