@@ -3,9 +3,8 @@ import Table from "../components/Table";
 import { getReportTable, ReportTableData } from "../services/getReportTable";
 const columns = [
   { header: "Room", accessor: "room" },
-  { header: "Room Status", accessor: "status" },
-  { header: "Information", accessor: "information" },
   { header: "Device", accessor: "device" },
+  { header: "Information", accessor: "information" },
   { header: "Time", accessor: "time" },
   { header: "Date", accessor: "date" },
 ];
@@ -18,6 +17,8 @@ const ReportTablePage = () => {
     const fetchData = async () => {
       try {
         const dataTable = await getReportTable();
+        
+
         setReportTable(dataTable);
         setLoading(false);
       } catch (err) {
@@ -57,7 +58,6 @@ const ReportTablePage = () => {
 
   return (
     <div className="flex flex-col w-full p-2">
-      <h1 className="text-xl font-bold mb-4">Room Status Table</h1>
       <Table columns={columns} data={reportTable} maxRows={10} />
     </div>
   );
