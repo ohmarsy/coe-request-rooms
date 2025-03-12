@@ -10,11 +10,11 @@ export default function SignInPage() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false); // Add loading state
     const navigate = useNavigate();
-    const { login, isAuthenticated } = useAuth();
+    const { login, isAuthenticated, role } = useAuth();
 
     // Redirect if the user is already authenticated
     if (isAuthenticated) {
-        return <Navigate to="/main" replace />;
+        return <Navigate to={role === 'student' ? "/request-rooms" : "/main"} replace />;
     }
 
     // Handle sign-in
@@ -24,8 +24,8 @@ export default function SignInPage() {
         try {
             const response = await axios.post('http://localhost:5002/login', { email, password }, { withCredentials: true });
             if (response.status === 200) {
-                login(response.data.access_token, response.data.refresh_token); // Store tokens
-                navigate('/main'); 
+                login(response.data.access_token, response.data.refresh_token,response.data.role); // Store tokens
+                navigate(response.data.role === "student" ? "/request-rooms" : '/main');
             }
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
