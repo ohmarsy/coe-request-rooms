@@ -3,10 +3,23 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+  allowedRoles: string[]; // บทบาทที่อนุญาตให้เข้าถึง
+}
 
-  return isAuthenticated ? children : <Navigate to="/" replace />;
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles }) => {
+  const { isAuthenticated, role } = useAuth(); // ดึง role จาก context
+
+  const hasAccess = isAuthenticated && role && allowedRoles.includes(role);
+
+  return hasAccess ? (
+    <>
+      {children} 
+    </>
+  ) : (
+    <Navigate to="/" replace /> 
+  );
 };
 
 export default ProtectedRoute;
