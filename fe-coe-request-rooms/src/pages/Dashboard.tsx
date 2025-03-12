@@ -133,8 +133,8 @@ const DashboardPage = () => {
 
           {/* Status/Quantity Right */}
           <div className="w-full flex-1 flex flex-col gap-3 lg:mt-0">
-            <RoomStatus peopleData={peopleData} />
-            <Quantity peopleData={peopleData} />
+            <RoomStatus peopleData={peopleData ?? 0} />
+            <Quantity peopleData={peopleData ?? 0} />
           </div>
         </div>
       </div>

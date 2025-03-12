@@ -4,8 +4,9 @@ interface RoomStatusProps {
   peopleData: PeopleData;
 }
 
-const RoomStatus: React.FC<RoomStatusProps> = ({peopleData }) => {
+const RoomStatus: React.FC<RoomStatusProps> = ({ peopleData }) => {
   const totalPeople = peopleData.totalMovements ?? 0;
+  
   const roomStatus = totalPeople > 0 ? "Occupied" : "Available";
   return (
     <div className="flex flex-col items-center justify-center bg-white  shadow-sm rounded-2xl p-8 w-full space-y-2 h-full">
