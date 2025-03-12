@@ -13,11 +13,12 @@ export interface User {
 const ShowName: React.FC = () => {
     const [user, setUser] = useState<User | null>(null);
     const navigate = useNavigate();
+  const baseUrl = import.meta.env.REACT_APP_API_URL || "http://localhost";
 
     const fetchUserData = async () => {
         try {
             const accessToken = localStorage.getItem('access_token');
-            const response = await axios.get('http://localhost:5002/protected', {
+            const response = await axios.get(`${baseUrl}:5002/protected`, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
@@ -35,7 +36,7 @@ const ShowName: React.FC = () => {
     const refreshAccessToken = async () => {
         const refreshToken = localStorage.getItem('refresh_token');
         try {
-            const response = await axios.post('http://localhost:5002/refresh/', {
+            const response = await axios.post(`${baseUrl}:5002/refresh/`, {
                 refresh_token: refreshToken
             });
             const { access_token } = response.data;

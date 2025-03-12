@@ -18,6 +18,8 @@ interface UserInfo {
 }
 
 const RequestRooms = () => {
+  const baseUrl = import.meta.env.REACT_APP_API_URL || "http://localhost";
+
     const today = new Date().toISOString().split('T')[0];
 
     const [activeComponent, setActiveComponent] = React.useState<"RequestRoom" | "History">("RequestRoom");
@@ -34,7 +36,7 @@ const RequestRooms = () => {
     }
     const fetchRooms = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:5003/rooms');
+            const response = await fetch(`${baseUrl}:5003/rooms`);
 
             if (!response.ok) {
                 throw new Error('Failed to fetch rooms');
@@ -58,7 +60,7 @@ const RequestRooms = () => {
                 throw new Error('No token found');
             }
 
-            const response = await fetch('http://127.0.0.1:5002/protected', {
+            const response = await fetch(`${baseUrl}:5002/protected`, {
                 method: 'GET',
                 headers: {
                     'authorization': `Bearer ${token}`,
@@ -92,7 +94,7 @@ const RequestRooms = () => {
                 return;
             }
             const userId = userInfo.user.id;
-            const response = await fetch(`http://127.0.0.1:5003/access-list/user/${userId}`);
+            const response = await fetch(`${baseUrl}:5003/access-list/user/${userId}`);
 
             if (!response.ok) {
                 throw new Error('Failed to fetch history data');
@@ -201,7 +203,7 @@ const RequestRooms = () => {
                 checkout: values.checkout,
                 user_id: userInfo.user.id,
             }
-            const response = await fetch('http://127.0.0.1:5003/access-list/', {
+            const response = await fetch(`${baseUrl}:5003/access-list/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -5,10 +5,12 @@ import AuthForm from "../components/AuthForm";
 
 export default function SignUpPage() {
     const navigate = useNavigate();
+  const baseUrl = import.meta.env.REACT_APP_API_URL || "http://localhost";
+
     
     const handleSignUp = async (firstname?: string, lastname?: string, email?: string, password?: string, role?: string) => {
         try {
-            const response = await fetch('http://localhost:5002/register', {
+            const response = await fetch(`${baseUrl}:5002/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -16,14 +16,16 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 CORS(app)
+baseUrl = os.getenv('BASE_URL', 'localhost')
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://postgres:password@localhost:5433/roomdb')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', f'postgresql://postgres:password@{baseUrl}:5433/roomdb')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 migrate = Migrate(app, db)
 
-AUTH_SERVICE_URL = "http://localhost:5002" 
+
+AUTH_SERVICE_URL = f"http://{baseUrl}:5002" 
 
 @app.route('/', methods=['GET'])
 def rooms():

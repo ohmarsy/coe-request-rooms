@@ -23,9 +23,10 @@ app.url_map.strict_slashes = False
 
 # CORS configuration
 CORS(app, supports_credentials=True)
+baseUrl = os.getenv('BASE_URL', 'localhost')
 
 # Configure database and JWT settings
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'postgresql://postgres:password@localhost:5432/authdb')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', f'postgresql://postgres:password@{baseUrl}:5432/authdb')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', generate_secret_key())
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(minutes=15)

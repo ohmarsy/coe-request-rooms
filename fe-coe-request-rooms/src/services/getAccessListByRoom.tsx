@@ -13,9 +13,11 @@ export interface AccessListData {
 export const getAccessListByRoom = async (
   room_id: string
 ): Promise<AccessListData[]> => {
+  const baseUrl = import.meta.env.REACT_APP_API_URL || "http://localhost";
+
   try {
     const response = await axios.get(
-      `http://localhost:5003/access-list/room/${room_id}`
+      `${baseUrl}:5003/access-list/room/${room_id}`
     );
     return response.data;
   } catch (err) {

@@ -10,8 +10,10 @@ export interface UserData {
 }
 
 export const getUserById = async (user_id: number): Promise<UserData[]> => {
+  const baseUrl = import.meta.env.REACT_APP_API_URL || "http://localhost";
+
   try {
-    const response = await api.get(`http://localhost:5002/user/${user_id}`);
+    const response = await api.get(`${baseUrl}:5002/user/${user_id}`);
     return response.data;
   } catch (err) {
     console.error("Error fetching access list:", err);

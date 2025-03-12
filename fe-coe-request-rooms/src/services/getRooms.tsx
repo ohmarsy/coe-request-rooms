@@ -1,10 +1,11 @@
 import {api} from "./useApiService";
-
 import { RoomProps } from '../components/AllRoom';
 
 export const getRooms = async (): Promise<RoomProps[]> => {
+  const baseUrl = import.meta.env.REACT_APP_API_URL || "http://localhost";
+
   try {
-    const response =await api.get("http://localhost:5003/rooms"); 
+    const response =await api.get(`${baseUrl}:5003/rooms`); 
     
     return response.data;
   } catch (err) {
