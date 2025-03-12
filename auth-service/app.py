@@ -123,10 +123,12 @@ def login_user():
         return jsonify({
             "message": "Login successful",
             "access_token": access_token,
-            "refresh_token": refresh_token
+            "refresh_token": refresh_token,
+            "role": user.role  # Changed this line to get role from user object
         }), 200
 
     return jsonify({"error": "Invalid email or password"}), 401
+
 
 @app.route('/refresh', methods=['POST'])
 def refresh_token():
