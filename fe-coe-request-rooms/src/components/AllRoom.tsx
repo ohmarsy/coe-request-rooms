@@ -9,7 +9,7 @@ interface AllRoomProps {
   classNameInner?: string;
   classNameOuter?: string;
   addRoom?: boolean;
-  handleClickAdd?: () => void; 
+  handleClickAdd?: () => void;
 }
 
 export interface RoomProps {
@@ -22,16 +22,21 @@ const AllRoom: React.FC<AllRoomProps> = ({
   classNameInner,
   classNameOuter,
   addRoom = false,
-  handleClickAdd,  
+  handleClickAdd,
 }) => {
   return (
     <div
       className={`w-full bg-white shadow-sm rounded-2xl flex flex-col ${classNameOuter}`}
     >
-      <div className="flex justify-between items-center border-b border-b-gray-200 px-5 py-4">
-        <p className="text-xl max-[1024px]:text-base max-[1280px]:text:lg">All rooms</p>
+      <div className="flex justify-between items-center border-b border-b-gray-200 px-5 py-4 max-[1024px]:flex-col-reverse max-[1024px]:gap-2">
+        <p className="text-xl max-[1024px]:text-base max-[1280px]:text:lg">
+          All rooms
+        </p>
         {addRoom && (
-          <button className="flex gap-2 items-center justify-center px-4 py-2 bg-gray-200 rounded-lg cursor-pointer hover:bg-gray-300" onClick={handleClickAdd}>
+          <button
+            className="flex gap-2 items-center justify-center px-4 py-2 bg-gray-200 rounded-lg cursor-pointer hover:bg-gray-300 max-[1024px]:w-full"
+            onClick={handleClickAdd}
+          >
             <FontAwesomeIcon icon={faPlusCircle} /> Add
           </button>
         )}

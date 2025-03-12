@@ -281,25 +281,33 @@ const ManageRoomPage = () => {
                   onClick_left={handleLeft}
                   onClick_right={handleRight}
                 />
-                <div className="flex flex-col w-full px-8 ">
+                <div className="flex flex-col w-full h-[55vh] px-8 ">
                   {activeComponent === "RequestRooms" ? (
-                    <Table
-                      columns={columns_request}
-                      data={data_request}
-                      maxRows={10}
-                      buttonShow={true}
-                      handleApprove={(id: string) => handleApprove(id)}
-                      handleReject={(id: string) => {
-                        handleReject(id);
-                      }}
-                    />
-                  ) : (
+                    data_request.length > 0 ? (
+                      <Table
+                        columns={columns_request}
+                        data={data_request}
+                        maxRows={10}
+                        buttonShow={true}
+                        handleApprove={handleApprove}
+                        handleReject={handleReject}
+                      />
+                    ) : (
+                      <div className="flex flex-col items-center justify-center h-full">
+                        <p>No Data Available</p>
+                      </div>
+                    )
+                  ) : data_history.length > 0 ? (
                     <Table
                       columns={columns_history}
                       data={data_history}
                       maxRows={10}
                       buttonShow={false}
                     />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-full">
+                      <p>No Data Available</p>
+                    </div>
                   )}
                 </div>
               </div>
