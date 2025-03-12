@@ -73,8 +73,12 @@ def add_access_list():
 
         if not isinstance(data['rooms'], list) or len(data['rooms']) == 0:
             return jsonify({"error": "Room must be a non-empty array"}), 400
+        
+        token = request.headers.get("Authorization")
+        if not token:
+            return jsonify({"error": "Missing Authorization Token"}), 401
 
-        user_response = requests.get(f"{AUTH_SERVICE_URL}/user/{data['user_id']}")
+        user_response = requests.get(f"{AUTH_SERVICE_URL}/user/{data['user_id']}", headers={"Authorization": token})
         if user_response.status_code != 200:
             return jsonify({"error": "User not found"}), 404
 

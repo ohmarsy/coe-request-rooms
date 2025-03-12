@@ -18,7 +18,7 @@ interface UserInfo {
 }
 
 const RequestRooms = () => {
-  const baseUrl = import.meta.env.REACT_APP_API_URL || "http://localhost";
+    const baseUrl = import.meta.env.REACT_APP_API_URL || "http://localhost";
 
     const today = new Date().toISOString().split('T')[0];
 
@@ -28,13 +28,15 @@ const RequestRooms = () => {
     const [userInfo, setUserInfo] = useState<UserInfo>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
+    const token = localStorage.getItem('access_token');
+
     const handleLeft = () => {
         setActiveComponent("RequestRoom")
     }
     const handleRight = () => {
         setActiveComponent("History")
     }
-    const fetchRooms = async () => {
+    const fetchRooms = useCallback(async () => {
         try {
             const response = await fetch(`${baseUrl}:5003/rooms`);
 
@@ -49,13 +51,11 @@ const RequestRooms = () => {
         } catch (error) {
             console.error('Error fetching rooms:', error);
         }
-    };
+    }, [baseUrl]);
 
-    const fetchUserInfo = async () => {
+    const fetchUserInfo = useCallback(async () => {
         setIsLoading(true);
         try {
-            const token = localStorage.getItem('access_token');
-
             if (!token) {
                 throw new Error('No token found');
             }
@@ -85,7 +85,7 @@ const RequestRooms = () => {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [baseUrl, token]);
 
     const fetchHistoryData = useCallback(async () => {
         try {
@@ -125,12 +125,12 @@ const RequestRooms = () => {
         } catch (error) {
             console.error('Error fetching history:', error);
         }
-    }, [userInfo]);
+    }, [baseUrl, userInfo]);
 
     useEffect(() => {
         fetchRooms();
         fetchUserInfo();
-    }, []);
+    }, [fetchRooms, fetchUserInfo]);
 
 
     useEffect(() => {
@@ -207,6 +207,7 @@ const RequestRooms = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(requestBody),
             })

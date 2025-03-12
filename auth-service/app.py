@@ -160,7 +160,8 @@ def refresh_token():
         return jsonify({"error": "Invalid refresh token"}), 401
 
 @app.route('/user/<int:user_id>', methods=['GET'])
-def get_user_by_id(user_id): 
+@token_required
+def get_user_by_id(user, user_id): 
     fetched_user = User.query.get(user_id) 
     if fetched_user is None:
         return jsonify({'message': 'User not found'}), 404
