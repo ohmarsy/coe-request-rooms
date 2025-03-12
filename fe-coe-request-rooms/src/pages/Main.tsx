@@ -69,7 +69,7 @@ const MainPage = () => {
 
         {/* Page Content */}
         <div
-          className={`flex-1 p-2 transition-all duration-300 ease-in-out ${
+          className={`flex-1 p-2 transition-all duration-300 ease-in-out fade-in ${
             isOpen && !isMobile ? "ml-64" : ""
           } mt-16 min-w-[calc(100vw-295px)] min-h-[calc(100vh-64px)]`}
         >

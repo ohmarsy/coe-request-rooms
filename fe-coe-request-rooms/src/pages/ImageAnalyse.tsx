@@ -32,7 +32,7 @@ const ImageAnalysePage = () => {
   };
 
   return (
-    <div>
+    <div className="p-2">
       <div className="flex justify-center sm:justify-start">
         <Switch
           leftname="Human face"
