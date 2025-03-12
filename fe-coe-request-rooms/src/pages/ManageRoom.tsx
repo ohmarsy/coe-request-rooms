@@ -175,6 +175,7 @@ const ManageRoomPage = () => {
   >("RequestRooms");
 
   const [animate, setAnimate] = useState(false);
+  const [animateSwitch, setAnimateSwitch] = useState(false);
 
   const handleLeft = () => {
     setActiveComponent("RequestRooms");
@@ -195,7 +196,16 @@ const ManageRoomPage = () => {
         });
       });
     }
-  }, [selectedRoom]);
+    if (activeComponent) {
+      setAnimateSwitch(false);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setAnimateSwitch(true);
+        });
+      });
+    }
+  }, [selectedRoom, activeComponent]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -281,39 +291,45 @@ const ManageRoomPage = () => {
                   onClick_left={handleLeft}
                   onClick_right={handleRight}
                 />
-                <div className="flex flex-col w-full h-[55vh] px-8 ">
+                <div className="flex flex-col w-full h-[55vh] px-8">
                   {activeComponent === "RequestRooms" ? (
-                    data_request.length > 0 ? (
-                      <Table
-                        columns={columns_request}
-                        data={data_request}
-                        maxRows={10}
-                        buttonShow={true}
-                        handleApprove={handleApprove}
-                        handleReject={handleReject}
-                      />
-                    ) : (
-                      <div className="flex flex-col items-center justify-center h-full">
-                        <p>No Data Available</p>
-                      </div>
-                    )
-                  ) : data_history.length > 0 ? (
-                    <Table
-                      columns={columns_history}
-                      data={data_history}
-                      maxRows={10}
-                      buttonShow={false}
-                    />
+                    <div className={`${animateSwitch ? "fade-in" : ""} h-full duration-200`}>
+                      {data_request.length > 0 ? (
+                        <Table
+                          columns={columns_request}
+                          data={data_request}
+                          maxRows={10}
+                          buttonShow={true}
+                          handleApprove={handleApprove}
+                          handleReject={handleReject}
+                        />
+                      ) : (
+                        <div className="flex flex-col items-center justify-center h-full fade-in duration-200">
+                          <p>No Data Available</p>
+                        </div>
+                      )}
+                    </div>
                   ) : (
-                    <div className="flex flex-col items-center justify-center h-full">
-                      <p>No Data Available</p>
+                    <div className={`${animateSwitch ? "fade-in" : ""} h-full duration-200`}>
+                      {data_history.length > 0 ? (
+                        <Table
+                          columns={columns_history}
+                          data={data_history}
+                          maxRows={10}
+                          buttonShow={false}
+                        />
+                      ) : (
+                        <div className="flex flex-col items-center justify-center h-full fade-in duration-200">
+                          <p>No Data Available</p>
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
               </div>
             </div>
           ) : (
-            <div className="w-full h-full flex justify-center items-center">
+            <div className="w-full h-full flex justify-center items-center fade-in duration-300">
               <p className="text-center">Please select the room</p>
             </div>
           )}
