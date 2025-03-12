@@ -1,12 +1,14 @@
 version: '3.8'
 services:
-  # web:
-  #   build: ./fe-coe-request-rooms
-  #   container_name: cloud_web
-  #   ports:
-  #     - "3003:5173" 
-  #   command: sh -c "npm install && npm run build && npm run dev"
-  #   restart: unless-stopped
+  web:
+    build: ./fe-coe-request-rooms
+    container_name: cloud_web
+    ports:
+      - "3003:5173" 
+    environment:
+      - VITE_NO_LINT=1
+    command: sh -c "npm install && npm run build && npm run dev"
+    restart: unless-stopped
   
   pgadmin:
     image: dpage/pgadmin4
@@ -51,48 +53,48 @@ services:
     volumes:
       - postgres_room_data:/var/lib/postgresql/data
       
-  # auth-service:
-  #   build: ./auth-service
-  #   ports:
-  #     - "5002:5002"
-  #   volumes:
-  #     - ./auth-service:/app
-  #   environment:
-  #     - FLASK_APP=app.py
-  #     - FLASK_RUN_HOST=0.0.0.0
-  #     - DATABASE_URL=postgresql://postgres:password@host.docker.internal:5432/authdb
-  #   depends_on:
-  #     - db-auth
-  #   networks:
-  #     - backend
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "5002:5002"
+    volumes:
+      - ./auth-service:/app
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+      - DATABASE_URL=postgresql://postgres:password@host.docker.internal:5432/authdb
+    depends_on:
+      - db-auth
+    networks:
+      - backend
 
-  # rooms-service:
-  #   build: ./rooms-service
-  #   ports:
-  #     - "5003:5003"
-  #   volumes:
-  #     - ./rooms-service:/app
-  #   environment:
-  #     - FLASK_APP=app.py
-  #     - FLASK_RUN_HOST=0.0.0.0
-  #     - DATABASE_URL=postgresql://postgres:password@host.docker.internal:5433/roomdb
-  #   networks:
-  #     - backend
+  rooms-service:
+    build: ./rooms-service
+    ports:
+      - "5003:5003"
+    volumes:
+      - ./rooms-service:/app
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+      - DATABASE_URL=postgresql://postgres:password@host.docker.internal:5433/roomdb
+    networks:
+      - backend
 
-  # api-gateway:
-  #   build: ./api-gateway
-  #   ports:
-  #     - "5001:5001"
-  #   volumes:
-  #     - ./api-gateway:/app
-  #   environment:
-  #     - FLASK_APP=app.py
-  #     - FLASK_RUN_HOST=0.0.0.0
-  #   networks:
-  #     - backend
-  #   depends_on:
-  #     - auth-service
-  #     - rooms-service
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./api-gateway:/app
+    environment:
+      - FLASK_APP=app.py
+      - FLASK_RUN_HOST=0.0.0.0
+    networks:
+      - backend
+    depends_on:
+      - auth-service
+      - rooms-service
 
 volumes:
   postgres_auth_data:
