@@ -53,7 +53,7 @@ def add_room():
         return jsonify({"error": "Failed to add room", "details": str(e)}), 500
     
 
-@app.route('/rooms', methods=['GET'])
+@app.route('/all-rooms', methods=['GET'])
 def get_rooms():
     try:
         rooms = Room.query.all()

@@ -5,7 +5,7 @@ export const getRooms = async (): Promise<RoomProps[]> => {
   const baseUrl = import.meta.env.REACT_APP_API_URL || "http://localhost";
 
   try {
-    const response =await api.get(`${baseUrl}:5003/rooms`); 
+    const response =await api.get(`${baseUrl}:5003/all-rooms`); 
     
     return response.data;
   } catch (err) {

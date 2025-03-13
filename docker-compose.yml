@@ -5,28 +5,31 @@ services:
     container_name: cloud_web
     ports:
       - "3003:5173" 
+    volumes:
+      - ./fe-coe-request-rooms:/app 
+      - /app/node_modules 
     environment:
       - VITE_NO_LINT=1
       - REACT_APP_API_URL=http://10.161.112.145
     command: sh -c "npm install && npm run build && npm run dev"
     restart: unless-stopped
   
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "5050:80"
-    networks:
-      - backend
-    depends_on:
-      - db-auth
-      - db-room
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: pgadmin
+  #   restart: always
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: admin@admin.com
+  #     PGADMIN_DEFAULT_PASSWORD: admin
+  #   ports:
+  #     - "5050:80"
+  #   networks:
+  #     - backend
+  #   depends_on:
+  #     - db-auth
+  #     - db-room
+  #   volumes:
+  #     - pgadmin_data:/var/lib/pgadmin
 
   db-auth:
     image: postgres:15
@@ -62,6 +65,7 @@ services:
       - ./auth-service:/app
     environment:
       - FLASK_APP=app.py
+      - FLASK_ENV=development
       - FLASK_RUN_HOST=0.0.0.0
       - BASE_URL=10.161.112.145
       - DATABASE_URL=postgresql://postgres:password@10.161.112.145:5432/authdb
@@ -78,6 +82,7 @@ services:
       - ./rooms-service:/app
     environment:
       - FLASK_APP=app.py
+      - FLASK_ENV=development
       - FLASK_RUN_HOST=0.0.0.0
       - BASE_URL=10.161.112.145
       # - DATABASE_URL=postgresql://postgres:password@host.docker.internal:5433/roomdb
