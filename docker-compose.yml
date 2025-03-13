@@ -10,7 +10,7 @@ services:
       - /app/node_modules 
     environment:
       - VITE_NO_LINT=1
-      - REACT_APP_API_URL=http://10.161.112.145
+      - VITE_API_URL=http://10.161.112.145
     command: sh -c "npm install && npm run build && npm run dev"
     restart: unless-stopped
   

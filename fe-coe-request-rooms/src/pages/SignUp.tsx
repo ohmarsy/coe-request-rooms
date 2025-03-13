@@ -5,7 +5,7 @@ import AuthForm from "../components/AuthForm";
 
 export default function SignUpPage() {
     const navigate = useNavigate();
-  const baseUrl = import.meta.env.REACT_APP_API_URL || "http://localhost";
+  const baseUrl = import.meta.env.VITE_API_URL || "http://localhost";
 
     
     const handleSignUp = async (firstname?: string, lastname?: string, email?: string, password?: string, role?: string) => {

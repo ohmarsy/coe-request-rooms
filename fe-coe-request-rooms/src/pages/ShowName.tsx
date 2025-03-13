@@ -13,7 +13,7 @@ export interface User {
 const ShowName: React.FC = () => {
     const [user, setUser] = useState<User | null>(null);
     const navigate = useNavigate();
-  const baseUrl = import.meta.env.REACT_APP_API_URL || "http://localhost";
+  const baseUrl = import.meta.env.VITE_API_URL || "http://localhost";
 
     const fetchUserData = async () => {
         try {

@@ -18,7 +18,7 @@ interface UserInfo {
 }
 
 const RequestRooms = () => {
-    const baseUrl = import.meta.env.REACT_APP_API_URL || "http://localhost";
+    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost";
 
     const today = new Date().toISOString().split('T')[0];
 
@@ -38,7 +38,7 @@ const RequestRooms = () => {
     }
     const fetchRooms = useCallback(async () => {
         try {
-            const response = await fetch(`${baseUrl}:5003/rooms`);
+            const response = await fetch(`${baseUrl}:5003/all-rooms`);
 
             if (!response.ok) {
                 throw new Error('Failed to fetch rooms');

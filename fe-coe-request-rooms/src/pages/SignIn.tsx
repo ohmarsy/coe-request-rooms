@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 
 export default function SignInPage() {
-  const baseUrl = import.meta.env.REACT_APP_API_URL || "http://localhost";
+  const baseUrl = import.meta.env.VITE_API_URL || "http://localhost";
     
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false); // Add loading state

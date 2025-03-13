@@ -10,7 +10,7 @@ export interface UserData {
 }
 
 export const getUserById = async (user_id: number): Promise<UserData[]> => {
-  const baseUrl = import.meta.env.REACT_APP_API_URL || "http://localhost";
+  const baseUrl = import.meta.env.VITE_API_URL || "http://localhost";
 
   try {
     const response = await api.get(`${baseUrl}:5002/user/${user_id}`);
