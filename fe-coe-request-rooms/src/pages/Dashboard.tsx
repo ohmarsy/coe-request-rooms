@@ -19,9 +19,8 @@ import {
 
 const columns = [
   { header: "Room", accessor: "room" },
-  { header: "Room Status", accessor: "status" },
-  { header: "Information", accessor: "information" },
   { header: "Device", accessor: "device" },
+  { header: "Information", accessor: "information" },
   { header: "Time", accessor: "time" },
   { header: "Date", accessor: "date" },
 ];
