@@ -5,6 +5,7 @@ export interface ImageData {
   name: string;
   email: string;
   image: string;
+  timestamps: number;
 }
 
 export const getImages = async (): Promise<ImageData[]> => {

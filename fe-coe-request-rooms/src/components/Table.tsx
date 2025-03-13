@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Column {
   header: string;
@@ -35,6 +36,7 @@ const Table: React.FC<TableProps> = ({
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
+  const navigate = useNavigate();
 
   function checkTypeDataInfo(value: string) {
     return !isNaN(Number(value));
@@ -59,9 +61,8 @@ const Table: React.FC<TableProps> = ({
           <tbody>
             {visibleData.map((row, rowIndex) => (
               <tr
-                className={`${
-                  rowIndex % 2 === 0 ? "bg-gray-100" : "bg-white"
-                }`}
+                className={`${rowIndex % 2 === 0 ? "bg-gray-100" : "bg-white"
+                  }`}
                 key={rowIndex}
               >
                 {columns.map((col, colIndex) => (
@@ -70,9 +71,12 @@ const Table: React.FC<TableProps> = ({
                       checkTypeDataInfo(row[col.accessor]) ? (
                         <span>{row[col.accessor]}</span>
                       ) : (
-                        <a href="#" className="text-blue-600 underline">
+                        <p
+                          className="text-blue-600 underline cursor-pointer"
+                          onClick={() => navigate("/main?menu=image-analyse")}
+                        >
                           {row[col.accessor]}
-                        </a>
+                        </p>
                       )
                     ) : col.accessor === "approved" || col.accessor == "status" ? (
                       row[col.accessor] === "Approved" ? (
@@ -119,9 +123,8 @@ const Table: React.FC<TableProps> = ({
       {pagination && (
         <div className="flex justify-end items-center mt-4 space-x-2 text-gray-600 text-base">
           <button
-            className={`transition duration-200 ease-in-out ${
-              currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className={`transition duration-200 ease-in-out ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
@@ -130,20 +133,18 @@ const Table: React.FC<TableProps> = ({
           {Array.from({ length: totalPages }, (_, index) => (
             <button
               key={index}
-              className={`transition duration-200 ease-in-out ${
-                currentPage === index + 1
+              className={`transition duration-200 ease-in-out ${currentPage === index + 1
                   ? "text-black font-bold"
                   : "text-gray-600"
-              }`}
+                }`}
               onClick={() => setCurrentPage(index + 1)}
             >
               {index + 1}
             </button>
           ))}
           <button
-            className={`px-3 py-2 transition duration-200 ease-in-out ${
-              currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className={`px-3 py-2 transition duration-200 ease-in-out ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             disabled={currentPage === totalPages}
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
