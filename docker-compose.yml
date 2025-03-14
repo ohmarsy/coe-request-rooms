@@ -55,7 +55,7 @@ services:
     depends_on:
       - db-auth
     networks:
-      - backend
+      - coe_request_room_networks
 
   rooms-service:
     build: ./rooms-service
@@ -71,7 +71,7 @@ services:
       # - DATABASE_URL=postgresql://postgres:password@host.docker.internal:5433/roomdb
       - DATABASE_URL=postgresql://postgres:password@10.161.112.145:5433/roomdb
     networks:
-      - backend
+      - coe_request_room_networks
 
   api-gateway:
     build: ./api-gateway
@@ -83,7 +83,7 @@ services:
       - FLASK_APP=app.py
       - FLASK_RUN_HOST=0.0.0.0
     networks:
-      - backend
+      - coe_request_room_networks
     depends_on:
       - auth-service
       - rooms-service
@@ -94,5 +94,5 @@ volumes:
   pgadmin_data:
 
 networks:
-  backend:
+  coe_request_room_networks:
     driver: bridge
