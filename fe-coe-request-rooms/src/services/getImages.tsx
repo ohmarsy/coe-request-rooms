@@ -15,10 +15,10 @@ interface Data {
 }
 
 // ฟังก์ชันดึงข้อมูลภาพจาก API
-export const fetchAllImages = async (current_page : number ): Promise<ImageData[]> => {
+export const fetchAllImages = async (): Promise<ImageData[]> => {
   try {
     //  ดึงข้อมูลจาก API แรก
-    const response = await axios.get(`http://10.161.112.138:5001/images?page=${current_page}&per_page=6`, {
+    const response = await axios.get(`http://10.161.112.138:5001/allImages`, {
       headers: {
         "x-api-key":
           "e90cfd82cd64ee7599b5f98180f743a6b03c762d6a10b1e69276d50a61f61fa6",

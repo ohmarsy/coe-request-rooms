@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "./Modal";
 import { fetchAllImages , ImageData  } from "../services/getImages";
 
-import Loading from "./Loading";
+// import Loading from "./Loading";
 
 interface Column {
   header: string;
@@ -36,7 +36,7 @@ const Table: React.FC<TableProps> = ({
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedRowData, setSelectedRowData] = useState<RowData | null>(null);
   const [imageData, setImageData] = useState<ImageData[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
 
   const rowsPerPage = maxRows;
   const totalPages = Math.ceil(data.length / rowsPerPage);
@@ -50,7 +50,7 @@ const Table: React.FC<TableProps> = ({
       try {
         const data = await fetchAllImages ();
         setImageData(data);
-        setLoading(false);
+        // setLoading(false);
       } catch (err) {
         console.error("Error fetching data:", err);
 

@@ -21,7 +21,7 @@ const ImageAnalysePage = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const data = await fetchAllImages(currentPage); // ส่ง currentPage ไป
+        const data = await fetchAllImages(); // ส่ง currentPage ไป
         setImageData(data);
         setLoading(false);
         // console.log("image data : ", imageData);

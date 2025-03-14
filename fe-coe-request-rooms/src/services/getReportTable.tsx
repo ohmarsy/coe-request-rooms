@@ -9,6 +9,7 @@ export interface ReportTableData {
   information: string;
   time: string;
   date: string;
+  
   [key: string]: string;
 }
 
@@ -34,7 +35,7 @@ const formatTimestamp = (unixTimestamp: number): { time: string; date: string } 
   return { time: formattedTime, date: formattedDate };
 };
 
-export const getReportTable = async (): Promise<ReportTableData[]> => {
+export const getReportTable = async ( ): Promise<ReportTableData[]> => {
   try {
     const rooms = await getRooms();
     const temperatureData = await getTemperature();
