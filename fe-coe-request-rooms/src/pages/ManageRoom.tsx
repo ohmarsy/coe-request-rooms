@@ -129,7 +129,7 @@ const ManageRoomPage = () => {
       confirmButtonText: "Ok",
       confirmButtonColor: "#3085d6",
     }).then(() => {
-      navigate("/main?menu=manage-room");
+      navigate(`/main?menu=manage-room&selectedRoom=${selectedRoom}`);
       window.location.reload();
     });
   };
@@ -143,7 +143,7 @@ const ManageRoomPage = () => {
       confirmButtonText: "Ok",
       confirmButtonColor: "#3085d6",
     }).then(() => {
-      navigate("/main?menu=manage-room");
+      navigate(`/main?menu=manage-room&selectedRoom=${selectedRoom}`);
       window.location.reload();
     });
   };
