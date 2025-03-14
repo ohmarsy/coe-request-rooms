@@ -41,10 +41,10 @@ const TemperatureDisplay: React.FC<TemperatureProps> = ({
         </div>
 
         <div className="text-sm sm:text-base text-[#7d7d7d] mt-2 ">
-          {tempType === "inside" ? "Indoor Temp" : "Outdoor Temp"}
+          {tempType === "inside" ? "Inside Temp" : "Outside Temp"}
         </div>
 
-        <div className="text-xs xs:text-sm text-[#7d7d7d] mt-2 h-4">
+        {/* <div className="text-xs xs:text-sm text-[#7d7d7d] mt-2 h-4">
           {tempType === "inside" && temperature !== null && (
             <>
               Air conditioner:{" "}
@@ -55,7 +55,7 @@ const TemperatureDisplay: React.FC<TemperatureProps> = ({
               </span>
             </>
           )}
-        </div>
+        </div> */}
 
       </div>
     </div>
