@@ -59,7 +59,7 @@ const ManageRoomPage = () => {
         name: user?.first_name ?? "Unknown",
         time_checkin: item.checkin.split(":").slice(0, 2).join(":"),
         time_checkout: item.checkout.split(":").slice(0, 2).join(":"),
-        date: item.date,
+        date: new Date(item.date).toLocaleDateString('en-GB'),
         room: item.room_id,
         id: `${item.id}`,
       };

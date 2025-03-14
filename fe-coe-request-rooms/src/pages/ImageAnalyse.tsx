@@ -7,9 +7,11 @@ import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
+import Loading from "../components/Loading";
 
 const ImageAnalysePage = () => {
   const [imageData, setImageData] = useState<ImageData[]>([]);
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeComponent, setActiveComponent] = useState<
     "Human face" | "Number plate"
@@ -21,7 +23,8 @@ const ImageAnalysePage = () => {
       try {
         const data = await fetchAllImages(currentPage); // ส่ง currentPage ไป
         setImageData(data);
-        console.log("Fetched image data:", data);
+        setLoading(false);
+        // console.log("image data : ", imageData);
       } catch (err) {
         console.log("Error fetching images:", err);
       }
@@ -31,6 +34,10 @@ const ImageAnalysePage = () => {
 
   // ตรวจสอบว่ามีข้อมูลก่อนใช้ .pages
   const totalPages = imageData.length > 0 ? imageData[0].pages : 1;
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="p-2">
@@ -48,7 +55,7 @@ const ImageAnalysePage = () => {
       {activeComponent === "Human face" ? (
         <>
           {/* Grid Layout */}
-          <div className="text-pretty grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-8 items-center mx-4 px-4 mt-4">
+          <div className="text-pretty grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-4 items-center mx-4 px-4 mt-4">
             {imageData.map((data, index) => (
               <Card
                 key={index}
