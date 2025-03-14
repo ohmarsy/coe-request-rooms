@@ -144,7 +144,7 @@ const DashboardPage = () => {
 
         {/* Report Table */}
         <div className="w-full xl:flex-2 bg-white  shadow-sm rounded-2xl p-6 h-full">
-          <p className="text-xl font-bold py-2">Room Status Table</p>
+          <p className="text-xl font-bold py-2">Report Table</p>
           <Table
             columns={columns}
             data={ReportTable}

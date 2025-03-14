@@ -20,6 +20,9 @@ const ReportTablePage = () => {
         const dataTable = await getReportTable();
 
         setReportTable(dataTable);
+
+        console.log('reportTable', dataTable);
+        
         setLoading(false);
       } catch (err) {
         console.error("Error fetching report table:", err);
