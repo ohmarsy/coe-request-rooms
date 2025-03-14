@@ -6,7 +6,7 @@ import AllRoom, { RoomProps } from "../components/AllRoom";
 import RoomStatus from "../components/RoomStatus";
 import Quantity from "../components/Quantity";
 import Card from "../components/Card";
-import { getImages, ImageData } from "../services/getImages";
+import { fetchAllImages,ImageData } from "../services/getImages";
 import Table from "../components/Table";
 import { useNavigate } from "react-router-dom";
 import { getRooms } from "../services/getRooms";
@@ -45,11 +45,15 @@ const DashboardPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getImages();
+        
+        const data = await fetchAllImages();
         const roomData = await getRooms();
         const peopleData = await getPeople();
         const dataTable = await getReportTable();
         const temperatureData = await getTemperature();
+
+       
+        
 
         setReportTable(dataTable);
         setImageData(data);
@@ -62,7 +66,6 @@ const DashboardPage = () => {
         console.error("Error fetching data:", err);
       }
     };
-
 
     fetchData();
   }, [selectedRoom]);
@@ -79,7 +82,6 @@ const DashboardPage = () => {
   }
 
   console.log("peopleData: ", peopleData);
-
 
   return (
     <div className="w-full h-full flex flex-col gap-3 p-2">
@@ -103,12 +105,16 @@ const DashboardPage = () => {
           <div className="flex flex-col w-full lg:flex-1 max-[1280px]:flex-1 gap-3  ">
             {/* <Image/> */}
             {/* <div className="flex w-full lg:flex-1 max-[1280px]:flex-1 gap-3  bg-red-500"> */}
-            <Card
-              name={imageData[0].name}
-              email={imageData[0].email}
-              image={imageData[0].image}
-              page="dashboard"
-            />
+            {imageData &&
+              
+                <Card
+                  // name={imageData[0].name}
+                  // email={imageData[0].email}
+                  image={imageData[0].imageUrl}
+                  date={imageData[0].date}
+                  page="dashboard"
+                />
+              }
           </div>
 
           {/* Status/Quantity Right */}
@@ -129,14 +135,8 @@ const DashboardPage = () => {
           </div>
           <div className="flex gap-3 h-full">
             <>
-              <TemBox
-                AllTemperatureData={temperatureData}
-                tempType="inside"
-              />
-              <TemBox
-                AllTemperatureData={temperatureData}
-                tempType="outside"
-              />
+              <TemBox AllTemperatureData={temperatureData} tempType="inside" />
+              <TemBox AllTemperatureData={temperatureData} tempType="outside" />
             </>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
 import Switch from "../components/Switch";
-import { getImages, ImageData } from "../services/getImages";
+import { fetchAllImages,ImageData  } from "../services/getImages";
 
 const ImageAnalysePage = () => {
   const [imageData, setImageData] = useState<ImageData[]>([]);
@@ -9,10 +9,15 @@ const ImageAnalysePage = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const data = await getImages();
+        const data = await fetchAllImages();
+        // console.log("fetch all images : ", data);
+
+        // const data = await getImages();
+
         setImageData(data);
+        // console.log("image data : ", imageData);
       } catch (err) {
-        console.log(err);
+        console.log("img err : ", err);
       }
     };
 
@@ -33,7 +38,7 @@ const ImageAnalysePage = () => {
 
   return (
     <div className="p-2">
-      <div className="flex justify-center sm:justify-start">
+      <div className="flex justify-center md:justify-start">
         <Switch
           leftname="Human face"
           rightname="Number plate"
@@ -43,28 +48,14 @@ const ImageAnalysePage = () => {
         />
       </div>
       {activeComponent === "Human face" ? (
-        <div className="text-pretty grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center mx-4 md:mx-0 px-8 md:px-0">
+        <div className="text-pretty grid grid-cols-1 flex-wrap md:grid-cols-3 gap-y-8 items-center mx-4 px-4 mt-8">
           {imageData!.map((data, index) => (
-            <Card
-              key={index}
-              name={data.name}
-              email={data.email}
-              image={data.image}
-              page="imageAnalyze"
-            />
+            <Card key={index} image={data.imageUrl} date={data.date} page="imageAnalyze" />
           ))}
         </div>
       ) : (
-        <div className="max-w-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 justify-items-center">
-          {imageData.map((data) => (
-            <div>
-              <img
-                src={data.image}
-                alt=""
-                className="object-cover rounded-2xl"
-              />
-            </div>
-          ))}
+        <div className=" h-[80vh] flex justify-center items-center text-3xl ">
+          Coming soon ...
         </div>
       )}
     </div>
