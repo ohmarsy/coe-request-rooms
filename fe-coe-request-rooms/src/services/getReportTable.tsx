@@ -1,6 +1,7 @@
 import { getRooms } from "./getRooms";
 import { getTemperature } from "./getTemperature";
 import { getImages } from "./getImages";
+import { useState } from "react";
 
 export interface ReportTableData {
   room: string;
@@ -16,11 +17,13 @@ const formatTimestamp = (unixTimestamp: number): { time: string; date: string } 
   const date = new Date(unixTimestamp * 1000); // Convert seconds to milliseconds
   date.setUTCHours(date.getUTCHours() + 7); // Convert to UTC+7
 
-  const formattedTime = date.toLocaleTimeString("en-GB", {
+  let formattedTime = date.toLocaleTimeString("en-GB", {
     hour: "2-digit",
     minute: "2-digit",
-    hour12: false,
+    hour12: true
   });
+
+  formattedTime = formattedTime.replace("am", "AM").replace("pm", "PM");
 
   const formattedDate = date.toLocaleDateString("en-GB", {
     day: "2-digit",
