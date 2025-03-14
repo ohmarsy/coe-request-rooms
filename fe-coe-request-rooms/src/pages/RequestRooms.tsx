@@ -345,6 +345,7 @@ const RequestRooms = () => {
                                 type="text"
                                 name="firstName"
                                 className="border border-[var(--border-color)] p-2 w-full rounded-md"
+                                disabled
                               />
                               <ErrorMessage
                                 name="firstName"
@@ -358,6 +359,7 @@ const RequestRooms = () => {
                                 type="text"
                                 name="lastName"
                                 className="border border-[var(--border-color)] p-2 w-full rounded-md"
+                                disabled
                               />
                               <ErrorMessage
                                 name="lastName"
