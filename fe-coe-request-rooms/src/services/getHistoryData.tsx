@@ -1,4 +1,5 @@
-export const GetHistoryData = async (userId: string, baseUrl: string) => {
+export const GetHistoryData = async (userId: string) => {
+    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost";
     try {
         const response = await fetch(`${baseUrl}:5003/access-list/user/${userId}`);
 

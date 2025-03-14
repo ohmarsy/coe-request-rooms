@@ -6,30 +6,22 @@ import * as Yup from "yup";
 import Table from '../components/Table';
 import Swal from 'sweetalert2';
 import Button from '../components/Button';
-
-interface UserInfo {
-    message: string;
-    user: {
-        id: number;
-        email: string;
-        first_name: string;
-        last_name: string;
-        role: string;
-    };
-}
+import { getRooms } from '../services/getRooms';
+import { RoomProps } from '../components/AllRoom';
+import { getUserName } from '../services/getUserName';
+import { User } from './ShowName';
+import { GetHistoryData } from '../services/getHistoryData';
+import { submitAccessListRequest } from '../services/postAccess';
 
 const RequestRooms = () => {
-    const baseUrl = import.meta.env.VITE_API_URL || "http://localhost";
-
     const today = new Date().toISOString().split('T')[0];
 
     const [activeComponent, setActiveComponent] = React.useState<"RequestRoom" | "History">("RequestRoom");
-    const [rooms, setRooms] = useState<string[]>([]);
+    const [rooms, setRooms] = useState<RoomProps[]>([]);
     const [historyData, setHistoryData] = useState<[]>([]);
-    const [userInfo, setUserInfo] = useState<UserInfo>();
+    const [userInfo, setUserInfo] = useState<User>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const token = localStorage.getItem('access_token');
 
     const handleLeft = () => {
         setActiveComponent("RequestRoom")
@@ -37,117 +29,35 @@ const RequestRooms = () => {
     const handleRight = () => {
         setActiveComponent("History")
     }
-    const fetchRooms = useCallback(async () => {
-        try {
-            const response = await fetch(`${baseUrl}:5003/all-rooms`);
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch rooms');
-            }
-
-            const data = await response.json();
-
-            const roomIds = data.map((room: { room_id: string }) => room.room_id);
-            setRooms(roomIds);
-        } catch (error) {
-            console.error('Error fetching rooms:', error);
-        }
-    }, [baseUrl]);
-
-    const fetchUserInfo = useCallback(async () => {
-        setIsLoading(true);
-        try {
-            if (!token) {
-                throw new Error('No token found');
-            }
-
-            const response = await fetch(`${baseUrl}:5002/protected`, {
-                method: 'GET',
-                headers: {
-                    'authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                }
-            });
-
-            if (!response.ok) {
-                if (response.status === 401) {
-                    // Token expired or invalid
-                    localStorage.removeItem('access_token');
-                    window.location.href = '/login';
-                    return;
-                }
-                throw new Error(`Failed to fetch user info: ${response.status}`);
-            }
-
-            const data = await response.json();
-            setUserInfo(data);
-        } catch (error) {
-            console.error('Error fetching user info:', error);
-        } finally {
-            setIsLoading(false);
-        }
-    }, [baseUrl, token]);
-
-    const fetchHistoryData = useCallback(async () => {
-        try {
-            if (!userInfo || !userInfo.user) {
-                console.error('User information not available');
-                return;
-            }
-            const userId = userInfo.user.id;
-            const response = await fetch(`${baseUrl}:5003/access-list/user/${userId}`);
-
-            if (!response.ok) {
-                throw new Error('Failed to fetch history data');
-            }
-
-            const data = await response.json();
-
-            const formattedData = data.map((item: { id: number, room_id: string, date: string, checkin: string, checkout: string, approved: string }) => {
-                const dateObj = new Date(item.date);
-                const formattedDate = dateObj.toISOString().split('T')[0];
-
-
-                const checkinTime = item.checkin.substring(0, 5);
-                const checkoutTime = item.checkout.substring(0, 5);
-
-                const status = item.approved == "approved" ? 'Approved' : 'Pending';
-
-                return {
-                    key: item.id.toString(),
-                    roomID: item.room_id,
-                    date: formattedDate,
-                    checkin: checkinTime,
-                    checkout: checkoutTime,
-                    status: status
-                };
-            });
-            setHistoryData(formattedData);
-        } catch (error) {
-            console.error('Error fetching history:', error);
-        }
-    }, [baseUrl, userInfo]);
 
     useEffect(() => {
-        fetchRooms();
-        fetchUserInfo();
-    }, [fetchRooms, fetchUserInfo]);
-
-
-    useEffect(() => {
-        if (activeComponent === "History") {
-            fetchHistoryData();
-        }
-    }, [activeComponent, fetchHistoryData]);
-
+        const fetchData = async () => {
+            try {
+                const roomData = await getRooms();
+                const userInfo = await getUserName();
+                if (activeComponent === "History") {
+                    const userId = userInfo.id;
+                    const data = await GetHistoryData(userId);
+                    setHistoryData(data);
+                }
+                setUserInfo(userInfo);
+                setRooms(roomData);
+            } catch (err) {
+                console.error("Error fetching data:", err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        fetchData();
+    }, [activeComponent]);
 
     const initialValues = {
         room: [],
         date: '',
         checkin: '',
         checkout: '',
-        firstName: userInfo?.user.first_name,
-        lastName: userInfo?.user.last_name,
+        firstName: userInfo?.first_name,
+        lastName: userInfo?.last_name,
     }
 
     const validationSchema = Yup.object({
@@ -193,7 +103,7 @@ const RequestRooms = () => {
             }
         });
         try {
-            if (!userInfo || !userInfo.user) {
+            if (!userInfo) {
                 throw new Error('User information not available');
             }
 
@@ -202,31 +112,19 @@ const RequestRooms = () => {
                 date: values.date,
                 checkin: values.checkin,
                 checkout: values.checkout,
-                user_id: userInfo.user.id,
-            }
-            const response = await fetch(`${baseUrl}:5003/access-list/`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(requestBody),
-            })
-
-            if (!response.ok) {
-                throw new Error('Failed to submit')
-            }
+                user_id: userInfo.id,
+            };
+            await submitAccessListRequest(requestBody);
 
             Swal.fire({
                 icon: 'success',
                 title: 'Success!',
                 text: 'Your request has been submitted successfully',
                 confirmButtonText: 'OK',
-                confirmButtonColor: '#3085d6'
+                confirmButtonColor: '#2a7be4'
             }).then(() => {
                 resetForm();
-            }
-            );
+            });
         } catch {
             Swal.fire({
                 icon: 'error',
@@ -302,8 +200,8 @@ const RequestRooms = () => {
                                                         <div className='flex flex-col space-y-4 mt-8 h-full overflow-y-auto scrollbar-hidden'>
                                                             {rooms.map((room, index) => (
                                                                 <label key={index} className='flex flex-row items-center space-x-4'>
-                                                                    <Field type='checkbox' name='room' value={room} className="form-checkbox h-5 w-5 text-blue-600" />
-                                                                    <span className='text-nowrap'>{room}</span>
+                                                                    <Field type='checkbox' name='room' value={room.room_id} className="form-checkbox h-5 w-5 text-blue-600" />
+                                                                    <span className='text-nowrap'>{room.room_id}</span>
                                                                 </label>
                                                             ))}
                                                         </div>
