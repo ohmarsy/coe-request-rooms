@@ -1,7 +1,6 @@
 import { getRooms } from "./getRooms";
 import { getTemperature } from "./getTemperature";
 import { getImages } from "./getImages";
-import { useState } from "react";
 
 export interface ReportTableData {
   room: string;
@@ -42,7 +41,7 @@ export const getReportTable = async (): Promise<ReportTableData[]> => {
 
     const validRooms = rooms.map((room) => room.room_id); 
 
-    let reportData: ReportTableData[] = [];
+    const reportData: ReportTableData[] = [];
 
     //Temperature Data
     const tempEntries = Object.values(temperatureData); 

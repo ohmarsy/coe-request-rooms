@@ -22,7 +22,11 @@ import { putAccessApproved } from "../services/putAccessApproved";
 const ManageRoomPage = () => {
   const navigate = useNavigate();
 
-  const [selectedRoom, setSelectedRoom] = useState("");
+  const urlParams = new URLSearchParams(location.search);
+
+  const [selectedRoom, setSelectedRoom] = useState(
+    urlParams.get("selectedRoom") || ""
+  );
   const [accessListData, setAccessListData] = useState<AccessListData[]>([]);
   const [addClick, setAddClick] = useState(false);
   const [roomData, setRoomData] = useState<RoomProps[]>([]);
@@ -148,6 +152,10 @@ const ManageRoomPage = () => {
       try {
         const data = await getRooms();
         if (selectedRoom) {
+          navigate(`/main?menu=manage-room&selectedRoom=${selectedRoom}`, {
+            replace: true,
+          });
+
           const accessData = await getAccessListByRoom(selectedRoom);
           setAccessListData(accessData);
 
@@ -168,7 +176,7 @@ const ManageRoomPage = () => {
     };
 
     fetchData();
-  }, [selectedRoom]);
+  }, [navigate, selectedRoom]);
 
   const [activeComponent, setActiveComponent] = React.useState<
     "RequestRooms" | "RequestHistory"
