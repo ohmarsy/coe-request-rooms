@@ -3,7 +3,7 @@ import React from "react";
 // Define the type for the props
 interface CardProps {
   image: string; // URL of the image
-  date :string;
+  date: string;
   time: string;
   page: "dashboard" | "imageAnalyze"; // Page type to control aspect ratio
 }
@@ -17,12 +17,16 @@ const Card: React.FC<CardProps> = ({ image, date, time, page }) => {
           : " w-full h-[300px] "
       }`}
     >
-      <img
-        className={`h-3/4 w-full object-cover rounded-t-2xl ${
-          page === "imageAnalyze" ? "aspect-[3/2]" : " "
-        }`}
-        src={image}
-      />
+      {image ? (
+        <img
+          className={`h-3/4 w-full object-cover rounded-t-2xl ${
+            page === "imageAnalyze" ? "aspect-[3/2]" : " "
+          }`}
+          src={image}
+        />
+      ) : (
+        <div className="w-full h-full"> No data</div>
+      )}
       <div className="flex-col flex justify-center h-1/4 items-center ">
         <h2 className="  text-center antialiased text-md font-bold text-gray-500 ">
           Date : {date}

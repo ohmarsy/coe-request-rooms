@@ -6,7 +6,7 @@ import AllRoom, { RoomProps } from "../components/AllRoom";
 import RoomStatus from "../components/RoomStatus";
 import Quantity from "../components/Quantity";
 import Card from "../components/Card";
-import { fetchAllImages,ImageData } from "../services/getImages";
+import { fetchAllImages, ImageData } from "../services/getImages";
 import Table from "../components/Table";
 import { useNavigate } from "react-router-dom";
 import { getRooms } from "../services/getRooms";
@@ -45,15 +45,11 @@ const DashboardPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
         const data = await fetchAllImages();
         const roomData = await getRooms();
         const peopleData = await getPeople();
         const dataTable = await getReportTable();
         const temperatureData = await getTemperature();
-
-       
-        
 
         setReportTable(dataTable);
         setImageData(data);
@@ -76,9 +72,7 @@ const DashboardPage = () => {
   };
 
   if (loading) {
-    return (
-      <Loading />
-    );
+    return <Loading />;
   }
 
   console.log("peopleData: ", peopleData);
@@ -105,17 +99,22 @@ const DashboardPage = () => {
           <div className="flex flex-col w-full lg:flex-1 max-[1280px]:flex-1 gap-3  ">
             {/* <Image/> */}
             {/* <div className="flex w-full lg:flex-1 max-[1280px]:flex-1 gap-3  bg-red-500"> */}
-            {imageData &&
-              
-                <Card
-                  // name={imageData[0].name}
-                  // email={imageData[0].email}
-                  image={imageData[0].imageUrl}
-                  date={new Date(imageData[0].timestamps).toLocaleDateString('en-GB')}
-                  time={new Date(imageData[0].timestamps).toLocaleTimeString([], { hour12: false, hour: "2-digit", minute: "2-digit" })}
-                  page="dashboard"
-                />
-              }
+            {imageData && selectedRoom == "EN4412" && (
+              <Card
+                // name={imageData[0].name}
+                // email={imageData[0].email}
+                image={imageData[0].imageUrl}
+                date={new Date(imageData[0].timestamps).toLocaleDateString(
+                  "en-GB"
+                )}
+                time={new Date(imageData[0].timestamps).toLocaleTimeString([], {
+                  hour12: false,
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+                page="dashboard"
+              />
+            )}
           </div>
 
           {/* Status/Quantity Right */}
