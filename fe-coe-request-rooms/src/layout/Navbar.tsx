@@ -56,8 +56,8 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar, isMobile }) => {
             <FontAwesomeIcon icon={faBars} size="lg" />
           </button>
         )}
-        <img src="./src/assets/LogoCoE.png" className="w-12" alt="Logo" />
-        <span className="text-white text-xl font-bold max-[500px]:text-sm">
+        <img src="./src/assets/LogoCoE.png" className="w-10 sm:w-12" alt="Logo" />
+        <span className="text-white text-xs sm:text-xl font-bold turncate"> 
           CoE Rooms
         </span>
       </div>

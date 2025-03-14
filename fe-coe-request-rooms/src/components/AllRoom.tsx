@@ -30,7 +30,7 @@ const AllRoom: React.FC<AllRoomProps> = ({
     >
       <div className="flex justify-between items-center border-b border-b-gray-200 px-5 py-4 max-[1024px]:flex-col-reverse max-[1024px]:gap-2">
         <p className="text-xl max-[1024px]:text-base max-[1280px]:text:lg">
-          All rooms
+          All rooms 
         </p>
         {addRoom && (
           <button

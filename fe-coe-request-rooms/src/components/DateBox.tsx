@@ -30,7 +30,7 @@ const DateBox = () => {
       <p className="text-2xl font-medium max-[1240px]:text-xl max-[1080px]:text-lg">
         {date.date}
       </p>
-      <p className="text-[#7d7d7d] font-medium text-base ">Date</p>
+      <p className="text-[#7d7d7d] font-medium text-base  ">Date</p>
     </div>
   );
 };

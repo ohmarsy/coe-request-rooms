@@ -111,7 +111,7 @@ const DashboardPage = () => {
               />
             ) : (
               <div className="w-full h-full bg-white flex items-center justify-center flex-col rounded-2xl shadow-sm">
-                <p className="text-gray-500">No image data</p>
+                <p className="text-gray-400 text-xs sm:text-lg truncate ">No image data</p>
               </div>
             )}
           </div>
