@@ -43,8 +43,8 @@ const WelcomePage = () => {
             />
 
             {/* Footer */}
-            <footer className="w-full text-center text-[#140B0C] opacity-40 py-4 flex flex-col space-y-2">
-                <p>Developed by</p>
+            <footer className="w-full text-center text-[#140B0C]  py-4 flex flex-col space-y-2">
+                <p className="opacity-40">Developed by</p>
                 <div className="flex flex-row justify-center items-center gap-2 text-lg font-bold">
                     <a href="https://github.com/JakkapatB" target="_blank" className="hover:text-[var(--primary-color)]">
                         <GradientText children="BOSS" />
