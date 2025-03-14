@@ -96,17 +96,12 @@ const DashboardPage = () => {
 
         <div className="flex flex-row gap-3 w-full  flex-1 max-[1280px]:flex-2">
           {/* Image Middle */}
-          <div className="flex flex-col w-full lg:flex-1 max-[1280px]:flex-1 gap-3  ">
-            {/* <Image/> */}
-            {/* <div className="flex w-full lg:flex-1 max-[1280px]:flex-1 gap-3  bg-red-500"> */}
-            {imageData && selectedRoom == "EN4412" && (
+          <div className="flex flex-col w-full lg:flex-1 max-[1280px]:flex-1 gap-3">
+            {/* Conditional rendering for EN4412 */}
+            {selectedRoom === "EN4412" && imageData ? (
               <Card
-                // name={imageData[0].name}
-                // email={imageData[0].email}
                 image={imageData[0].imageUrl}
-                date={new Date(imageData[0].timestamps).toLocaleDateString(
-                  "en-GB"
-                )}
+                date={new Date(imageData[0].timestamps).toLocaleDateString("en-GB")}
                 time={new Date(imageData[0].timestamps).toLocaleTimeString([], {
                   hour12: false,
                   hour: "2-digit",
@@ -114,8 +109,13 @@ const DashboardPage = () => {
                 })}
                 page="dashboard"
               />
+            ) : (
+              <div className="w-full h-full bg-white flex items-center justify-center flex-col rounded-2xl shadow-sm">
+                <p className="text-gray-500">No image data</p>
+              </div>
             )}
           </div>
+
 
           {/* Status/Quantity Right */}
           <div className="w-full flex-1 flex flex-col gap-3 lg:mt-0">
