@@ -23,7 +23,15 @@ const RequestRooms = () => {
   const [rooms, setRooms] = useState<RoomProps[]>([]);
   const [historyData, setHistoryData] = useState<[]>([]);
   const [userInfo, setUserInfo] = useState<User>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [initialValues, setInitialValues] = useState({
+        room: [],
+        date: '',
+        checkin: '',
+        checkout: '',
+        firstName: '',
+        lastName: '',
+    });
 
   const handleLeft = () => {
     setActiveComponent("RequestRoom");
@@ -44,6 +52,14 @@ const RequestRooms = () => {
         }
         setUserInfo(userInfo);
         setRooms(roomData);
+          setInitialValues({
+              room: [],
+              date: '',
+              checkin: '',
+              checkout: '',
+              firstName: userInfo.first_name,
+              lastName: userInfo.last_name,
+          });
       } catch (err) {
         console.error("Error fetching data:", err);
       } finally {
@@ -53,14 +69,7 @@ const RequestRooms = () => {
     fetchData();
   }, [activeComponent]);
 
-  const initialValues = {
-    room: [],
-    date: "",
-    checkin: "",
-    checkout: "",
-    firstName: userInfo?.first_name,
-    lastName: userInfo?.last_name,
-  };
+
 
   const validationSchema = Yup.object({
     room: Yup.array().of(Yup.string()).min(1, "Select at least one room"),
