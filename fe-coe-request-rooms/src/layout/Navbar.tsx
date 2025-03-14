@@ -96,9 +96,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar, isMobile }) => {
               setToggle(!toggle);
             }}
           />
-        </div>
-      </div>
-      {toggle && (
+          {toggle && (
         <div className="absolute right-6 top-14 mt-2 bg-white text-black shadow-lg rounded-t-none rounded-lg overflow-hidden">
           <ul className="flex flex-col">
             {userName?.role == "staff" && (
@@ -132,6 +130,8 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar, isMobile }) => {
           </ul>
         </div>
       )}
+        </div>
+      </div>
     </nav>
   );
 };

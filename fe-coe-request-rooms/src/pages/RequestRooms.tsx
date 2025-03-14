@@ -347,7 +347,7 @@ const RequestRooms = () => {
                                                         <div className='flex flex-row w-full justify-center items-center'>
                                                             <button
                                                                 type="submit"
-                                                                className="mt-8 bg-blue-500 text-white py-2 px-16 rounded-md disabled:bg-gray-400"
+                                                                className="mt-8 bg-blue-500 text-white py-2 px-16 rounded-md disabled:bg-gray-400 cursor-pointer"
                                                             >
                                                                 Submit
                                                             </button>

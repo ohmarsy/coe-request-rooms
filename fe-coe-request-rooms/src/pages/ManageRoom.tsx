@@ -244,7 +244,7 @@ const ManageRoomPage = () => {
   }
 
   return (
-    <div className="w-full h-full flex gap-3 overflow-x-scroll p-1">
+    <div className="w-full h-full flex max-xl:flex-col gap-3 overflow-x-scroll p-1">
       <div className="w-full flex flex-col flex-1/3 h-full gap-3">
         <div className="w-full flex gap-3 items-center justify-center max-[1024px]:flex-col">
           <DateBox />
