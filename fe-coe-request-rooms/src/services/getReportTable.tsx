@@ -30,10 +30,8 @@ const formatTimestamp = (unixTimestamp: number): { time: string; date: string } 
     month: "2-digit",
     year: "numeric",
   });
-  const formattedDateWithDash = formattedDate.replace(/\//g, '-');
 
-
-  return { time: formattedTime, date: formattedDateWithDash  };
+  return { time: formattedTime, date: formattedDate };
 };
 
 export const getReportTable = async (): Promise<ReportTableData[]> => {

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "./Modal";
 import { getImages } from "../services/getImages";
+import Loading from "./Loading";
+
 
 interface Column {
   header: string;
@@ -42,7 +44,7 @@ const Table: React.FC<TableProps> = ({
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedRowData, setSelectedRowData] = useState<RowData | null>(null);
   const [imageData, setImageData] = useState<ImageData[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const rowsPerPage = maxRows;
   const totalPages = Math.ceil(data.length / rowsPerPage);
@@ -195,15 +197,15 @@ const Table: React.FC<TableProps> = ({
 
       {/* Modal */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal} title="Image Information">
-
+        
         {imageData ? (
           imageData.filter((item) => `${item.id}` == `${selectedRowData?.id}`)
             .map((item, index) => (
               <div className="w-full overflow-hidden " key={index}>
                 <img
-                  src={item.image}
+                    src={item.image}
                   alt="Camera capture"
-                  className="w-48 h-48 object-cover mx-auto rounded-2xl"
+                  className="w-48 h-48 object-cover mx-auto rounded-md"
                 />
               </div>
             ))
