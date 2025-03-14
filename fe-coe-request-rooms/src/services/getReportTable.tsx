@@ -3,6 +3,7 @@ import { getTemperature } from "./getTemperature";
 import { getImages } from "./getImages";
 
 export interface ReportTableData {
+  id: string;
   room: string;
   device: string;
   information: string;
@@ -29,8 +30,10 @@ const formatTimestamp = (unixTimestamp: number): { time: string; date: string } 
     month: "2-digit",
     year: "numeric",
   });
+  const formattedDateWithDash = formattedDate.replace(/\//g, '-');
 
-  return { time: formattedTime, date: formattedDate };
+
+  return { time: formattedTime, date: formattedDateWithDash  };
 };
 
 export const getReportTable = async (): Promise<ReportTableData[]> => {
@@ -49,6 +52,7 @@ export const getReportTable = async (): Promise<ReportTableData[]> => {
       if (validRooms.includes("EN4412")) { 
         const { time, date } = formatTimestamp(temp.Timestamps);
         reportData.push({
+          id: temp.id,
           room: "EN4412",
           device: "IoT",
           information: temp.Temperature.toString(),
@@ -63,6 +67,7 @@ export const getReportTable = async (): Promise<ReportTableData[]> => {
       if (validRooms.includes("EN4412")) { 
         const { time, date } = formatTimestamp(Number(image.timestamps));
         reportData.push({
+          id: image.id.toString(),
           room: "EN4412",
           device: "IPCamera",
           information: "User_image",

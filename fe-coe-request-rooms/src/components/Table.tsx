@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Modal } from "./Modal";
+import { getImages } from "../services/getImages";
 
 interface Column {
   header: string;
@@ -8,6 +9,14 @@ interface Column {
 
 interface RowData {
   [key: string]: string;
+}
+
+interface ImageData {
+  id: number;
+  name: string;
+  email: string;
+  image: string;
+  timestamps: number;
 }
 
 interface TableProps {
@@ -30,13 +39,42 @@ const Table: React.FC<TableProps> = ({
   handleReject,
 }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [selectedRowData, setSelectedRowData] = useState<RowData | null>(null);
+  const [imageData, setImageData] = useState<ImageData[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const rowsPerPage = maxRows;
   const totalPages = Math.ceil(data.length / rowsPerPage);
   const visibleData = data.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getImages();
+        setImageData(data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleOpenModal = (row: RowData) => {
+    setSelectedRowData(row);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedRowData(null);
+  };
 
   function checkTypeDataInfo(value: string) {
     return !isNaN(Number(value));
@@ -44,7 +82,7 @@ const Table: React.FC<TableProps> = ({
 
   return (
     <div className="overflow-x-auto">
-      <div className="w-full overflow-x-auto  whitespace-nowrap">
+      <div className="w-full overflow-x-auto whitespace-nowrap">
         <table className="w-full min-w-max border-collapse border-spacing-0 table-auto">
           <thead>
             <tr className="text-gray-500 text-left text-sm">
@@ -61,8 +99,7 @@ const Table: React.FC<TableProps> = ({
           <tbody>
             {visibleData.map((row, rowIndex) => (
               <tr
-                className={`${rowIndex % 2 === 0 ? "bg-gray-100" : "bg-white"
-                  }`}
+                className={`${rowIndex % 2 === 0 ? "bg-gray-100" : "bg-white"}`}
                 key={rowIndex}
               >
                 {columns.map((col, colIndex) => (
@@ -74,14 +111,14 @@ const Table: React.FC<TableProps> = ({
                             `${row[col.accessor]} °C` : row[col.accessor]}
                         </span>
                       ) : (
-                        <p
+                        <button
                           className="text-blue-600 underline cursor-pointer"
-                          onClick={() => navigate("/main?menu=image-analyse")}
+                          onClick={() => handleOpenModal(row)}
                         >
                           {row[col.accessor]}
-                        </p>
+                        </button>
                       )
-                    ) : col.accessor === "approved" || col.accessor == "status" ? (
+                    ) : col.accessor === "approved" || col.accessor === "status" ? (
                       row[col.accessor] === "Approved" ? (
                         <p className="text-green-500">{row[col.accessor]}</p>
                       ) : (
@@ -126,8 +163,7 @@ const Table: React.FC<TableProps> = ({
       {pagination && (
         <div className="flex justify-end items-center mt-4 space-x-2 text-gray-600 text-base">
           <button
-            className={`transition duration-200 ease-in-out ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+            className={`transition duration-200 ease-in-out ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
@@ -146,8 +182,7 @@ const Table: React.FC<TableProps> = ({
             </button>
           ))}
           <button
-            className={`px-3 py-2 transition duration-200 ease-in-out ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+            className={`px-3 py-2 transition duration-200 ease-in-out ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
             disabled={currentPage === totalPages}
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
@@ -157,6 +192,29 @@ const Table: React.FC<TableProps> = ({
           </button>
         </div>
       )}
+
+      {/* Modal */}
+      <Modal isOpen={isModalOpen} onClose={handleCloseModal} title="Image Information">
+
+        {imageData ? (
+          imageData.filter((item) => `${item.id}` == `${selectedRowData?.id}`)
+            .map((item, index) => (
+              <div className="w-full overflow-hidden " key={index}>
+                <img
+                  src={item.image}
+                  alt="Camera capture"
+                  className="w-48 h-48 object-cover mx-auto rounded-2xl"
+                />
+              </div>
+            ))
+        ) : (
+          <div className="p-4 text-center text-gray-500">
+            <p>No image data available</p>
+          </div>
+        )}
+
+      </Modal>
+
     </div>
   );
 };
