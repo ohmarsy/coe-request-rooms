@@ -1,6 +1,6 @@
 import { getRooms } from "./getRooms";
 import { getTemperature } from "./getTemperature";
-import { getImages } from "./getImages";
+import { fetchAllImages  } from "./getImages";
 
 export interface ReportTableData {
   id: string;
@@ -38,7 +38,7 @@ export const getReportTable = async (): Promise<ReportTableData[]> => {
   try {
     const rooms = await getRooms();
     const temperatureData = await getTemperature();
-    const imagesData = await getImages();
+    const imagesData = await fetchAllImages ();
 
     const validRooms = rooms.map((room) => room.room_id); 
 

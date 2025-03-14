@@ -111,7 +111,7 @@ const DashboardPage = () => {
                   // name={imageData[0].name}
                   // email={imageData[0].email}
                   image={imageData[0].imageUrl}
-                  date={imageData[0].date}
+                  date={imageData[0].timestamps}
                   page="dashboard"
                 />
               }

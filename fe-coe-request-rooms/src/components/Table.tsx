@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Modal } from "./Modal";
-import { getImages } from "../services/getImages";
-import Loading from "./Loading";
+import { fetchAllImages , ImageData  } from "../services/getImages";
 
+import Loading from "./Loading";
 
 interface Column {
   header: string;
@@ -11,14 +11,6 @@ interface Column {
 
 interface RowData {
   [key: string]: string;
-}
-
-interface ImageData {
-  id: number;
-  name: string;
-  email: string;
-  image: string;
-  timestamps: number;
 }
 
 interface TableProps {
@@ -56,7 +48,7 @@ const Table: React.FC<TableProps> = ({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await getImages();
+        const data = await fetchAllImages ();
         setImageData(data);
         setLoading(false);
       } catch (err) {
@@ -203,7 +195,7 @@ const Table: React.FC<TableProps> = ({
             .map((item, index) => (
               <div className="w-full overflow-hidden " key={index}>
                 <img
-                    src={item.image}
+                    src={item.imageUrl}
                   alt="Camera capture"
                   className="w-48 h-48 object-cover mx-auto rounded-md"
                 />

@@ -1,16 +1,16 @@
 import axios from 'axios';
 
 // Define the structure of an image
-export interface ImagData {
-  name: string;
-  email: string;
-  image: string;
-  timestamps: number;
-}
+// export interface ImagData {
+//   name: string;
+//   email: string;
+//   image: string;
+//   timestamps: number;
+// }
 // Define the structure of an image
 export interface ImageData {
   imageUrl: string;
-  date: string;
+  timestamps: string;
   id:string;
 }
 
@@ -72,16 +72,16 @@ export const fetchAllImages = async (): Promise<ImageData[]> => {
   }
 };
 
-export const getImages = async (): Promise<ImagData[]> => {
-  try {
-    const response = await axios.get(`http://127.0.0.1:5003/images`, {});
+// export const getImages = async (): Promise<ImagData[]> => {
+//   try {
+//     const response = await axios.get(`http://127.0.0.1:5003/images`, {});
 
-    // console.log("Response data : ", response.data);
-    // const images = await fetchAllImages();
-    // console.log("images : ", images);
-    return response.data;
-  } catch (err) {
-    console.error("Error fetching images:", err);
-    throw err;
-  }
-};
+//     // console.log("Response data : ", response.data);
+//     // const images = await fetchAllImages();
+//     // console.log("images : ", images);
+//     return response.data;
+//   } catch (err) {
+//     console.error("Error fetching images:", err);
+//     throw err;
+//   }
+// };
