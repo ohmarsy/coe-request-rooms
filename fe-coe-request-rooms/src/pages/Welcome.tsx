@@ -46,13 +46,13 @@ const WelcomePage = () => {
             <footer className="w-full text-center text-[#140B0C]  py-4 flex flex-col space-y-2">
                 <p className="opacity-40">Developed by</p>
                 <div className="flex flex-row justify-center items-center gap-2 text-lg font-bold">
-                    <a href="https://github.com/JakkapatB" target="_blank" className="hover:text-[var(--primary-color)]">
+                    <a href="https://github.com/JakkapatB" target="_blank">
                         <GradientText children="BOSS" />
                     </a>
-                    <a href="https://github.com/ohmarsy" target="_blank" className="hover:text-[var(--primary-color)]"><GradientText children="OHM" /></a>
-                    <a href="https://github.com/WeerapongKh" target="_blank" className="hover:text-[var(--primary-color)]"><GradientText children="LEE" /></a>
-                    <a href="https://github.com/Piyawat-Mokkhuthod" target="_blank" className="hover:text-[var(--primary-color)]"><GradientText children="EARTH" /></a>
-                    <a href="https://github.com/Wachiice" target="_blank" className="hover:text-[var(--primary-color)]"><GradientText children="ICE" /></a>
+                    <a href="https://github.com/ohmarsy" target="_blank"><GradientText children="OHM" /></a>
+                    <a href="https://github.com/WeerapongKh" target="_blank"><GradientText children="LEE" /></a>
+                    <a href="https://github.com/Piyawat-Mokkhuthod" target="_blank"><GradientText children="EARTH" /></a>
+                    <a href="https://github.com/Wachiice" target="_blank"><GradientText children="ICE" /></a>
                 </div>
             </footer>
         </motion.div>
