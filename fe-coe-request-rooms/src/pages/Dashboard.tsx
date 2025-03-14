@@ -46,7 +46,7 @@ const DashboardPage = () => {
     const fetchData = async () => {
       try {
         
-        const data = await fetchAllImages(1);
+        const data = await fetchAllImages();
         const roomData = await getRooms();
         const peopleData = await getPeople();
         const dataTable = await getReportTable();
@@ -111,8 +111,8 @@ const DashboardPage = () => {
                   // name={imageData[0].name}
                   // email={imageData[0].email}
                   image={imageData[0].imageUrl}
-                  date={new Date(imageData[0].timestamps).toLocaleDateString()}
-                  time={new Date(imageData[0].timestamps).toLocaleTimeString([], { hour12: false })}
+                  date={new Date(imageData[0].timestamps).toLocaleDateString('en-GB')}
+                  time={new Date(imageData[0].timestamps).toLocaleTimeString([], { hour12: false, hour: "2-digit", minute: "2-digit" })}
                   page="dashboard"
                 />
               }

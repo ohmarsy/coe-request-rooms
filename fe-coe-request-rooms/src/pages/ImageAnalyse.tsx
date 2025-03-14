@@ -60,8 +60,8 @@ const ImageAnalysePage = () => {
               <Card
                 key={index}
                 image={data.imageUrl}
-                date={new Date(data.timestamps).toLocaleDateString()}
-                time={new Date(data.timestamps).toLocaleTimeString([], { hour12: false })}
+                date={new Date(data.timestamps).toLocaleDateString('en-GB')}
+                time={new Date(data.timestamps).toLocaleTimeString([], { hour12: false, hour: "2-digit", minute: "2-digit" })}
                 page="imageAnalyze"
               />
             ))}

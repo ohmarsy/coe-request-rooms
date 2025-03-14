@@ -18,7 +18,7 @@ const formatTimestamp = (unixTimestamp: number): { time: string; date: string } 
   const date = new Date(unixTimestamp * 1000); // Convert seconds to milliseconds
   date.setUTCHours(date.getUTCHours() + 7); // Convert to UTC+7
 
-  let formattedTime = date.toLocaleTimeString("en-GB", {
+  const formattedTime = date.toLocaleTimeString("en-GB", {
     hour: "2-digit",
     minute: "2-digit",
     hour12: false,
@@ -68,7 +68,7 @@ export const getReportTable = async ( ): Promise<ReportTableData[]> => {
           room: "EN4412",
           device: "IPCamera",
           information: "User_image",
-          time: image.timestamps.split(" ")[1],
+          time: image.timestamps.split(" ")[1].split(":").slice(0, 2).join(":"),
           date: formattedDate, 
         });
       }

@@ -20,6 +20,7 @@ const ReportTablePage = () => {
         const dataTable = await getReportTable();
 
         setReportTable(dataTable);
+        
 
         console.log('reportTable', dataTable);
         

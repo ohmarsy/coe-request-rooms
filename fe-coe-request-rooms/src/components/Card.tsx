@@ -24,7 +24,7 @@ const Card: React.FC<CardProps> = ({ image, date, time, page }) => {
         src={image}
       />
       <div className="flex-col flex justify-center h-1/4 items-center ">
-        <h2 className="  text-center antialiased text-md font-bold text-gray-600 ">
+        <h2 className="  text-center antialiased text-md font-bold text-gray-500 ">
           Date : {date}
         </h2>
         <p className="text-md text-gray-500 truncate w-full text-center">
