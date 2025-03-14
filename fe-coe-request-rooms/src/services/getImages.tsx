@@ -11,6 +11,7 @@ export interface ImagData {
 export interface ImageData {
   imageUrl: string;
   date: string;
+  id:string;
 }
 
 interface Data {
@@ -54,7 +55,7 @@ export const fetchAllImages = async (): Promise<ImageData[]> => {
           );
           const imgURL = URL.createObjectURL(imageResponse.data);
 
-          return{ imageUrl: imgURL, date }; // คืนค่า URL ของรูปภาพ
+          return{ imageUrl: imgURL, date, id }; // คืนค่า URL ของรูปภาพ
         } catch (err) {
           console.error(`Error fetching image ID ${id}:`, err);
           return null; // คืนค่า null ถ้าเกิด error
