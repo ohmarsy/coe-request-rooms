@@ -69,7 +69,10 @@ const Table: React.FC<TableProps> = ({
                   <td key={colIndex} className="px-4 py-2 whitespace-nowrap">
                     {col.accessor === "information" ? (
                       checkTypeDataInfo(row[col.accessor]) ? (
-                        <span>{row[col.accessor]}</span>
+                        <span>
+                          {!isNaN(parseFloat(row[col.accessor])) ?
+                            `${row[col.accessor]} °C` : row[col.accessor]}
+                        </span>
                       ) : (
                         <p
                           className="text-blue-600 underline cursor-pointer"
@@ -134,8 +137,8 @@ const Table: React.FC<TableProps> = ({
             <button
               key={index}
               className={`transition duration-200 ease-in-out ${currentPage === index + 1
-                  ? "text-black font-bold"
-                  : "text-gray-600"
+                ? "text-black font-bold"
+                : "text-gray-600"
                 }`}
               onClick={() => setCurrentPage(index + 1)}
             >
