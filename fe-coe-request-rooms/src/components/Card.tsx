@@ -4,15 +4,16 @@ import React from "react";
 interface CardProps {
   image: string; // URL of the image
   date :string;
+  time: string;
   page: "dashboard" | "imageAnalyze"; // Page type to control aspect ratio
 }
 
-const Card: React.FC<CardProps> = ({ image, date, page }) => {
+const Card: React.FC<CardProps> = ({ image, date, time, page }) => {
   return (
     <div
       className={`bg-white flex-col rounded-2xl shadow-md overflow-hidden  flex-grow ${
         page === "imageAnalyze"
-          ? "h-full  w-[80%] mx-auto "
+          ? "h-[240px]  w-[80%] mx-auto "
           : " w-full h-[300px] "
       }`}
     >
@@ -22,13 +23,13 @@ const Card: React.FC<CardProps> = ({ image, date, page }) => {
         }`}
         src={image}
       />
-      <div className="flex-col flex justify-center space-y-4 h-1/4 items-center ">
+      <div className="flex-col flex justify-center h-1/4 items-center ">
         <h2 className="  text-center antialiased text-md font-bold text-gray-600 ">
           Date : {date}
         </h2>
-        {/* <p className="text-md text-gray-500 truncate w-full text-center">
-          {email}
-        </p> */}
+        <p className="text-md text-gray-500 truncate w-full text-center">
+          Time : {time}
+        </p>
       </div>
     </div>
   );

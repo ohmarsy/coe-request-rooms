@@ -19,7 +19,7 @@ const SideBar = ({ setSelectedMenu, selectedMenu }: SideBarProps) => {
 
   const menuItems = [
     { title: "Dashboard", icon: faTableCells, route: "dashboard" },
-    { title: "Image Analyse", icon: faImage, route: "image-analyse" },
+    { title: "Images Report", icon: faImage, route: "image-analyse" },
     { title: "Report Table", icon: faTableList, route: "report-table" },
     { title: "Manage Room", icon: faDoorOpen, route: "manage-room" },
   ];
