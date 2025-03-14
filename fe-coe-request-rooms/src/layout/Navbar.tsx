@@ -77,9 +77,14 @@ const Navbar: React.FC<NavbarProps> = ({ toggleSidebar, isMobile }) => {
       </div>
 
       <div className="flex flex-row  items-center space-x-4 max-[500px]:space-x-2">
-        <a className="px-4 py-2 bg-blue-300 font-bold  cursor-pointer rounded-lg">
-          {pathname === "request-rooms" ? "Admin" : "Request Room"}
-        </a>
+        {userName?.role == "staff" && (
+          <a
+            className="px-4 py-2 bg-blue-400 hover:bg-blue-500 text-white font-bold  cursor-pointer rounded-lg"
+            href={`${pathname == "/request-rooms" ? "main" : "/request-rooms"}`}
+          >
+            {pathname === "/request-rooms" ? "Admin" : "Request Room"}
+          </a>
+        )}
         <h1 className="text-white text-lg font-bold max-[500px]:text-sm">
           {userName!.first_name ?? "User"}
         </h1>
