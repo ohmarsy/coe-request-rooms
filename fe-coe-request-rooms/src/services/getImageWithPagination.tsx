@@ -1,13 +1,19 @@
 import axios from "axios";
 import { Data, ImageData } from "./getImages";
 
-export const fetchAllImagesWithPagination = async (): Promise<
-  ImageData[]
-> => {
+interface FetchPagination {
+  page: number;
+  per_page: number;
+}
+
+export const fetchAllImagesWithPagination = async ({
+  page,
+  per_page,
+}: FetchPagination): Promise<ImageData[]> => {
   try {
     //  ดึงข้อมูลจาก API แรก
     const response = await axios.get(
-      `http://10.161.112.138:5001/images?page=1&per_page=1`,
+      `http://10.161.112.138:5001/images?page=${page}&per_page=${per_page}`,
       {
         headers: {
           "x-api-key":

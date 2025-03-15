@@ -46,7 +46,7 @@ const DashboardPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchAllImagesWithPagination();
+        const data = await fetchAllImagesWithPagination({page: 1, per_page: 1});
         const roomData = await getRooms();
         const peopleData = await getPeople();
         const dataTable = await getReportTable();

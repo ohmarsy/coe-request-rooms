@@ -1,6 +1,7 @@
 import { getRooms } from "./getRooms";
 import { getTemperature } from "./getTemperature";
 import { fetchAllImages } from "./getImages";
+import { fetchAllImagesWithPagination } from "./getImageWithPagination";
 
 export interface ReportTableData {
   id: string;
@@ -9,12 +10,14 @@ export interface ReportTableData {
   information: string;
   time: string;
   date: string;
-  
+
   [key: string]: string;
 }
 
 // Helper function to convert Unix timestamp to Thai timezone (UTC+7) format
-const formatTimestamp = (unixTimestamp: number): { time: string; date: string } => {
+const formatTimestamp = (
+  unixTimestamp: number
+): { time: string; date: string } => {
   const date = new Date(unixTimestamp * 1000); // Convert seconds to milliseconds
   date.setUTCHours(date.getUTCHours() + 7); // Convert to UTC+7
 
@@ -32,11 +35,22 @@ const formatTimestamp = (unixTimestamp: number): { time: string; date: string } 
   return { time: formattedTime, date: formattedDate };
 };
 
-export const getReportTable = async ( ): Promise<ReportTableData[]> => {
+export const getReportTable = async (): Promise<ReportTableData[]> => {
   try {
     const rooms = await getRooms();
     const temperatureData = await getTemperature();
-    const imagesData = await fetchAllImages();
+    const urlParams = new URLSearchParams(location.search);
+    const menu = urlParams.get("menu");
+    let imagesData; // Declare as `let` so it can be reassigned
+
+    if (menu === "dashboard") {
+      imagesData = await fetchAllImagesWithPagination({
+        page: 1,
+        per_page: 1,
+      });
+    } else {
+      imagesData = await fetchAllImages();
+    }
 
     const validRooms = rooms.map((room) => room.room_id);
 
@@ -61,19 +75,23 @@ export const getReportTable = async ( ): Promise<ReportTableData[]> => {
     imagesData.forEach((image) => {
       if (validRooms.includes("EN4412")) {
         const timestamp = new Date(image.timestamps.split(" ")[0]);
-        const formattedDate = `${timestamp.getDate().toString().padStart(2, '0')}/${(timestamp.getMonth() + 1).toString().padStart(2, '0')}/${timestamp.getFullYear().toString()}`;
-    
+        const formattedDate = `${timestamp
+          .getDate()
+          .toString()
+          .padStart(2, "0")}/${(timestamp.getMonth() + 1)
+          .toString()
+          .padStart(2, "0")}/${timestamp.getFullYear().toString()}`;
+
         reportData.push({
           id: image.id.toString(),
           room: "EN4412",
           device: "IPCamera",
           information: "User_image",
           time: image.timestamps.split(" ")[1].split(":").slice(0, 2).join(":"),
-          date: formattedDate, 
+          date: formattedDate,
         });
       }
     });
-    
 
     return reportData;
   } catch (error) {
