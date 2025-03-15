@@ -6,7 +6,6 @@ import AllRoom, { RoomProps } from "../components/AllRoom";
 import RoomStatus from "../components/RoomStatus";
 import Quantity from "../components/Quantity";
 import Card from "../components/Card";
-import { fetchAllImages, ImageData } from "../services/getImages";
 import Table from "../components/Table";
 import { useNavigate } from "react-router-dom";
 import { getRooms } from "../services/getRooms";
@@ -17,6 +16,8 @@ import {
   getTemperature,
 } from "../services/getTemperature";
 import Loading from "../components/Loading";
+import { fetchAllImagesWithPagination } from "../services/getImageWithPagination";
+import { ImageData } from "../services/getImages";
 
 const columns = [
   { header: "Room", accessor: "room" },
@@ -45,11 +46,14 @@ const DashboardPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchAllImages();
+        const data = await fetchAllImagesWithPagination();
         const roomData = await getRooms();
         const peopleData = await getPeople();
         const dataTable = await getReportTable();
         const temperatureData = await getTemperature();
+
+        console.log("image with pagination: ", data);
+
 
         setReportTable(dataTable);
         setImageData(data);
@@ -68,14 +72,12 @@ const DashboardPage = () => {
 
   const handleClickRoom = (name: string) => {
     setSelectedRoom(name);
-    console.log(selectedRoom);
   };
 
   if (loading) {
     return <Loading />;
   }
 
-  console.log("peopleData: ", peopleData);
 
   return (
     <div className="w-full h-full flex flex-col gap-3 p-2">
@@ -110,7 +112,7 @@ const DashboardPage = () => {
                 page="dashboard"
               />
             ) : (
-              <div className="w-full h-full bg-white flex items-center justify-center flex-col rounded-2xl shadow-sm">
+              <div className="w-full h-full bg-white flex items-center justify-center flex-col rounded-2xl shadow-sm" onClick={()=> console.log(imageData[0])}>
                 <p className="text-gray-400 text-xs sm:text-lg truncate ">No image data</p>
               </div>
             )}

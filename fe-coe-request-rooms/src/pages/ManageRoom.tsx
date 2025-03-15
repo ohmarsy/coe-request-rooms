@@ -101,7 +101,7 @@ const ManageRoomPage = () => {
   };
 
   const handleSubmit = async (values: typeof initialValues) => {
-    console.log("Form values:", values);
+    // console.log("Form values:", values);
     try {
       const roomData = await addRoom(values.room_id);
       console.log("Room added successfully: ", roomData);

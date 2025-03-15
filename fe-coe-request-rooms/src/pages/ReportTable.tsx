@@ -22,7 +22,7 @@ const ReportTablePage = () => {
         setReportTable(dataTable);
         
 
-        console.log('reportTable', dataTable);
+        // console.log('reportTable', dataTable);
         
         setLoading(false);
       } catch (err) {

@@ -14,7 +14,7 @@ export interface AllTemperatureProps {
 export const getTemperature = async (): Promise<AllTemperatureProps> => {
     try {
         const response = await axios.get("http://10.161.112.106:8000/temp");
-        console.log('temp data: ', response.data);
+        // console.log('temp data: ', response.data);
         return response.data;
     } catch (err) {
         console.error("Error fetching temperature:", err);

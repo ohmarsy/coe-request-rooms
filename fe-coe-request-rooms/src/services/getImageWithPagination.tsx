@@ -1,37 +1,28 @@
-import axios from 'axios';
+import axios from "axios";
+import { Data, ImageData } from "./getImages";
 
-// Define the structure of an image
-export interface ImageData {
-  imageUrl: string;
-  timestamps: string;
-  id:string;
-  pages : number;
-}
-
-export interface Data {
-  filename: string;
-  id: number;
-  uploaded_at: string;
-}
-
-// ฟังก์ชันดึงข้อมูลภาพจาก API
-export const fetchAllImages = async (): Promise<ImageData[]> => {
+export const fetchAllImagesWithPagination = async (): Promise<
+  ImageData[]
+> => {
   try {
     //  ดึงข้อมูลจาก API แรก
-    const response = await axios.get(`http://10.161.112.138:5001/allImages`, {
-      headers: {
-        "x-api-key":
-          "e90cfd82cd64ee7599b5f98180f743a6b03c762d6a10b1e69276d50a61f61fa6",
-      },
-    });
+    const response = await axios.get(
+      `http://10.161.112.138:5001/images?page=1&per_page=1`,
+      {
+        headers: {
+          "x-api-key":
+            "e90cfd82cd64ee7599b5f98180f743a6b03c762d6a10b1e69276d50a61f61fa6",
+        },
+      }
+    );
     // console.log("Response data : ", response.data);
 
-     // ดึงรายการ ID และวันที่ของภาพทั้งหมด
+    // ดึงรายการ ID และวันที่ของภาพทั้งหมด
     const imageInfo = response.data.images.map((image: Data) => ({
       id: image.id,
       date: image.uploaded_at, // ดึงวันที่ที่อัปโหลด
     }));
-    
+
     // ใช้ Promise.all() เพื่อดึงข้อมูลจาก API ที่สองสำหรับแต่ละ ID
     const imageUrls = await Promise.all(
       imageInfo.map(async ({ id, date }: { id: number; date: string }) => {
@@ -49,8 +40,12 @@ export const fetchAllImages = async (): Promise<ImageData[]> => {
           );
           const imgURL = URL.createObjectURL(imageResponse.data);
 
-
-          return{ imageUrl: imgURL,timestamps:date, id, pages: response.data.pages }; // คืนค่า URL ของรูปภาพ
+          return {
+            imageUrl: imgURL,
+            timestamps: date,
+            id,
+            pages: response.data.pages,
+          }; // คืนค่า URL ของรูปภาพ
         } catch (err) {
           console.error(`Error fetching image ID ${id}:`, err);
           return null; // คืนค่า null ถ้าเกิด error
@@ -66,4 +61,3 @@ export const fetchAllImages = async (): Promise<ImageData[]> => {
     throw err;
   }
 };
-
