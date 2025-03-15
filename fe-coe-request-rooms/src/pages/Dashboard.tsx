@@ -29,6 +29,7 @@ const columns = [
 
 const DashboardPage = () => {
   const navigate = useNavigate();
+  const [hasFetchData, setHasFetchedData] = useState(false);
 
   const [selectedRoom, setSelectedRoom] = useState("");
   const [imageData, setImageData] = useState<ImageData[]>([]);
@@ -45,15 +46,16 @@ const DashboardPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      if (hasFetchData) return;
       try {
-        const data = await fetchAllImagesWithPagination({page: 1, per_page: 1});
+        const data = await fetchAllImagesWithPagination({
+          page: 1,
+          per_page: 1,
+        });
         const roomData = await getRooms();
         const peopleData = await getPeople();
         const dataTable = await getReportTable();
         const temperatureData = await getTemperature();
-
-        console.log("image with pagination: ", data);
-
 
         setReportTable(dataTable);
         setImageData(data);
@@ -61,6 +63,7 @@ const DashboardPage = () => {
         setPeopleData(selectedRoom === "EN4412" ? peopleData : null);
         setTemperatureData(selectedRoom === "EN4412" ? temperatureData : null);
 
+        setHasFetchedData(true);
         setLoading(false);
       } catch (err) {
         console.error("Error fetching data:", err);
@@ -68,7 +71,7 @@ const DashboardPage = () => {
     };
 
     fetchData();
-  }, [selectedRoom]);
+  }, [selectedRoom, hasFetchData]);
 
   const handleClickRoom = (name: string) => {
     setSelectedRoom(name);
@@ -77,7 +80,6 @@ const DashboardPage = () => {
   if (loading) {
     return <Loading />;
   }
-
 
   return (
     <div className="w-full h-full flex flex-col gap-3 p-2">
@@ -103,7 +105,9 @@ const DashboardPage = () => {
             {selectedRoom === "EN4412" && imageData ? (
               <Card
                 image={imageData[0].imageUrl}
-                date={new Date(imageData[0].timestamps).toLocaleDateString("en-GB")}
+                date={new Date(imageData[0].timestamps).toLocaleDateString(
+                  "en-GB"
+                )}
                 time={new Date(imageData[0].timestamps).toLocaleTimeString([], {
                   hour12: false,
                   hour: "2-digit",
@@ -112,12 +116,16 @@ const DashboardPage = () => {
                 page="dashboard"
               />
             ) : (
-              <div className="w-full h-full bg-white flex items-center justify-center flex-col rounded-2xl shadow-sm" onClick={()=> console.log(imageData[0])}>
-                <p className="text-gray-400 text-xs sm:text-lg truncate ">No image data</p>
+              <div
+                className="w-full h-full bg-white flex items-center justify-center flex-col rounded-2xl shadow-sm"
+                onClick={() => console.log(imageData[0])}
+              >
+                <p className="text-gray-400 text-xs sm:text-lg truncate ">
+                  No image data
+                </p>
               </div>
             )}
           </div>
-
 
           {/* Status/Quantity Right */}
           <div className="w-full flex-1 flex flex-col gap-3 lg:mt-0">

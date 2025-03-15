@@ -30,7 +30,7 @@ const ImageAnalysePage = () => {
       }
     };
     fetchImages();
-  }, [currentPage]); // รีโหลดข้อมูลเมื่อ currentPage เปลี่ยน
+  }, []); 
 
   // ตรวจสอบว่ามีข้อมูลก่อนใช้ .pages
   const totalPages = imageData.length > 0 ? imageData[0].pages : 1;
