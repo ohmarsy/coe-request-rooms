@@ -1,6 +1,5 @@
 import { getRooms } from "./getRooms";
 import { getTemperature } from "./getTemperature";
-import { fetchAllImages } from "./getImages";
 import { fetchAllImagesWithPagination } from "./getImageWithPagination";
 
 export interface ReportTableData {
@@ -35,28 +34,35 @@ const formatTimestamp = (
   return { time: formattedTime, date: formattedDate };
 };
 
-export const getReportTable = async (): Promise<ReportTableData[]> => {
+// Updated function to support pagination inside `else` condition
+export const getReportTable = async (
+  page: number = 1,
+  perPage: number = 10
+): Promise<ReportTableData[]> => {
   try {
     const rooms = await getRooms();
     const temperatureData = await getTemperature();
     const urlParams = new URLSearchParams(location.search);
     const menu = urlParams.get("menu");
-    let imagesData; // Declare as `let` so it can be reassigned
+    let imagesData;
 
     if (menu === "dashboard") {
       imagesData = await fetchAllImagesWithPagination({
-        page: 1,
-        per_page: 1,
+        page,
+        per_page: perPage,
       });
     } else {
-      imagesData = await fetchAllImages();
+      imagesData = await fetchAllImagesWithPagination({
+        page,
+        per_page: perPage,
+      });
     }
 
     const validRooms = rooms.map((room) => room.room_id);
 
     const reportData: ReportTableData[] = [];
 
-    //Temperature Data
+    // Temperature Data
     const tempEntries = Object.values(temperatureData);
     tempEntries.forEach((temp) => {
       if (validRooms.includes("EN4412")) {
@@ -72,6 +78,7 @@ export const getReportTable = async (): Promise<ReportTableData[]> => {
       }
     });
 
+    // Image Data
     imagesData.forEach((image) => {
       if (validRooms.includes("EN4412")) {
         const timestamp = new Date(image.timestamps.split(" ")[0]);

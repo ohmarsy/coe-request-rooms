@@ -1,18 +1,20 @@
 import { useEffect, useState } from "react";
 import Card from "../components/Card";
 import Switch from "../components/Switch";
-import { fetchAllImages, ImageData } from "../services/getImages";
+import { ImageData } from "../services/getImages";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../components/Loading";
+import { fetchAllImagesWithPagination } from "../services/getImageWithPagination";
 
 const ImageAnalysePage = () => {
   const [imageData, setImageData] = useState<ImageData[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [perPage] = useState(6); // You can set this to whatever number of images you want per page
   const [activeComponent, setActiveComponent] = useState<
     "Human face" | "Number plate"
   >("Human face");
@@ -21,16 +23,19 @@ const ImageAnalysePage = () => {
   useEffect(() => {
     const fetchImages = async () => {
       try {
-        const data = await fetchAllImages(); // ส่ง currentPage ไป
+        const data = await fetchAllImagesWithPagination({
+          page: currentPage,
+          per_page: perPage,
+        });
         setImageData(data);
         setLoading(false);
-        // console.log("image data : ", imageData);
       } catch (err) {
         console.log("Error fetching images:", err);
+        setLoading(false); // Ensure loading is false even on error
       }
     };
     fetchImages();
-  }, []); 
+  }, [currentPage, perPage]); // Add currentPage as a dependency
 
   // ตรวจสอบว่ามีข้อมูลก่อนใช้ .pages
   const totalPages = imageData.length > 0 ? imageData[0].pages : 1;
@@ -60,8 +65,12 @@ const ImageAnalysePage = () => {
               <Card
                 key={index}
                 image={data.imageUrl}
-                date={new Date(data.timestamps).toLocaleDateString('en-GB')}
-                time={new Date(data.timestamps).toLocaleTimeString([], { hour12: false, hour: "2-digit", minute: "2-digit" })}
+                date={new Date(data.timestamps).toLocaleDateString("en-GB")}
+                time={new Date(data.timestamps).toLocaleTimeString([], {
+                  hour12: false,
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
                 page="imageAnalyze"
               />
             ))}
@@ -76,7 +85,9 @@ const ImageAnalysePage = () => {
               >
                 <FontAwesomeIcon
                   icon={faChevronLeft}
-                  className="cursor-pointer"
+                  className={`cursor-pointer ${
+                    currentPage === 1 ? "text-gray-200" : ""
+                  }`}
                 />
               </button>
               <span className="text-lg font-medium">

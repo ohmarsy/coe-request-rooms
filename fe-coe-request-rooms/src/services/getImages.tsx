@@ -4,8 +4,8 @@ import axios from 'axios';
 export interface ImageData {
   imageUrl: string;
   timestamps: string;
-  id:string;
-  pages : number;
+  id: string;
+  pages: number;
 }
 
 export interface Data {
@@ -24,17 +24,21 @@ export const fetchAllImages = async (): Promise<ImageData[]> => {
           "e90cfd82cd64ee7599b5f98180f743a6b03c762d6a10b1e69276d50a61f61fa6",
       },
     });
-    // console.log("Response data : ", response.data);
 
-     // ดึงรายการ ID และวันที่ของภาพทั้งหมด
+    // ดึงรายการ ID และวันที่ของภาพทั้งหมด
     const imageInfo = response.data.images.map((image: Data) => ({
       id: image.id,
       date: image.uploaded_at, // ดึงวันที่ที่อัปโหลด
     }));
-    
-    // ใช้ Promise.all() เพื่อดึงข้อมูลจาก API ที่สองสำหรับแต่ละ ID
+
+    // สร้างเซ็ต ID เพื่อไม่ให้มีการเรียก API ซ้ำ
+    const imageIds = new Set<number>();
     const imageUrls = await Promise.all(
       imageInfo.map(async ({ id, date }: { id: number; date: string }) => {
+        if (imageIds.has(id)) return null; // ถ้า ID นี้เคยเรียกไปแล้วจะข้ามไป
+
+        imageIds.add(id); // บันทึก ID ที่เรียกไปแล้ว
+
         try {
           const imageResponse = await axios.get(
             `http://10.161.112.138:5001/image/${id}`,
@@ -49,15 +53,18 @@ export const fetchAllImages = async (): Promise<ImageData[]> => {
           );
           const imgURL = URL.createObjectURL(imageResponse.data);
 
-
-          return{ imageUrl: imgURL,timestamps:date, id, pages: response.data.pages }; // คืนค่า URL ของรูปภาพ
+          return {
+            imageUrl: imgURL,
+            timestamps: date,
+            id: id.toString(),
+            pages: response.data.pages,
+          };
         } catch (err) {
           console.error(`Error fetching image ID ${id}:`, err);
           return null; // คืนค่า null ถ้าเกิด error
         }
       })
     );
-    // console.log("imageUrls with date : ", imageUrls);
 
     // กรองเฉพาะค่าที่ไม่ใช่ null
     return imageUrls.filter((url) => url !== null);
@@ -66,4 +73,3 @@ export const fetchAllImages = async (): Promise<ImageData[]> => {
     throw err;
   }
 };
-
