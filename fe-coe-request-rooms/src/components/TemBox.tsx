@@ -18,15 +18,6 @@ const TemperatureDisplay: React.FC<TemperatureProps> = ({
       ? AllTemperatureData?.Inside?.Temperature ?? null
       : AllTemperatureData?.Outside?.Temperature ?? null;
 
-<<<<<<< Updated upstream
-=======
-  // เช็คสถานะแอร์เมื่อ temperature มีค่าปกติ
-  // const acStatus =
-  //   tempType === "inside" && temperature !== null && temperature < 25
-  //     ? "on"
-  //     : "off";
-
->>>>>>> Stashed changes
   return (
     <div className="flex flex-col items-center justify-center bg-white shadow-sm rounded-2xl p-4 w-full h-full text-sm sm:text-base">
       <div className="flex flex-col items-center min-h-[100px]  justify-center">
