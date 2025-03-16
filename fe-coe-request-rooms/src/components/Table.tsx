@@ -154,7 +154,7 @@ const Table: React.FC<TableProps> = ({
       {pagination && (
         <div className="flex justify-end items-center mt-4 space-x-2 text-gray-600 text-base">
           <button
-            className={`transition duration-200 ease-in-out ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+            className={`transition duration-200 ease-in-out cursor-pointer ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
             disabled={currentPage === 1}
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
@@ -163,7 +163,7 @@ const Table: React.FC<TableProps> = ({
           {Array.from({ length: totalPages }, (_, index) => (
             <button
               key={index}
-              className={`transition duration-200 ease-in-out cursor-pointer ${currentPage === index + 1
+              className={`transition duration-200 ease-in-out ${currentPage === index + 1
                 ? "text-black font-bold"
                 : "text-gray-600"
                 }`}
