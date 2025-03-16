@@ -163,7 +163,7 @@ const Table: React.FC<TableProps> = ({
           {Array.from({ length: totalPages }, (_, index) => (
             <button
               key={index}
-              className={`transition duration-200 ease-in-out ${currentPage === index + 1
+              className={`transition duration-200 ease-in-out cursor-pointer ${currentPage === index + 1
                 ? "text-black font-bold"
                 : "text-gray-600"
                 }`}
@@ -173,7 +173,7 @@ const Table: React.FC<TableProps> = ({
             </button>
           ))}
           <button
-            className={`px-3 py-2 transition duration-200 ease-in-out ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
+            className={`px-3 py-2 transition duration-200 ease-in-out cursor-pointer ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
             disabled={currentPage === totalPages}
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))

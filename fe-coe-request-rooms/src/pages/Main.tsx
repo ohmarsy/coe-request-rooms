@@ -17,6 +17,7 @@ const MainPage = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const menu = urlParams.get("menu") || "dashboard";
+    
 
     if (menu) {
       setSelectedMenu(menu);

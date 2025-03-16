@@ -311,7 +311,7 @@ const ManageRoomPage = () => {
                         <Table
                           columns={columns_request}
                           data={data_request}
-                          maxRows={10}
+                          maxRows={9}
                           buttonShow={true}
                           handleApprove={handleApprove}
                           handleReject={handleReject}
@@ -332,7 +332,7 @@ const ManageRoomPage = () => {
                         <Table
                           columns={columns_history}
                           data={data_history}
-                          maxRows={10}
+                          maxRows={9}
                           buttonShow={false}
                         />
                       ) : (
